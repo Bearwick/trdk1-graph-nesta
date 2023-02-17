@@ -1,11 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const root = document.getElementById('root');
+if (root == null) {
+  throw new Error('Cannot render React app when root element is missing!');
+}
+
+createRoot(root).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
