@@ -1,7 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import './index.css';
 import App from './App';
+import Test from './pages/Test'
 import reportWebVitals from './reportWebVitals';
 
 const root = document.getElementById('root');
@@ -11,7 +13,12 @@ if (root == null) {
 
 createRoot(root).render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="test" element={<Test />} />
+          </Routes>
+      </BrowserRouter>
   </React.StrictMode>
 );
 
