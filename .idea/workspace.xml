@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ad14e04-c04f-4ee2-a4e8-5fb51c0f274a" name="Changes" comment="" />
+    <list default="true" id="0ad14e04-c04f-4ee2-a4e8-5fb51c0f274a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph-nesta/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/graph-nesta/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph-nesta/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/graph-nesta/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph-nesta/frontend/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/graph-nesta/frontend/src/index.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +22,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2M0TgUQfh26hEhJS4k0msuy52L2" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -33,7 +41,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.maddyhome.idea.vim.ui.VimEmulationConfigurable",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Users/magne/skole/bachelor/trdk1_graph-nesta/graph-nesta/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
