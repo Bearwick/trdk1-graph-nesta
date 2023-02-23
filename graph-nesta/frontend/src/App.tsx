@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './images/logo.svg';
 import './App.css';
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         </h1>
         <img src={logo} className="App-logo" alt="logo" />
       </header>
+        <Footer />
     </div>
   );
 }
