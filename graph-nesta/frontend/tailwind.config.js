@@ -5,12 +5,15 @@ module.exports = {
     colors: {
       'background': '#E3EDF5',
       'text': '#0D264A',
+      'white':'#ffffff',
       'buttonDark': '#0D264A',
       'buttonLight':'#00527a',
+      'buttonLightHover':'#3d3f6b',
       'textLight':'#3969AD',
       'statusGreen':'#2BB728',
       'statusOrange':'#F0AE2F',
-      'statusRed':'#FF002F'
+      'statusRed':'#FF002F',
+      'black':'#000000'
     },
     extend: {},
   },
