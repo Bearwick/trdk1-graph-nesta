@@ -1,10 +1,14 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes} from 'react-router-dom'
 import './index.css'
-import App from './App'
-import Test from './pages/Test'
 import reportWebVitals from './reportWebVitals'
+import App from './App'
+import NewChallenge from './pages/NewChallenge'
+import Login from './pages/Login'
+import MyChallenges from './pages/MyChallenges'
+import Search from './pages/Search'
+import ErrorPage from './pages/ErrorPage'
 
 const root = document.getElementById('root')
 if (root == null) {
@@ -15,8 +19,13 @@ createRoot(root).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="test" element={<Test />} />
+          <Route path="Hjem" index element={<App />} />
+          <Route path="MinProfil" element={<App />} />
+          <Route path="LoggInn" element={<Login />} />
+          <Route path="MineUtfordringer" element={<MyChallenges />} />
+          <Route path="NyUtfordring" element={<NewChallenge />} />
+          <Route path="Søk" element={<Search />} />
+          <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
