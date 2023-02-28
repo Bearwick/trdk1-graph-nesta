@@ -1,14 +1,15 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Route, Routes} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
-import reportWebVitals from './reportWebVitals'
-import App from './App'
+import App from './App';
 import NewChallenge from './pages/NewChallenge'
 import Login from './pages/Login'
 import MyChallenges from './pages/MyChallenges'
 import Search from './pages/Search'
 import ErrorPage from './pages/ErrorPage'
+import UserProfile from './pages/UserProfile'
+import reportWebVitals from './reportWebVitals'
 
 const root = document.getElementById('root')
 if (root == null) {
@@ -26,6 +27,8 @@ createRoot(root).render(
           <Route path="NyUtfordring" element={<NewChallenge />} />
           <Route path="Søk" element={<Search />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route path="/" element={<App />} />
+          <Route path="UserProfile" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

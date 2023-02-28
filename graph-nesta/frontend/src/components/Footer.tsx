@@ -7,7 +7,7 @@ function Footer() {
     }
 
     return (
-       <div className='footerbox bg-footer h-20 items-center grid grid-cols-3'>
+       <div className='footerbox bg-footer h-20 place-items-center grid grid-cols-3 bottom-0' >
            <div>
             <button className={'toTopButton bg-buttonDark hover:bg-buttonHover text-white rounded-lg w-40 h-8'} onClick={backToTopfunction}>
                 <p> Tilbake til toppen </p>
