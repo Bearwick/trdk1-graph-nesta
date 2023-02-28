@@ -28,7 +28,7 @@ createRoot(root).render(
           <Route path="Søk" element={<Search />} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="/" element={<App />} />
-          <Route path="UserProfile" element={<UserProfile />} />
+          <Route path="BrukerProfil" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
