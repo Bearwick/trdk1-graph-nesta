@@ -16,7 +16,11 @@ module.exports = {
       'black':'#000000',
       'footer':'#14325E'
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        Inter: ["Inter", "sans-serif"],
+      }
+    },
   },
   plugins: [],
 }
