@@ -3,6 +3,7 @@ import logo from './images/logo.svg';
 import './App.css';
 import Footer from "./components/Footer";
 import Header from './components/Header';
+import ChallengeCard from './components/ChallengeCard';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
             Hello Group!
           </h1>
           <img src={logo} className="App-logo" alt="logo" />
+          <ChallengeCard/>
         </header>
           <Footer />
       </div>
