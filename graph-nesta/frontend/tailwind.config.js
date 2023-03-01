@@ -15,6 +15,7 @@ module.exports = {
       'statusRed':'#FF002F',
       'black':'#000000',
       'footer':'#14325E',
+      'linkBlue': '#337FEC',
       'ODA1':'#f8c829',
       'ODA2':'#ff3c00',
       'ODA3':'#ff001f',
