@@ -14,7 +14,11 @@ module.exports = {
       'statusOrange':'#F0AE2F',
       'statusRed':'#FF002F',
       'black':'#000000',
-      'footer':'#14325E'
+      'footer':'#14325E',
+      'ODA1':'#f8c829',
+      'ODA2':'#ff3c00',
+      'ODA3':'#ff001f',
+      'ODA4':'#8600b4'
     },
     extend: {
       fontFamily: {
