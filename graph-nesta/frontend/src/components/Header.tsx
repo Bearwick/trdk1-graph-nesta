@@ -20,18 +20,18 @@ function Header(){
 
                  <div className="text-lg">
 
-                    <div onClick={onChange} className="cursor-pointer mt-2 z-20">{!show ? <MenuIcon sx={{ fontSize: "2.5rem"}} /> : <CloseIcon sx={{ fontSize: "2.5rem"}}/>}</div>
+                    <div onClick={onChange} className="mt-2 z-20">{!show ? <MenuIcon sx={{ fontSize: "2.5rem", cursor: "pointer"}} /> : <CloseIcon sx={{ fontSize: "2.5rem", cursor: "pointer"}}/>}</div>
 
                     {show ?
                         (   
-                            <div className="bg-white w-1/2 rounded-md ml-8" onClick={(e) => {e.stopPropagation()}}>
-                                {login ? <Link to="/MinProfil"><div className="text-right pr-5 hover:bg-buttonDark hover:text-white">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-right pr-5 hover:bg-buttonDark hover:text-white">Logg inn</div></Link>}
+                            <div className="bg-white lg:ml-24 sm:ml-8 lg:w-1/3 md:w-1/2 sm:w-2/3 rounded-md mt-2">
+                                {login ? <Link to="/MinProfil"><div className="text-right pr-2 hover:bg-buttonDark hover:text-white">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-right pr-2 hover:bg-buttonDark hover:text-white">Logg inn</div></Link>}
                                 <hr />
-                                <Link to="/MineUtfordringer"><div className="text-right pr-5 hover:bg-buttonDark hover:text-white">Mine utfordringer</div></Link>
+                                <Link to="/MineUtfordringer"><div className="text-right pr-2 hover:bg-buttonDark hover:text-white">Mine utfordringer</div></Link>
                                 <hr />
-                                <Link to="/NyUtfordring"><div className="text-right pr-5 hover:bg-buttonDark hover:text-white">Ny utfordring</div></Link>
+                                <Link to="/NyUtfordring"><div className="text-right pr-2 hover:bg-buttonDark hover:text-white">Ny utfordring</div></Link>
                                 <hr />
-                                <Link to="/Søk"><div className="text-right pr-5 hover:bg-buttonDark hover:text-white">Søk</div></Link>
+                                <Link to="/Søk"><div className="text-right pr-2 hover:bg-buttonDark hover:text-white">Søk</div></Link>
                             </div>
                         ):
                             
