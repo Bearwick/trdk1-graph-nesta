@@ -7,7 +7,7 @@ function ChallengeCard(){
 
     return(
 
-        <div className="grid grid-rows-7 h-64 w-80 bg-buttonDark px-5 py-5 text-white">
+        <div className="grid grid-rows-7 h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer">
 
             <section className="row-span-2 grid grid-cols-3">        {/* Header */}
                 <p className="col-span-2 font-bold text-left">Overskrift</p>
