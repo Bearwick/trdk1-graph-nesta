@@ -125,6 +125,7 @@ function Search() {
               <ChallengeCard />
               <ChallengeCard />
               <ChallengeCard />
+       
             </div>
           </div>
           <Footer />
