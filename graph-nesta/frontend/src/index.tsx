@@ -10,6 +10,7 @@ import Search from './pages/Search'
 import ErrorPage from './pages/ErrorPage'
 import UserProfile from './pages/UserProfile'
 import reportWebVitals from './reportWebVitals'
+import RegisterUser from './pages/RegisterUser';
 
 const root = document.getElementById('root')
 if (root == null) {
@@ -23,6 +24,7 @@ createRoot(root).render(
           <Route path="Hjem" index element={<App />} />
           <Route path="MinProfil" element={<App />} />
           <Route path="LoggInn" element={<Login />} />
+          <Route path="RegistrerBruker" element={<RegisterUser/>}></Route>
           <Route path="MineUtfordringer" element={<MyChallenges />} />
           <Route path="NyUtfordring" element={<NewChallenge />} />
           <Route path="Søk" element={<Search />} />
