@@ -5,6 +5,8 @@ import CategoryButton from "../components/CategoryButton";
 import ChallengeCard from "../components/ChallengeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { type User } from "../types/types";
+import { Status } from "../types/types";
 
 function Search() {
 
@@ -12,6 +14,16 @@ function Search() {
   const [, setFilter] = useState("Løst");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [searchHits, ] = useState(11);
+ 
+  const placeHolder : User = {
+    email: "edvard.bjornevik@nesodden.kommune.no",
+    telephone: "69420",
+    affiliation: "Trondheim",
+  }
+
+  const subPlaceholder: User[] = [placeHolder];
+
+
 
 
   //  List of filters available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
@@ -73,6 +85,10 @@ function Search() {
     }
   }
 
+  const onClick = () => {
+    alert("click");
+  }
+
 
 
     return (
@@ -119,12 +135,11 @@ function Search() {
                 <p className="">{ searchHits } treff</p>
 
           </div>
-            
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
-              <ChallengeCard />
-              <ChallengeCard />
-              <ChallengeCard />
-              <ChallengeCard />
+              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt."} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
        
             </div>
           </div>
@@ -134,3 +149,4 @@ function Search() {
   }
   
   export default Search;
+
