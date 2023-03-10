@@ -11,6 +11,7 @@ import ErrorPage from './pages/ErrorPage'
 import UserProfile from './pages/UserProfile'
 import reportWebVitals from './reportWebVitals'
 import RegisterUser from './pages/RegisterUser';
+import InspectChallenge from './pages/InspectChallenge';
 
 const root = document.getElementById('root')
 if (root == null) {
@@ -31,6 +32,7 @@ createRoot(root).render(
           <Route path="*" element={<ErrorPage />} />
           <Route path="/" element={<App />} />
           <Route path="BrukerProfil" element={<UserProfile />} />
+          <Route path="/InspectChallenge" element={<InspectChallenge />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
