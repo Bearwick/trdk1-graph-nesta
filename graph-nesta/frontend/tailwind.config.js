@@ -25,8 +25,13 @@ module.exports = {
     extend: {
       fontFamily: {
         Inter: ["Inter", "sans-serif"],
+      },
+      dropShadow: {
+        '3xl': '0 15px 15px rgba(0,82, 122, 0.50)',
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }

@@ -10,7 +10,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import ODACircle from '../components/ODACircle';
-import ChallengeCard from '../components/ChallengeCard';
+//  import ChallengeCard from '../components/ChallengeCard';
 
 function NewChallenge() {
 
@@ -308,10 +308,7 @@ function NewChallenge() {
       <div className=" bg-white h-80 w-4/5 px-3 py-2">
         <h2 className="text-text underline underline-offset-2 text-left mb-2">Like utfordringer</h2>
         <div className="flex flex-row flex-nowrap overflow-auto gap-4">
-          <ChallengeCard />
-          <ChallengeCard />
-          <ChallengeCard />
-          <ChallengeCard />
+      
         </div>
       </div> 
       : ""}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ChallengeCard from "../components/ChallengeCard";
+//  import ChallengeCard from "../components/ChallengeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
@@ -22,10 +22,7 @@ const handleChallengeShow = ( value: boolean) =>{
              </div>
   
             <div className="flex flex-wrap justify-center overflow gap-4 mt-16 mb-5">
-              <ChallengeCard/>
-              <ChallengeCard/>
-              <ChallengeCard/>
-              <ChallengeCard/>
+    
             </div>
           </div>
           <Footer />

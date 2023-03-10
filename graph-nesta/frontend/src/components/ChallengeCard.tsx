@@ -1,44 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
 import PeopleIcon from '@mui/icons-material/People';
-import EmailIcon from '@mui/icons-material/Email';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import { type challengeCardProps } from "../types/types";
+import { Status } from "../types/types";
+import ODACircle from "./ODACircle";
 
-function ChallengeCard(){
+function ChallengeCard(props: challengeCardProps){
+    
+    const [statusColor, setStatusColor] = useState("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
+ 
+    useEffect(() => {
+        switch (props.status) {
+            case Status.newChallenge:
+                setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
+                break;
+    
+            case Status.started:
+                setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusOrange");
+                break;
+    
+            case Status.solved:
+                setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen");
+                break;
+        }
+
+    }, [props.status])
+
+
 
     return(
 
-        <div className="grid grid-rows-7 h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer">
+        <div onClick={props.onClick} className="flex flex-col justify-between h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer hover:drop-shadow-3xl">
 
-            <section className="row-span-2 grid grid-cols-3">        {/* Header */}
-                <p className="col-span-2 font-bold text-left">Overskrift</p>
-                <p className="text-base mt-2">Status</p>
+            <section className="flex justify-between  items-center">        
+                <p className="font-bold text-left">{props.title}</p>
+                
+                <div className="flex flex-row items-center">
+                    <ODACircle style={statusColor} text={""}/>
+                    <p className="whitespace-nowrap">{props.status}</p>
+                </div>
+
             </section>
 
-            <section className="row-span-4 text-left">               {/* Main */}
-                <span className="text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+            <section className="text-left pt-2.5 h-40">               
+                <p className="text-sm line-clamp-6">{props.specificProblem}</p>
             </section>
 
-            <section className="flex flex-row justify-between text-xs">{/* Footer */}
+            <section className=" items-end flex flex-row justify-between text-xs">
                 <div className="flex flex-row">
                     <PersonalVideoIcon sx={{ fontSize: "1rem"}}/>
-                    <p className="ml-1.5">System</p>
+                    <p className="ml-1.5 whitespace-nowrap">{props.system}</p>
                 </div>
                 <p>&#x2022;</p>
                 <div className="flex flex-row">
                     <PeopleIcon sx={{fontSize: "1rem"}}/>
-                    <p className="ml-1.5">0</p>
+                    <p className="ml-1.5 whitespace-nowrap">{props.subCount}</p>
                 </div>
                 <p>&#x2022;</p>
                 <div className="flex flex-row">
-                    <EmailIcon sx={{fontSize: "1rem"}}/>
-                    <p className="ml-1.5">place@holder.com</p>
+                    <LocationCityIcon sx={{fontSize: "1rem"}}/>
+                    <p className="ml-1.5 whitespace-nowrap">{props.owner.affiliation}</p>
                 </div>
             </section>
-
-
-
-
         </div>
 
 
