@@ -18,12 +18,12 @@ function Header(){
 
             <Link to="/Hjem" className="text-3xl text-left w-48 mt-2"><p className="">Graph Nesta</p></Link>
 
-            <div className="text-base">
+            <section className="text-base">
 
                     {show ?
                         (   
-                            <div className="flex flex-col items-end" >
-                            <div  className="mt-2 z-20 "> <CloseIcon onClick={onChange} sx={{ fontSize: "2.5rem", cursor: "pointer"}}/>
+                            <section className="flex flex-col items-end" >
+                            <div  className="mt-2 z-20 "> <Link to={""} onClick={onChange}><CloseIcon onClick={onChange} sx={{ fontSize: "2.5rem", cursor: "pointer"}}/></Link>
                             <div className="bg-menuBackground w-36 ml-[-6.5rem]  rounded-b mt-2 z-20">
                                 <hr />
                                 {login ? <Link to="/MinProfil"><div className="text-right pr-1 hover:bg-buttonDark hover:text-white">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-right pr-1 hover:bg-buttonDark hover:text-white">Logg inn</div></Link>}
@@ -35,18 +35,18 @@ function Header(){
                                 <Link to="/Søk"><div className="text-right pr-1 hover:bg-buttonDark hover:rounded-b hover:text-white">Søk</div></Link>
                             </div>
                             </div>
-                            </div>
+                            </section>
                         ):
                        
                         (
-                            <div className="flex flex-col items-end" >
-                            <div className="mt-2 z-20 "> 
-                            <MenuIcon onClick={onChange}  sx={{ fontSize: "2.5rem", cursor: "pointer"}} />
-                            </div>
-                            </div>
+                            <section className="flex flex-col items-end" >
+                            <section className="mt-2 z-20 "> 
+                            <Link to={""} onClick={onChange}><MenuIcon onClick={onChange}  sx={{ fontSize: "2.5rem", cursor: "pointer"}} /></Link>
+                            </section>
+                            </section>
                         )
                     }
-            </div>
+            </section>
         </div>
     )
 }
