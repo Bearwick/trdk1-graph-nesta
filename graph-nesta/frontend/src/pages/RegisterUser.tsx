@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
@@ -23,7 +24,7 @@ function RegisterUser(){
           },
         }
       };
-
+ 
 
       const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
@@ -45,9 +46,9 @@ function RegisterUser(){
         <div className="App">
             <Header/>
                 <main className="min-h-[82vh] flex flex-col items-center">
-                  <h1 className="text-center mt-10 text-2xl">Registrer bruker</h1>
-                  <section className="mt-20 mb-10 grid grid-rows-3 gap-4">
-                    
+                  <h1 className="text-center mt-20 text-2xl">Registrer bruker</h1>
+                  <section className="mt-10 flex flex-col">
+                  <section className="flex flex-col gap-4">
                     <TextField
                       label="Navn"
                       size="medium"
@@ -81,7 +82,8 @@ function RegisterUser(){
                         onChange={handleTlfChange}
                         sx={ { ...textFieldStyle,     width: "50vw",
                         maxWidth: "300px", }}/>
-
+                  </section>
+                  <Link to="/LoggInn"><p className="text-right underline hover:text-linkBlue">Har du allerede en konto?</p></Link>
                   </section>
                   <Button variant="contained" onClick={handlePost} sx={{ color: "white", backgroundColor: "#0D264A", width: "180px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
                     backgroundColor: '#14325E',

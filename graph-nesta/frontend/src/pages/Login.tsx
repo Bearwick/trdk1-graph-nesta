@@ -43,10 +43,12 @@ function Login() {
       <div  className="text-center">
         <Header />
         <main className="min-h-[82vh] flex flex-col items-center">
-          <h1 className="text-center mt-10 text-2xl">Innlogging</h1>
-          <section className="mt-28 grid grid-rows-3 gap-6">
+          <h1 className="text-center mt-28 text-2xl">Innlogging</h1>
+
+          <section className="mt-10 flex flex-col">
+          <section className="flex flex-col gap-4">
             <TextField
-              label="Navn"
+              label="E-post"
               size="medium"
               onChange={handleNameChange}
               sx={ { ...textFieldStyle,     width: "50vw",
@@ -60,7 +62,8 @@ function Login() {
               sx={ { ...textFieldStyle,     width: "50vw",
               maxWidth: "300px", }}
             />
-            <Link to="/RegistrerBruker"><p className="text-right underline">Har du ikke bruker?</p></Link>
+          </section>
+          <Link to="/RegistrerBruker"><p className="text-right underline hover:text-linkBlue">Har du ikke bruker?</p></Link>
           </section>
 
             <Button variant="contained" onClick={handleLogin} sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
