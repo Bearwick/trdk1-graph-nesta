@@ -7,7 +7,7 @@ function ErrorPage() {
     return (
       <div className="App">
           <Header />
-          <header className="ErrorPage-header">
+          <header className="ErrorPage-header pb-20">
               <h1 className="text-9xl font-bold mt-[-100px]">404</h1>
               <p>Page not found</p>
           </header>
