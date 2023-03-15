@@ -8,13 +8,13 @@ import ODACircle from '../components/ODACircle';
 
 function Home() {
 
-
     return (
-      <div className="App">
+      <div className="text-center flex flex-col min-h-screen">
+
         <Header />
-        
+  
         <div className="bg-background flex flex-col items-center">
-          
+  
           <div className="text-white bg-footer px-5 py-3 w-full items-center justify-center flex flex-col">
             <div>
             <h1 className="text-4xl mb-5">Velkommen!</h1>
@@ -86,8 +86,9 @@ function Home() {
           </div>
 
         </div>
-          
-          <Footer />
+
+        <Footer />
+ 
       </div>
     );
   }
