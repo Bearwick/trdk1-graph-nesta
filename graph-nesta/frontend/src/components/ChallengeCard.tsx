@@ -6,12 +6,13 @@ import { type challengeCardProps } from "../types/types";
 import { Status } from "../types/types";
 import ODACircle from "./ODACircle";
 import { ChallengeContext } from "../globalState/ChallengeContext";
+import { Link } from "react-router-dom";
 
 function ChallengeCard(props: challengeCardProps){
     
     const [statusColor, setStatusColor] = useState("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
  
-    const {challenge, setChallenge} = useContext(ChallengeContext)
+    const { setChallenge } = useContext(ChallengeContext)
 
     const onChange = () => {
         setChallenge({
@@ -27,7 +28,6 @@ function ChallengeCard(props: challengeCardProps){
             owner: props.owner,
             subs: props.subs
         });
-        alert(JSON.stringify(challenge))
     }
 
     useEffect(() => {
@@ -48,10 +48,10 @@ function ChallengeCard(props: challengeCardProps){
     }, [props.status])
 
 
-
     return(
 
-        <div onClick={onChange} className="flex flex-col justify-between h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer hover:drop-shadow-3xl">
+        <div className="flex flex-col justify-between h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer hover:drop-shadow-3xl">
+            <Link to={"/inspiserUtfordring"}  onClick={onChange}>
 
             <section className="flex justify-between  items-center">        
                 <p className="font-bold text-left">{props.title}</p>
@@ -83,15 +83,9 @@ function ChallengeCard(props: challengeCardProps){
                     <p className="ml-1.5 whitespace-nowrap">{props.owner.affiliation}</p>
                 </div>
             </section>
+            </Link>
         </div>
-
-
-
-
     )
-
-
-
 }
 
 export default ChallengeCard;

@@ -11,6 +11,7 @@ import RegisterUser from './pages/RegisterUser';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ChallengeProvider from './globalState/ChallengeContext';
 import React from 'react'
+import InspectChallenge from './pages/InspectChallenge'
 
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<Home />} />
         <Route path="BrukerProfil" element={<UserProfile />} />
+        <Route path="inspiserUtfordring" element={<InspectChallenge />} />
     </Routes>
   </BrowserRouter>
   </ChallengeProvider>

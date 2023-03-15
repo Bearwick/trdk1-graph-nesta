@@ -17,11 +17,24 @@ function Search() {
  
   const placeHolder : User = {
     email: "edvard.bjornevik@nesodden.kommune.no",
-    telephone: "69420",
+    telephone: "123 45 678",
     affiliation: "Trondheim",
   }
 
-  const subPlaceholder: User[] = [placeHolder];
+  const subUserPlaceHolder : User = {
+    email: "subPlaceholder@mail.com",
+    telephone: "123 45 678",
+    affiliation: "Malvik",
+  }
+
+  //  dummy data
+  const subPlaceholder: User[] = [subUserPlaceHolder];
+
+  const subPlaceholder2: User[] = [subUserPlaceHolder, subUserPlaceHolder];
+
+  const subPlaceholder3: User[] = [subUserPlaceHolder, subUserPlaceHolder, placeHolder];
+
+  const subPlaceholder4: User[] = [subUserPlaceHolder, subUserPlaceHolder, placeHolder, placeHolder];
 
 
 
@@ -132,10 +145,10 @@ function Search() {
 
           </div>
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
-              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt."} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
-              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
-              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
-              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"Lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt."} clearDataProduct={"Områdekart som viser sannsynligheten for ringepigging for en gitt dato."} accessibleData={"Nasjonale ringepigging-datasett"} definedAction={"Lage en nettside med områdekart. Dette kan vi gi ut til innbyggerne som kan forhindre ringepigging før det skjer."} subCount={8} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} title={"Økonomi"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder2}/>
+              <ChallengeCard id={"12345"} title={"Skole"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder3}/>
+              <ChallengeCard id={"12345"} title={"Turn down for what!"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder4}/>
        
             </div>
           </div>
@@ -145,4 +158,3 @@ function Search() {
   }
   
   export default Search;
-
