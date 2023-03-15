@@ -1,6 +1,20 @@
+
+
+export enum Status {
+    newChallenge = "Ny utfordring",
+    started = "Påbegynnt",
+    solved = "Løst",
+}
+
+export interface User {
+    email: string;
+    telephone: string;
+    affiliation: string;
+
+}
+
 export interface challengeCardProps {
     id: string;
-    onClick: any;
     title: string;
     system: string;
     status: Status;
@@ -14,15 +28,4 @@ export interface challengeCardProps {
 
 }
 
-export interface User {
-    email: string;
-    telephone: string;
-    affiliation: string;
 
-}
-
-export enum Status {
-    newChallenge = "Ny utfordring",
-    started = "Påbegynnt",
-    solved = "Løst",
-}

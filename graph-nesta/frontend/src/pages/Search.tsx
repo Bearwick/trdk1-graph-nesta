@@ -85,10 +85,6 @@ function Search() {
     }
   }
 
-  const onClick = () => {
-    alert("click");
-  }
-
 
 
     return (
@@ -136,10 +132,10 @@ function Search() {
 
           </div>
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
-              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt."} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
-              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
-              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
-              <ChallengeCard id={"12345"} onClick={onClick} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt."} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
+              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder}/>
        
             </div>
           </div>

@@ -1,15 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
 import PeopleIcon from '@mui/icons-material/People';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import { type challengeCardProps } from "../types/types";
 import { Status } from "../types/types";
 import ODACircle from "./ODACircle";
+import { ChallengeContext } from "../globalState/ChallengeContext";
 
 function ChallengeCard(props: challengeCardProps){
     
     const [statusColor, setStatusColor] = useState("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
  
+    const {challenge, setChallenge} = useContext(ChallengeContext)
+
+    const onChange = () => {
+        setChallenge({
+            id: props.id,
+            title: props.title,
+            system: props.system,
+            status: props.status,
+            specificProblem: props.specificProblem,
+            clearDataProduct: props.clearDataProduct,
+            accessibleData: props.accessibleData,
+            definedAction: props.definedAction,
+            subCount: props.subCount,
+            owner: props.owner,
+            subs: props.subs
+        });
+        alert(JSON.stringify(challenge))
+    }
+
     useEffect(() => {
         switch (props.status) {
             case Status.newChallenge:
@@ -31,7 +51,7 @@ function ChallengeCard(props: challengeCardProps){
 
     return(
 
-        <div onClick={props.onClick} className="flex flex-col justify-between h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer hover:drop-shadow-3xl">
+        <div onClick={onChange} className="flex flex-col justify-between h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer hover:drop-shadow-3xl">
 
             <section className="flex justify-between  items-center">        
                 <p className="font-bold text-left">{props.title}</p>
