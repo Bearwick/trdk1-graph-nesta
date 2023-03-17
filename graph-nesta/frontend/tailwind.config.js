@@ -20,7 +20,8 @@ module.exports = {
       'ODA1':'#f8c829',
       'ODA2':'#ff3c00',
       'ODA3':'#ff001f',
-      'ODA4':'#8600b4'
+      'ODA4':'#8600b4',
+      'menuHover': '#F5F5F5'
     },
     extend: {
       fontFamily: {

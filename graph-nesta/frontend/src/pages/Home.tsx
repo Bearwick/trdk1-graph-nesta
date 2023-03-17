@@ -23,9 +23,9 @@ function Home() {
             </div>
             
             <div className="flex flex-col gap-4 sm:flex-row sm:gap-2 mb-2">
-            <Link to="/Søk"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#14325E',}}}>
+            <Link to="/Søk"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
                 Søk</Button></Link>
-          <Link to="/NyUtfordring"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#14325E',}}}>
+          <Link to="/NyUtfordring"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
           Ny utfordring</Button></Link>
 
             </div>
