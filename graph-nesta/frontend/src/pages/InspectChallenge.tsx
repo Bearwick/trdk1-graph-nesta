@@ -114,24 +114,24 @@ function InspectChallenge() {
             </div>
 
           <div>
-            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw] mb-8 items-center ">
-                <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA1 text-xs sm:text-base"} text={"Spesifikt problem"}/>
-                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ specificProblem }</p>
+            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
+                <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1"} text={"Spesifikt problem"}/>
+                <p className="w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8">{ specificProblem }</p>
             </div>
 
-            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw]] mb-8 items-center ">
-                <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA2 text-xs sm:text-base"} text={"Dataprodukt"}/>
-                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ clearDataProduct }</p>
+            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
+                <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2"} text={"Dataprodukt"}/>
+                <p className="w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8">{ clearDataProduct }</p>
             </div>
 
-            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw] mb-8 items-center ">
-                <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA3 text-xs sm:text-base"} text={"Data"}/>
-                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ accessibleData }</p>
+            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
+                <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3"} text={"Data"}/>
+                <p className="w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8">{ accessibleData }</p>
             </div>
 
-            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw] mb-8 items-center ">
-                <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA4 text-xs sm:text-base"} text={"Definert handling"}/>
-                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ definedAction }</p>
+            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
+                <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4"} text={"Definert handling"}/>
+                <p className="w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8">{ definedAction }</p>
             </div>
           </div>
 
