@@ -114,24 +114,24 @@ function InspectChallenge() {
             </div>
 
           <div>
-            <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
+            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw] mb-8 items-center ">
                 <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA1 text-xs sm:text-base"} text={"Spesifikt problem"}/>
-                <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ specificProblem }</p>
+                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ specificProblem }</p>
             </div>
 
-            <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
+            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw]] mb-8 items-center ">
                 <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA2 text-xs sm:text-base"} text={"Dataprodukt"}/>
-                <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ clearDataProduct }</p>
+                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ clearDataProduct }</p>
             </div>
 
-            <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
+            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw] mb-8 items-center ">
                 <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA3 text-xs sm:text-base"} text={"Data"}/>
-                <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ accessibleData }</p>
+                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ accessibleData }</p>
             </div>
 
-            <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
+            <div className="flex flex-row h-50 w-[80vw] sm-w-[65vw] mb-8 items-center ">
                 <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA4 text-xs sm:text-base"} text={"Definert handling"}/>
-                <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ definedAction }</p>
+                <p className="w-[65vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">{ definedAction }</p>
             </div>
           </div>
 
@@ -139,15 +139,15 @@ function InspectChallenge() {
             <h2 className="text-text underline underline-offset2 text-2xl">Kontaktinformasjon</h2>
 
          
-            <div className="flex flex-row items-center gap-1"><EmailIcon sx={{fontSize: "1rem"}}/>{ email }</div>
-            <div className="flex flex-row items-center gap-1"><PhoneIcon sx={{fontSize: "1rem"}}/>{ telephone }</div>
-            <div className="flex flex-row items-center gap-1"><LocationCityIcon sx={{fontSize: "1rem"}}/>{ affiliation }</div>
+            <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><EmailIcon sx={{fontSize: "1rem"}}/>{ email }</div>
+            <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><PhoneIcon sx={{fontSize: "1rem"}}/>{ telephone }</div>
+            <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><LocationCityIcon sx={{fontSize: "1rem"}}/>{ affiliation }</div>
           </div>
 
           <div className="flex flex-col w-[65vw] text-left mb-5 gap-1">
 
             <div className="mt-5 flex flex-row flex-wrap justify-between gap-2 mb-2">
-                <h1 className="text-text underline underline-offset2 text-2xl flex flex-row items-center">  <PeopleIcon sx={{fontSize: "2rem", marginRight: "0.5rem"}}/>{ subCount } har samme problem</h1>
+                <h1 className="text-text underline underline-offset2 text-2xl flex flex-row items-center whitespace-nowrap">  <PeopleIcon sx={{fontSize: "2rem", marginRight: "0.5rem"}}/>{ subCount } har samme problem</h1>
                 <Button variant="contained" onClick={handleSubClick} sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", '&:hover': {backgroundColor: '#14325E',}}}> {isSubbed ? "Fjern fra listen": "Abonner"}</Button>
             </div>
             
