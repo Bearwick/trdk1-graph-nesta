@@ -235,8 +235,8 @@ function NewChallenge() {
       </RadioGroup>
         
       <div className="flex flex-col">
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA1"} text={"Spesifikt problem"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
+        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1"} text={"Spesifikt problem"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -246,14 +246,14 @@ function NewChallenge() {
           label="Spesifikt problem"
           size="small"
           onChange={handleSpecificProblemChange}
-          sx={ specificProblemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "55vw", maxWidth: "600px", height: "100%"
-         } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
+          sx={ specificProblemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
+         } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
            }}
         />
       </div>
 
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA2"} text={"Dataprodukt"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
+        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2"} text={"Dataprodukt"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -263,14 +263,14 @@ function NewChallenge() {
           label="Dataprodukt"
           size="small"
           onChange={handleClearDataProductChange}
-          sx={ clearDataProductRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "55vw", maxWidth: "600px", height: "100%"
-        } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
+          sx={ clearDataProductRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
+        } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
           }}
         />
       </div>
 
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA3"} text={"Data"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
+        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3"} text={"Data"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -280,14 +280,14 @@ function NewChallenge() {
           label="Data"
           size="small"
           onChange={handleAccessibleDataChange}
-          sx={ accessibleDataRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle,width: "55vw", maxWidth: "600px", height: "100%"
-        } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
+          sx={ accessibleDataRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
+        } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
           }}
         />
       </div>
 
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA4"} text={"Definert handling"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
+        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4"} text={"Definert handling"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -297,8 +297,8 @@ function NewChallenge() {
           label="Definert handling"
           size="small"
           onChange={handleDefinedActionChange}
-          sx={ definedActionRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "55vw", maxWidth: "600px", height: "100%"
-        } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
+          sx={ definedActionRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
+        } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
           }}
         />
       </div>
