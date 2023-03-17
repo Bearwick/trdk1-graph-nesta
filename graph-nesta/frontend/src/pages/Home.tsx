@@ -22,10 +22,10 @@ function Home() {
             <p className="max-w-2xl text-sm sm:text-base mb-5">Alle norske kommuner har samme lovpålagte ansvarsområder. Det betyr at en annen kommune kanskje har eller har hatt samme utfordring! Søk etter din utfordring, kanskje er den allerede løst eller noen arbeider med en løsning. Hvis ikke, opprett en ny utfordring! </p>
             </div>
             
-            <div className="flex gap-4">
-            <Link to="/Søk"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginTop: "1rem", marginBottom: "1rem", border: "1px solid white", '&:hover': {backgroundColor: '#14325E',}}}>
+            <div className="flex flex-col gap-4 sm:flex-row sm:gap-2 mb-2">
+            <Link to="/Søk"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#14325E',}}}>
                 Søk</Button></Link>
-          <Link to="/NyUtfordring"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", marginTop: "1rem", marginBottom: "1rem", border: "1px solid white", '&:hover': {backgroundColor: '#14325E',}}}>
+          <Link to="/NyUtfordring"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#14325E',}}}>
           Ny utfordring</Button></Link>
 
             </div>
@@ -35,8 +35,8 @@ function Home() {
           <div>
            
             
-          <div className="flex flex-row h-12 w-[65vw] mb-8 items-center mt-5">
-            <div className="h-[4vw] max-h-12 w-[18vw] max-w-[12rem] mr-8">
+          <div className="flex flex-row h-12 w-[80vw] sm:w-[65vw] mb-4 sm:mb-8 items-center mt-5">
+            <div className="h-[4vw] max-h-12 sm:w-[18vw] max-w-[12rem] sm:mr-8">
             </div>
             
             <div className="flex flex-col mt-5">
@@ -47,7 +47,7 @@ function Home() {
 
 
 
-          <div className="flex flex-row h-12 w-[65vw] mb-4 items-center ">
+          <div className="flex flex-row h-12 w-[65vw] mb-2 sm:mb-4 items-center ">
           <div className="h-[4vw] max-h-12 w-[18vw] max-w-[12rem] mr-8">
           </div>
 
@@ -59,25 +59,25 @@ function Home() {
           </div>
           </div>
 
-          <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
-            <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA1 text-xs sm:text-base"} text={"Spesifikt problem"}/>
-            <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
+            <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA4 text-xs sm:text-base"} text={"Spesifikt problem"}/>
+            <p className="w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
             </p>
           </div>
 
-          <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
             <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA2 text-xs sm:text-base"} text={"Dataprodukt"}/>
-            <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
+            <p className="w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
             </p>
           </div>
 
-          <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
             <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA3 text-xs sm:text-base"} text={"Data"}/>
-            <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
+            <p className="w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
             </p>
           </div>
 
-          <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
             <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA4 text-xs sm:text-base"} text={"Definert handling"}/>
             <p className="w-[45vw] h-100% text-text text-xs sm:text-base text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
             </p>

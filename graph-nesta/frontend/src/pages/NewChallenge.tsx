@@ -189,9 +189,9 @@ function NewChallenge() {
           label="Tittel"
           size="small"
           onChange={handleTitleChange}
-          sx={ titleRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle,     width: "50vw",
-          maxWidth: "300px", } : { ...textFieldStyle,     width: "50vw",
-          maxWidth: "300px", }}
+          sx={ titleRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle,     width: "60vw",
+          maxWidth: "375px", } : { ...textFieldStyle,     width: "60vw",
+          maxWidth: "375px", }}
         />
 
         <TextField
@@ -201,9 +201,9 @@ function NewChallenge() {
           label="System"
           size="small"
           onChange={handelSystemChange}
-          sx={ systemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "50vw",
-          maxWidth: "300px", marginTop: "10px"} : { ...textFieldStyle, width: "50vw",
-          maxWidth: "300px", marginTop: "10px"}}
+          sx={ systemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "60vw",
+          maxWidth: "375px", marginTop: "10px"} : { ...textFieldStyle, width: "60vw",
+          maxWidth: "375px", marginTop: "10px"}}
         >
           {systems.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -217,7 +217,7 @@ function NewChallenge() {
           label="Annet system"
           size="small"
           onChange={handleOtherSystemCHange}
-          sx={{ backgroundColor: "white", width: "50vw", maxWidth: "300px", marginTop: "10px"}}
+          sx={{ backgroundColor: "white", width: "60vw", maxWidth: "375px", marginTop: "10px"}}
         /> : <div></div>}
 
         <FormLabel id="demo-radio-buttons-group-label" className="mt-5">Status</FormLabel>
@@ -235,8 +235,8 @@ function NewChallenge() {
       </RadioGroup>
         
       <div className="flex flex-col">
-      <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA1"} text={"Spesifikt problem"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
+        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA1"} text={"Spesifikt problem"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -246,14 +246,14 @@ function NewChallenge() {
           label="Spesifikt problem"
           size="small"
           onChange={handleSpecificProblemChange}
-          sx={ specificProblemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "45vw", height: "100%"
-         } : { ...textFieldStyle, width: "45vw", height: "100%"
+          sx={ specificProblemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "55vw", maxWidth: "600px", height: "100%"
+         } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
            }}
         />
       </div>
 
-      <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA2"} text={"Dataprodukt"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
+        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA2"} text={"Dataprodukt"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -263,14 +263,14 @@ function NewChallenge() {
           label="Dataprodukt"
           size="small"
           onChange={handleClearDataProductChange}
-          sx={ clearDataProductRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "45vw", height: "100%"
-        } : { ...textFieldStyle, width: "45vw", height: "100%"
+          sx={ clearDataProductRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "55vw", maxWidth: "600px", height: "100%"
+        } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
           }}
         />
       </div>
 
-      <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA3"} text={"Data"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
+        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA3"} text={"Data"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -280,14 +280,14 @@ function NewChallenge() {
           label="Data"
           size="small"
           onChange={handleAccessibleDataChange}
-          sx={ accessibleDataRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "45vw", height: "100%"
-        } : { ...textFieldStyle, width: "45vw", height: "100%"
+          sx={ accessibleDataRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle,width: "55vw", maxWidth: "600px", height: "100%"
+        } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
           }}
         />
       </div>
 
-      <div className="flex flex-row h-50 w-[65vw] mb-8 items-center ">
-        <ODACircle style={"rounded-full flex items-center justify-center h-[18vw] max-h-48 w-[18vw] max-w-[12rem] mr-8 bg-ODA4"} text={"Definert handling"}/>
+      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
+        <ODACircle style={"rounded-full flex items-center justify-center h-[24vw] max-h-48 w-[24vw] max-w-[12rem] mr-4 sm:mr-8 bg-ODA4"} text={"Definert handling"}/>
         <TextField
           required
           id="outlined-multiline-static"
@@ -297,8 +297,8 @@ function NewChallenge() {
           label="Definert handling"
           size="small"
           onChange={handleDefinedActionChange}
-          sx={ definedActionRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "45vw", height: "100%"
-        } : { ...textFieldStyle, width: "45vw", height: "100%"
+          sx={ definedActionRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "55vw", maxWidth: "600px", height: "100%"
+        } : { ...textFieldStyle, width: "55vw", maxWidth: "600px", height: "100%"
           }}
         />
       </div>

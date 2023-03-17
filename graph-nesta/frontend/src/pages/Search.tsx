@@ -105,14 +105,14 @@ function Search() {
           <Header />
           <div className="bg-background flex flex-col items-center mb-5 min-h-screen">
 
-          <div className="flex flex-col mt-5">
+          <div className="flex flex-col mt-5 items-center">
             <div className="flex flex-row gap-1">
               <TextField
               id="outlined-required"
               label="Søk"
               size="small"
               onChange={handleSearchChange}
-              sx={ {...textFieldStyle, width: "80vw",
+              sx={ {...textFieldStyle, width: "60vw",
               maxWidth: "375px"}}
               />
 
@@ -133,7 +133,7 @@ function Search() {
             </TextField>
             </div>
 
-            <div className="flex flex-row flex-nowrap overflow-auto gap-2 my-5 h-12 w-[480px] sm:w-[500px] no-scrollbar">
+            <div className="flex flex-row flex-nowrap overflow-auto gap-2 my-5 h-12 w-[80vw] sm:w-[500px] no-scrollbar">
               <CategoryButton text={"Lisens"} focused={categoryFilter} onClick={handleCategoryButtonClick}/>
               <CategoryButton text={"Økonomi"} focused={categoryFilter} onClick={handleCategoryButtonClick}/>
               <CategoryButton text={"Skole"} focused={categoryFilter} onClick={handleCategoryButtonClick}/>
