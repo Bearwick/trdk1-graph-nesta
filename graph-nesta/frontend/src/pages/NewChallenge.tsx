@@ -316,7 +316,7 @@ function NewChallenge() {
       {requiredTextShow ? <p className="text-statusRed">Fyll inn de påkrevde boksene!</p> : ""}
 
       <Button variant="contained" onClick={handleSend} sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
-      backgroundColor: '#14325E',
+      backgroundColor: '#3d3f6b',
   }}}>Send</Button>
       </div>
 

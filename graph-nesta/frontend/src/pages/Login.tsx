@@ -67,7 +67,7 @@ function Login() {
           </section>
 
             <Button variant="contained" onClick={handleLogin} sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
-            backgroundColor: '#14325E',
+            backgroundColor: '#3d3f6b',
       }}}   >Logg inn</Button>
 
         </main>

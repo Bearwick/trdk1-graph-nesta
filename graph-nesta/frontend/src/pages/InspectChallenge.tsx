@@ -148,7 +148,7 @@ function InspectChallenge() {
 
             <div className="mt-5 flex flex-row flex-wrap justify-between gap-2 mb-2">
                 <h1 className="text-text underline underline-offset2 text-2xl flex flex-row items-center whitespace-nowrap">  <PeopleIcon sx={{fontSize: "2rem", marginRight: "0.5rem"}}/>{ subCount } har samme problem</h1>
-                <Button variant="contained" onClick={handleSubClick} sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", '&:hover': {backgroundColor: '#14325E',}}}> {isSubbed ? "Fjern fra listen": "Abonner"}</Button>
+                <Button variant="contained" onClick={handleSubClick} sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", '&:hover': {backgroundColor: '#3d3f6b',}}}> {isSubbed ? "Fjern fra listen": "Abonner"}</Button>
             </div>
             
             {isSubs ? 

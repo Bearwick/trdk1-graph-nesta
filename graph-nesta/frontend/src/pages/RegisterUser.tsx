@@ -86,7 +86,7 @@ function RegisterUser(){
                   <Link to="/LoggInn"><p className="text-right underline hover:text-linkBlue">Har du allerede en konto?</p></Link>
                   </section>
                   <Button variant="contained" onClick={handlePost} sx={{ color: "white", backgroundColor: "#0D264A", width: "180px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
-                    backgroundColor: '#14325E',
+                    backgroundColor: '#3d3f6b',
                     }}}   ><p className="whitespace-nowrap">Registrer bruker</p></Button>
                   
                 </main>
