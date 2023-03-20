@@ -48,10 +48,10 @@ function Home() {
 
 
           <div className="flex flex-row h-12 w-[65vw] mb-2 sm:mb-4 items-center ">
-          <div className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48">
-          </div>
+          {/* <div className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48"> */}
+          {/* </div> */}
 
-          <div className="flex flex-row pl-4 sm:pl-8">
+          <div className="flex flex-row ml-auto mr-auto items-center">
           <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 mr-2 bg-ODA1"} text={""}/>
           <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 mr-2 bg-ODA2"} text={""}/>
           <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 mr-2 bg-ODA3"} text={""}/>
