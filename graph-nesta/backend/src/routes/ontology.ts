@@ -1,5 +1,5 @@
 import { type Request, type Response, Router } from 'express'
-import { getODAProblems } from '../database/ontology'
+import { addODAProblem, getODAProblems } from '../database/ontology'
 
 const router = Router()
 
@@ -11,12 +11,27 @@ interface OdaProblemParams {
   offset: number
 }
 
+interface AddOdaProblemParams {
+  title: string
+  specificProblem: string
+  clearDataProduct: string
+  accessibleData: string
+  supplier: string
+}
+
 router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaProblemParams>, res: Response) {
   const limit: number = req.query.limit
   const offset: number = req.query.offset
   getODAProblems(limit, offset).then(r => {
     res.send(r.data.results.bindings)
   }).catch(() => res.send('Error'))
+})
+
+router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOdaProblemParams>, res: Response) {
+  const query = req.query
+  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.supplier).then(r => {
+    res.send(r)
+  }).catch((r) => res.send(r))
 })
 
 export default router

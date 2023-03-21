@@ -1,9 +1,36 @@
 export default {
-  getRepositories: () =>
-    `
-        PREFIX%20untitled-ontology-19%3A%20%3Chttp%3A%2F%2Fwww.semanticweb.org%2Fjespb%2Fontologies%2F2023%2F1%2Funtitled-ontology-19%23%3E%20PREFIX%20untitled-ontology-24%3A%20%3Chttp%3A%2F%2Fwww.semanticweb.org%2Fjespb%2Fontologies%2F2023%2F1%2Funtitled-ontology-24%23%3E%20select%20*%20where%20%7B%20%20%09%3Fs%20%3Fp%20untitled-ontology-24%3AgoesWellWith%20%7D%20limit%20100%20 
-    `,
+  // OUTDATED
   getODAProblems: (limit: number, offset: number) => `
-    PREFIX%20untitled-ontology-24%3A%20%3Chttp%3A%2F%2Fwww.semanticweb.org%2Fjespb%2Fontologies%2F2023%2F1%2Funtitled-ontology-24%23%3E%20PREFIX%20untitled-ontology-19%3A%20%3Chttp%3A%2F%2Fwww.semanticweb.org%2Fjespb%2Fontologies%2F2023%2F1%2Funtitled-ontology-19%23%3E%20PREFIX%20rdf%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%20select%20*%20where%20%7B%20%20%09%3Fs%20rdf%3Atype%20untitled-ontology-19%3AODAProblem%20%20%7D%20limit%20${limit}%20offset${offset}
-    `,
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    select * where {
+      ?s rdf:type <urn:absolute:ODA2.0#ODAProblem> 
+  } limit ${limit} offset ${offset}`,
+  addODAProblem: (nodeName: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, supplier: string) => `
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX owl: <http://www.w3.org/2002/07/owl#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  insert data {
+    oda:${nodeName} rdf:type oda:ODAProblem.
+    
+    oda:${nodeName}SpecificProblem rdf:type oda:SpecificProblem.
+    oda:${nodeName}ClearDataProduct rdf:type oda:ClearDataProduct.
+    oda:${nodeName}AccessibleData rdf:type oda:AccesibleData.
+    
+    oda:name rdf:type owl:NamedIndividual.
+    oda:${nodeName}SpecificProblem rdf:type owl:NamedIndividual.
+    oda:${nodeName}ClearDataProduct rdf:type owl:NamedIndividual.
+    oda:${nodeName}AccessibleData rdf:type owl:NamedIndividual.
+    
+    oda:${nodeName} oda:hasSpecificProblem oda:${nodeName}SpecificProblem.
+    oda:${nodeName} oda:hasClearDataProduct oda:${nodeName}ClearDataProduct.
+    oda:${nodeName} oda:hasAccesibleData oda:${nodeName}AccessibleData.
+    oda:${nodeName} oda:hasVendor oda:${supplier}.
+    
+    oda:${nodeName} rdfs:comment "${title}".
+    oda:${nodeName}SpecificProblem rdfs:comment "${specificProblem}".
+    oda:${nodeName}ClearDataProduct rdfs:comment "${clearDataProduct}".
+    oda:${nodeName}AccessibleData rdfs:comment "${accessibleData}".
+  }`,
+
 }
