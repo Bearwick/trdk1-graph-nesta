@@ -3,8 +3,20 @@ import { type User } from '../types/types';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
+import validateUser from '../utils/validateUser';
 
 function SubInfoComponent(props: User) {
+
+    try {
+        validateUser(props);
+    } catch (error: any) {
+        const errorMsg = "En feil oppstod: ".concat(error);
+        return (
+            <div>
+                <p className='color-red items-center'>{errorMsg}</p>
+            </div>
+        )
+    }
 
     return (
         <div className="flex flex-col flex-wrap text-white justify-between bg-buttonDark py-2.5 px-2.5 text-xs sm:flex-row sm:text-base">
