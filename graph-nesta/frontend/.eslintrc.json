@@ -11,7 +11,7 @@
   ],
   "overrides": [
     {
-      "files": ["*.jsx", "*.tsx", "*.ts"],
+      "files": ["*.jsx", "*.tsx"],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": "off"
       }
@@ -21,12 +21,9 @@
     "ecmaVersion": "latest",
     "sourceType": "module",
     "project": ["**/tsconfig.json"],
-    "parser": "@typescript-eslint-parser"
+    "parser": "@typescript-eslint-parser",
+    "tsconfigRootDir": "__dirname"
   },
   "plugins": ["react"],
-  "ignorePatterns": [
-    "cypress.config.ts",
-    "cypress/**/*"
-  ],
   "rules": {}
 }
