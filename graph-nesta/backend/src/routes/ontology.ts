@@ -1,24 +1,40 @@
 import { type Request, type Response, Router } from 'express'
-import { addODAProblem, getODAProblems } from '../database/ontology'
+import { addCategories, addODAProblem, addUser, getODAProblems, setAdmin } from '../database/ontology'
+import {
+  type AddCategoriesParams,
+  type AddOdaProblemParams,
+  type AddUserParams,
+  type OdaProblemParams,
+  type SetAdminParams,
+} from '../interfaces/interfaces'
 
 const router = Router()
 
 /**
  * Interface is used to go around the fact that the query request does not know what type the query parameters are. Here those are specified
  */
-interface OdaProblemParams {
-  limit: number
-  offset: number
-}
 
-interface AddOdaProblemParams {
-  title: string
-  specificProblem: string
-  clearDataProduct: string
-  accessibleData: string
-  supplier: string
-}
-
+/**
+ * @swagger
+ * /OdaProblem:
+ *    get:
+ *        description: Add new ODA problem to database
+ *        parameters:
+ *          - in: path
+ *            name: limit
+ *            required: true
+ *            description: Limit of objects to retrieve
+ *            schema:
+ *              type: number
+ *          - in: path
+ *            name: offset
+ *            required: true
+ *            description: offset
+ *            schema:
+ *              type: number
+ *
+ *
+ */
 router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaProblemParams>, res: Response) {
   const limit: number = req.query.limit
   const offset: number = req.query.offset
@@ -29,9 +45,30 @@ router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaPr
 
 router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOdaProblemParams>, res: Response) {
   const query = req.query
-  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.supplier).then(r => {
+  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.supplier, query.userMail).then(r => {
     res.send(r)
   }).catch((r) => res.send(r))
+})
+
+router.get('/AddUser', function(req: Request<unknown, unknown, unknown, AddUserParams>, res: Response) {
+  const query = req.query
+  addUser(query.name, query.phone, query.email, query.affiliation).then(r => {
+    res.send(r)
+  }).catch((r) => res.send(r.body))
+})
+
+router.get("/AddCategories", function(req: Request<unknown, unknown, unknown, AddCategoriesParams>, res: Response) {
+  const query = req.query
+  addCategories(query.specProblem, query.dataProduct, query.accessibleData, query.nodeName).then(r => {
+    res.send(r)
+  }).catch(r => res.send(r))
+})
+
+router.get("/SetAdmin", function(req: Request<unknown, unknown, unknown, SetAdminParams>, res: Response) {
+  const query = req.query
+  setAdmin(query.email, query.setAdmin.toLowerCase() === "true").then(r => {
+    res.send(r)
+  }).catch(r => res.send(r))
 })
 
 export default router
