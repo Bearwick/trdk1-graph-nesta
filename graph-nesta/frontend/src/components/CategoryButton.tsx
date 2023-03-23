@@ -7,8 +7,8 @@ function CategoryButton( { text, focused ,onClick }: { text: string, focused: st
     const focusedStyle = "bg-buttonDark border-4 border-textLight text-white cursor-pointer px-5 py-1 rounded-[45px] h-10 w-200px";
      
     return (
-       <div onClick={ () => onClick(text)} className={ text === focused ? focusedStyle: defaultStyle} >
-            <p className="whitespace-nowrap"> { text }</p>
+       <div onClick={ () => onClick(text)} className={ text === focused ? focusedStyle: defaultStyle} data-testid="categoryButton">
+            <p className="whitespace-nowrap" data-testid="categoryText"> { text }</p>
         </div>
     );
 }

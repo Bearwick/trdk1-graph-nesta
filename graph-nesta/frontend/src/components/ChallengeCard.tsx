@@ -7,6 +7,7 @@ import { Status } from "../types/types";
 import ODACircle from "./ODACircle";
 import { ChallengeContext } from "../globalState/ChallengeContext";
 import { Link } from "react-router-dom";
+import validateChallenge from "../utils/validateChallenge";
 
 function ChallengeCard(props: challengeCardProps){
     
@@ -47,6 +48,16 @@ function ChallengeCard(props: challengeCardProps){
 
     }, [props.status])
 
+    try {
+        validateChallenge(props);
+    } catch (error: any) {
+        const errorMsg = "En feil oppstod: ".concat(error);
+        return (
+            <div>
+                <p className='color-red items-center'>{errorMsg}</p>
+            </div>
+        )
+    }
 
     return(
 

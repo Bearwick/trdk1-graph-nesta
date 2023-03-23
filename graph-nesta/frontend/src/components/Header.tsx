@@ -26,7 +26,7 @@ function Header(){
                 <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                         <React.Fragment>
-                        <Button {...bindTrigger(popupState)}> 
+                        <Button data-testid="hamburgerMenu" {...bindTrigger(popupState)}> 
                             {popupState.isOpen ? <CloseIcon onClick={onChange} sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}}/>: <MenuIcon onClick={onChange}  sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}} />}
                         </Button>
                         <Menu {...bindMenu(popupState)}>
