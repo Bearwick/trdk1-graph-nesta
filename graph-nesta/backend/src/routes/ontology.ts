@@ -1,11 +1,20 @@
 import { type Request, type Response, Router } from 'express'
-import { addCategories, addODAProblem, addUser, getODAProblems, setAdmin } from '../database/ontology'
+import {
+  addCategories,
+  addODAProblem,
+  addUser,
+  getODAProblems,
+  setAdmin,
+  subscribe,
+  unsubscribe,
+} from '../database/ontology'
 import {
   type AddCategoriesParams,
   type AddOdaProblemParams,
   type AddUserParams,
   type OdaProblemParams,
   type SetAdminParams,
+  type SubscribeParams,
 } from '../interfaces/interfaces'
 
 const router = Router()
@@ -40,12 +49,12 @@ router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaPr
   const offset: number = req.query.offset
   getODAProblems(limit, offset).then(r => {
     res.send(r.data.results.bindings)
-  }).catch(() => res.send('Error'))
+  }).catch((r) => res.send(r))
 })
 
 router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOdaProblemParams>, res: Response) {
   const query = req.query
-  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.supplier, query.userMail).then(r => {
+  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.definedAction, query.supplier, query.userMail).then(r => {
     res.send(r)
   }).catch((r) => res.send(r))
 })
@@ -57,16 +66,30 @@ router.get('/AddUser', function(req: Request<unknown, unknown, unknown, AddUserP
   }).catch((r) => res.send(r.body))
 })
 
-router.get("/AddCategories", function(req: Request<unknown, unknown, unknown, AddCategoriesParams>, res: Response) {
+router.get('/AddCategories', function(req: Request<unknown, unknown, unknown, AddCategoriesParams>, res: Response) {
   const query = req.query
   addCategories(query.specProblem, query.dataProduct, query.accessibleData, query.nodeName).then(r => {
     res.send(r)
   }).catch(r => res.send(r))
 })
 
-router.get("/SetAdmin", function(req: Request<unknown, unknown, unknown, SetAdminParams>, res: Response) {
+router.get('/SetAdmin', function(req: Request<unknown, unknown, unknown, SetAdminParams>, res: Response) {
   const query = req.query
-  setAdmin(query.email, query.setAdmin.toLowerCase() === "true").then(r => {
+  setAdmin(query.email, query.setAdmin.toLowerCase() === 'true').then(r => {
+    res.send(r)
+  }).catch(r => res.send(r))
+})
+
+router.get("/Subscribe", function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
+  const query = req.query
+  subscribe(query.email, query.ODAProblem).then(r => {
+    res.send(r)
+  }).catch(r => res.send(r))
+})
+
+router.get("/Unsubscribe", function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
+  const query = req.query
+  unsubscribe(query.email, query.ODAProblem).then(r => {
     res.send(r)
   }).catch(r => res.send(r))
 })

@@ -13,12 +13,12 @@ const update = async (query: string) => {
 const getODAProblems = async (limit: number, offset: number) => {
   return await get(queries.getODAProblems(limit, offset))
 }
-const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, supplier: string, userMail: string) => {
+const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string) => {
   // Assumes title is unique, otherwise we could end up in a situation where a single ODA problem can have many accessible datas etc.
   // Eventually add a check for this
   // Query will also need to update which user has made the query etc.
   const nodeName: string = title.replace(/\s/g, '')
-  return await update(queries.addODAProblem(nodeName, title, specificProblem, clearDataProduct, accessibleData, supplier, userMail))
+  return await update(queries.addODAProblem(nodeName, title, specificProblem, clearDataProduct, accessibleData, definedAction, supplier, userMail))
 }
 
 const addCategories = async (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string) => {
@@ -35,4 +35,12 @@ const setAdmin = async(email: string, setAdmin: boolean) => {
   return await update(queries.setAdmin(email, setAdmin))
 
 }
-export { getODAProblems, addODAProblem, addUser, addCategories, setAdmin }
+
+const subscribe = async (email: string, ODAProblem: string) => {
+  return await update(queries.subscribe(email, ODAProblem))
+}
+
+const unsubscribe = async(email: string, ODAProblem: string) => {
+  return await update(queries.unsubscribe(email, ODAProblem))
+}
+export { getODAProblems, addODAProblem, addUser, addCategories, setAdmin, subscribe, unsubscribe }
