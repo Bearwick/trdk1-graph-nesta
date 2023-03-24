@@ -1,36 +1,62 @@
 export default {
   // OUTDATED
   getODAProblems: (limit: number, offset: number) => `
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    select * where {
-      ?s rdf:type <urn:absolute:ODA2.0#ODAProblem> 
-  } limit ${limit} offset ${offset}`,
-  addODAProblem: (nodeName: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, supplier: string, userMail: string) => `
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  select * where {
+    ?odaProblem rdf:type oda:ODAProblem.
+    ?odaProblem oda:hasSpecificProblem ?specificProblem.
+    ?odaProblem oda:hasClearDataProduct ?dataProduct.
+    ?odaProblem oda:hasAccesibleData ?accessibleData.
+    ?odaProblem oda:hasDefinedAction ?definedAction.
+    ?odaProblem oda:hasVendor ?vendor.
+    
+    ?odaProblem oda:ODATitle ?title.
+    ?specificProblem oda:specificProblemDescription ?specificProblemDescription.
+    ?dataProduct oda:dataProductDescription ?dataProductDescription.
+    ?accessibleData oda:accesibleDataDescription ?accessibleDataDescription.
+    ?definedAction oda:definedActionDescription ?definedActionDescription.
+    ?odaProblem oda:createdBy ?user.
+    ?user oda:userPhoneNumber ?phoneNumber.
+    ?user oda:userName ?name.
+    ?user oda:userMail ?email.
+    ?user oda:userAffiliation ?affiliation.
+    optional {
+        ?odaProblem oda:ODAprogress ?progress.
+    }
+    
+} limit ${limit} offset ${offset}`,
+  addODAProblem: (nodeName: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX oda: <urn:absolute:ODA2.0#>
   insert {
     oda:${nodeName} rdf:type oda:ODAProblem.
+    oda:${nodeName} rdf:type owl:NamedIndividual.
     
     oda:${nodeName}SpecificProblem rdf:type oda:SpecificProblem.
     oda:${nodeName}ClearDataProduct rdf:type oda:ClearDataProduct.
     oda:${nodeName}AccessibleData rdf:type oda:AccesibleData.
-    
-    oda:name rdf:type owl:NamedIndividual.
+    oda:${nodeName}DefinedAction rdf:type oda:hasDefinedAction.
+   
     oda:${nodeName}SpecificProblem rdf:type owl:NamedIndividual.
     oda:${nodeName}ClearDataProduct rdf:type owl:NamedIndividual.
     oda:${nodeName}AccessibleData rdf:type owl:NamedIndividual.
+    oda:${nodeName}DefinedAction rdf:type oda:NamedIndividual.
     
     oda:${nodeName} oda:hasSpecificProblem oda:${nodeName}SpecificProblem.
     oda:${nodeName} oda:hasClearDataProduct oda:${nodeName}ClearDataProduct.
     oda:${nodeName} oda:hasAccesibleData oda:${nodeName}AccessibleData.
+    oda:${nodeName} oda:hasDefinedAction oda:${nodeName}DefinedAction.
     oda:${nodeName} oda:hasVendor oda:${supplier}.
     
     oda:${nodeName} oda:ODATitle "${title}".
     oda:${nodeName}SpecificProblem oda:specificProblemDescription "${specificProblem}".
     oda:${nodeName}ClearDataProduct oda:dataProductDescription "${clearDataProduct}".
     oda:${nodeName}AccessibleData oda:accesibleDataDescription "${accessibleData}".
+    oda:${nodeName}DefinedAction oda:definedActionDescription "${definedAction}".
     oda:${nodeName} oda:createdBy ?user.
     
   }
@@ -88,15 +114,33 @@ export default {
   setAdmin: (email: string, setAdmin: boolean) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   delete {
-    ?u oda:isAdmin ${!setAdmin}.
+    ?u oda:isAdmin ${(!setAdmin).toString()}.
   }
   insert  { 
-    ?u oda:isAdmin ${setAdmin}.
+    ?u oda:isAdmin ${setAdmin.toString()}.
   } where {
     ?u oda:userMail "${email}".
     bind(?u as ?user)
   }
   `,
+  subscribe: (userEmail: string, ODAProblem: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  insert {
+    ?user oda:subscribedTo <${ODAProblem}>.
+  } where {
+    ?u oda:userMail "${userEmail}".
+    bind(?u as ?user)
+  }
+  `,
+  unsubscribe: (userEmail: string, ODAProblem: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  delete {
+    ?user oda:subscribedTo <${ODAProblem}>.
+  } where {
+    ?u oda:userMail "${userEmail}".
+    bind(?u as ?user)
+  }
+  `
 
 
 }

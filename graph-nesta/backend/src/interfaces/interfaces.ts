@@ -8,6 +8,7 @@ interface AddOdaProblemParams {
   specificProblem: string
   clearDataProduct: string
   accessibleData: string
+  definedAction: string
   supplier: string
   userMail: string
 }
@@ -32,4 +33,16 @@ interface SetAdminParams {
   setAdmin: string
 }
 
-export {type OdaProblemParams, type AddOdaProblemParams, type AddCategoriesParams, type AddUserParams, type SetAdminParams}
+interface SubscribeParams {
+  email: string
+  ODAProblem: string
+}
+
+export {
+  type OdaProblemParams,
+  type AddOdaProblemParams,
+  type AddCategoriesParams,
+  type AddUserParams,
+  type SetAdminParams,
+  type SubscribeParams,
+}
