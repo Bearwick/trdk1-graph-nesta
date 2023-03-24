@@ -28,4 +28,12 @@ export interface challengeCardProps {
 
 }
 
+export interface IfetchType {
+    limit: number
+    searchPhrase: string
+    categoryFilter: string
+    orderBy: string
+}
+
+
 

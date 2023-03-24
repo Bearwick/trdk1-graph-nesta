@@ -244,6 +244,7 @@ function NewChallenge() {
           rows={8}
           maxRows={8}
           label="Spesifikt problem"
+          placeholder= "Problemet vårt er at … [sett inn spesifikk problemstilling]. F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes, men som likevel koster penger for enhetene."
           size="small"
           onChange={handleSpecificProblemChange}
           sx={ specificProblemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
@@ -260,7 +261,8 @@ function NewChallenge() {
           multiline
           rows={8}
           maxRows={8}
-          label="Dataprodukt"
+          label="Tydelig dataprodukt"
+          placeholder="Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser]. F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,"
           size="small"
           onChange={handleClearDataProductChange}
           sx={ clearDataProductRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
@@ -270,14 +272,15 @@ function NewChallenge() {
       </div>
 
       <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
-        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3"} text={"Data"}/>
+        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3"} text={"Tilgjengelig data"}/>
         <TextField
           required
           id="outlined-multiline-static"
           multiline
           rows={8}
           maxRows={8}
-          label="Data"
+          label="Tilgjengelige data"
+          placeholder="Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke]. F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,"
           size="small"
           onChange={handleAccessibleDataChange}
           sx={ accessibleDataRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
@@ -295,6 +298,7 @@ function NewChallenge() {
           rows={8}
           maxRows={8}
           label="Definert handling"
+          placeholder="For å løse dette vil vi … [liste over tiltak du ønsker å implementere]. F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre, og bevisstgjøre enhetsledere på kostnaden ved lisenser."
           size="small"
           onChange={handleDefinedActionChange}
           sx={ definedActionRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
