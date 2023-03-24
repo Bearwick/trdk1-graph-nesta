@@ -1,4 +1,5 @@
 import { type Request, type Response, Router } from 'express'
+import * as fs from "fs";
 import {
   addCategories,
   addODAProblem,
@@ -57,6 +58,19 @@ router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOd
   addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.definedAction, query.supplier, query.userMail).then(r => {
     res.send(r)
   }).catch((r) => res.send(r))
+})
+
+router.get('/NestaGuide', function(_, res: Response) {
+  const path = "./public/NestaGuide.pdf";
+  if (fs.existsSync(path)) {
+    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Need to allow cross domain. Because of CORS-policy. 
+    res.contentType("application/pdf");
+    fs.createReadStream(path).pipe(res);
+  } else {
+    res.status(500);
+    console.log("File not found");
+    res.send("File not found")
+  }
 })
 
 router.get('/AddUser', function(req: Request<unknown, unknown, unknown, AddUserParams>, res: Response) {

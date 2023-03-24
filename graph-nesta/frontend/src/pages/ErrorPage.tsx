@@ -5,10 +5,10 @@ import Header from "../components/Header";
 
 function ErrorPage() {
     return (
-      <div className="App">
+      <div className="text-center flex flex-col bg-background">
           <Header />
-          <header className="ErrorPage-header pb-20">
-              <h1 className="text-9xl font-bold mt-[-100px]">404</h1>
+          <header className="h-[82.5vh] flex flex-col items-center justify-center">
+              <h1 className="text-9xl font-bold">404</h1>
               <p>Page not found</p>
           </header>
           <Footer />

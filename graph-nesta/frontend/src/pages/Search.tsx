@@ -5,15 +5,20 @@ import CategoryButton from "../components/CategoryButton";
 import ChallengeCard from "../components/ChallengeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { type User } from "../types/types";
+import useFetch from "../hooks/useFetch";
+import type {IfetchType, challengeCardProps, User } from "../types/types";
 import { Status } from "../types/types";
 
 function Search() {
 
-  const [, setSearch] = useState("");
-  const [, setFilter] = useState("Løst");
+  //  const [limit, setLimit] = useState(30); //  offset for fetching the next ODA-problems in the infinite scroll
+  const [searchPhrase, setSearch] = useState("");
+  const [orderBy, setOrderBy] = useState("Løst");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [searchHits, ] = useState(11);
+
+  //  Infinite scroll
+  const [limit, ] = useState(20);
  
   const placeHolder : User = {
     email: "edvard.bjornevik@nesodden.kommune.no",
@@ -35,6 +40,20 @@ function Search() {
   const subPlaceholder3: User[] = [subUserPlaceHolder, subUserPlaceHolder, placeHolder];
 
   const subPlaceholder4: User[] = [subUserPlaceHolder, subUserPlaceHolder, placeHolder, placeHolder];
+
+  const odaPlaceholder : challengeCardProps = {
+    id: "12345",
+    title: "Lisens",
+    system: "Bluegaarden",
+    status: Status.newChallenge,
+    specificProblem: "Lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt.",
+    clearDataProduct: "Områdekart som viser sannsynligheten for ringepigging for en gitt dato",
+    accessibleData: "Nasjonale ringepigging-datasett",
+    definedAction: "Lage en nettside med områdekart. Dette kan vi gi ut til innbyggerne som kan forhindre ringepigging før det skjer.",
+    subCount: subPlaceholder.length,
+    owner: placeHolder,
+    subs: subPlaceholder,
+  }
 
 
 
@@ -78,19 +97,48 @@ function Search() {
       },
     };
 
+  // initial IfetchType object
+  const querySearch: IfetchType = {
+    limit,
+    categoryFilter,
+    searchPhrase,
+    orderBy,
+  }
 
-  //  Handle events for changes in inputs.
+  const [query, setQuery] = useState<IfetchType>(querySearch);
+  const [page, setPage] = useState(0);
+  const { isLoading, isError, ODAproblems } = useFetch(query, page);
+  //  const loader = useRef(null);
+
+  //  Fetches ODAproblems
+  const fetchODAproblems = (limit: number, categoryFilter: string, searchPhrase: string, orderBy: string) => {
+    const newQuery:IfetchType = {
+      limit,
+      categoryFilter,
+      searchPhrase,
+      orderBy,
+    }
+    setQuery(newQuery);
+}
+
+
+  //  Handle events for changes in search inputs.
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
+    setPage(0);
+    fetchODAproblems(limit, searchPhrase, categoryFilter, orderBy);
+    alert(ODAproblems);
   }
 
   //  Handle event changes for filter.
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(event.target.value);
+    setPage(0);
+    setOrderBy(event.target.value);
   }
 
   //  Handle event for category changes.
   const handleCategoryButtonClick = (value: string) => {
+    setPage(0);
     if (categoryFilter === value) {
       setCategoryFilter("");
     } else {
@@ -144,13 +192,19 @@ function Search() {
                 <p className="">{ searchHits } treff</p>
 
           </div>
+          
+
+              {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> : 
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
-              <ChallengeCard id={"12345"} title={"Lisens"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"Lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt."} clearDataProduct={"Områdekart som viser sannsynligheten for ringepigging for en gitt dato."} accessibleData={"Nasjonale ringepigging-datasett"} definedAction={"Lage en nettside med områdekart. Dette kan vi gi ut til innbyggerne som kan forhindre ringepigging før det skjer."} subCount={8} owner={placeHolder} subs={subPlaceholder}/>
-              <ChallengeCard id={"12345"} title={"Økonomi"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder2}/>
-              <ChallengeCard id={"12345"} title={"Skole"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder3}/>
-              <ChallengeCard id={"12345"} title={"Turn down for what!"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder4}/>
-       
-            </div>
+               <ChallengeCard { ...odaPlaceholder } />
+               <ChallengeCard id={"12345"} title={"Økonomi"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder2}/>
+               <ChallengeCard id={"12345"} title={"Skole"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder3}/>
+               <ChallengeCard id={"12345"} title={"Turn down for what!"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder4}/>
+               </div>
+        }
+
+             
+           
           </div>
           <Footer />
       </div>
