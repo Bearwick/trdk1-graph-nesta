@@ -1,6 +1,6 @@
 export default {
   // OUTDATED
-  getODAProblems: (limit: number, offset: number) => `
+  getODAProblems: (limit: number, offset: number, searchString: string, category: string) => `
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX oda: <urn:absolute:ODA2.0#>
@@ -22,9 +22,10 @@ export default {
     ?user oda:userName ?name.
     ?user oda:userMail ?email.
     ?user oda:userAffiliation ?affiliation.
-    optional {
-        ?odaProblem oda:ODAprogress ?progress.
-    }
+    ?odaProblem oda:ODAprogress ?progress.
+    
+    Filter (regex(?title, "${searchString}") || regex(?specificProblemDescription, "${searchString}")).
+    Filter (regex(?title, "${category}") || regex(?specificProblemDescription, "${category}")).
     
 } limit ${limit} offset ${offset}`,
   addODAProblem: (nodeName: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string) => `
@@ -53,6 +54,7 @@ export default {
     oda:${nodeName} oda:hasVendor oda:${supplier}.
     
     oda:${nodeName} oda:ODATitle "${title}".
+    oda:${nodeName} oda:ODAprogress "Ny Utfordring".
     oda:${nodeName}SpecificProblem oda:specificProblemDescription "${specificProblem}".
     oda:${nodeName}ClearDataProduct oda:dataProductDescription "${clearDataProduct}".
     oda:${nodeName}AccessibleData oda:accesibleDataDescription "${accessibleData}".
@@ -97,7 +99,7 @@ export default {
   }
   `,
 
-  addUser: (name: string, phone: number, email: string, affiliation: string) => `
+  addUser: (name: string, phone: number, email: string, affiliation: string, password: string) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -109,8 +111,16 @@ export default {
     oda:${email.replace("@", "")} oda:userPhoneNumber "${phone}"^^xsd:int.
     oda:${email.replace("@", "")} oda:userMail "${email}".
     oda:${email.replace("@", "")} oda:userAffiliation "${affiliation}".
-    oda:${email.replace("@", "")} oda:isAdmin false.          
+    oda:${email.replace("@", "")} oda:isAdmin false.
+    oda:${email.replace("@", "")} oda:userPassword "${password}".          
 } `,
+  findUser: (email: string, password: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  select * where {
+  ?user oda:userMail "${email}".
+  ?user oda:userPassword "${password}".
+  }
+  `,
   setAdmin: (email: string, setAdmin: boolean) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   delete {

@@ -10,8 +10,8 @@ const update = async (query: string) => {
   ${encodeURIComponent(query)}`)
 }
 
-const getODAProblems = async (limit: number, offset: number) => {
-  return await get(queries.getODAProblems(limit, offset))
+const getODAProblems = async (limit: number, offset: number, searchString: string, category: string) => {
+  return await get(queries.getODAProblems(limit, offset, searchString, category))
 }
 const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string) => {
   // Assumes title is unique, otherwise we could end up in a situation where a single ODA problem can have many accessible datas etc.
@@ -27,8 +27,12 @@ const addCategories = async (specProblem: string, dataProduct: string, accessibl
   return await update(queries.addCategories(specProblem, dataProduct, accessibleData, nodeName))
 }
 
-const addUser = async (name: string, phone: number, email: string, affiliation: string) => {
-  return await update(queries.addUser(name, phone, email, affiliation))
+const addUser = async (name: string, phone: number, email: string, affiliation: string, password: string) => {
+  return await update(queries.addUser(name, phone, email, affiliation, password))
+}
+
+const findUser = async (email: string, password: string) => {
+  return await get(queries.findUser(email, password))
 }
 
 const setAdmin = async(email: string, setAdmin: boolean) => {
@@ -43,4 +47,4 @@ const subscribe = async (email: string, ODAProblem: string) => {
 const unsubscribe = async(email: string, ODAProblem: string) => {
   return await update(queries.unsubscribe(email, ODAProblem))
 }
-export { getODAProblems, addODAProblem, addUser, addCategories, setAdmin, subscribe, unsubscribe }
+export { getODAProblems, addODAProblem, addUser, addCategories, setAdmin, subscribe, unsubscribe, findUser }

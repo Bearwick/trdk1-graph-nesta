@@ -1,6 +1,8 @@
 interface OdaProblemParams {
   limit: number
   offset: number
+  searchString: string
+  category: string
 }
 
 interface AddOdaProblemParams {
@@ -18,6 +20,12 @@ interface AddUserParams {
   phone: number
   email: string
   affiliation: string
+  password: string
+}
+
+interface FindUserParams {
+  email: string
+  password: string
 }
 
 interface AddCategoriesParams {
@@ -45,4 +53,5 @@ export {
   type AddUserParams,
   type SetAdminParams,
   type SubscribeParams,
+  type FindUserParams
 }
