@@ -2,7 +2,7 @@ import { type Request, type Response, Router } from 'express'
 import {
   addCategories,
   addODAProblem,
-  addUser,
+  addUser, findUser,
   getODAProblems,
   setAdmin,
   subscribe,
@@ -12,6 +12,7 @@ import {
   type AddCategoriesParams,
   type AddOdaProblemParams,
   type AddUserParams,
+  type FindUserParams,
   type OdaProblemParams,
   type SetAdminParams,
   type SubscribeParams,
@@ -47,7 +48,9 @@ const router = Router()
 router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaProblemParams>, res: Response) {
   const limit: number = req.query.limit
   const offset: number = req.query.offset
-  getODAProblems(limit, offset).then(r => {
+  const searchString: string = req.query.searchString
+  const category: string = req.query.category
+  getODAProblems(limit, offset, searchString, category).then(r => {
     res.send(r.data.results.bindings)
   }).catch((r) => res.send(r))
 })
@@ -61,9 +64,16 @@ router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOd
 
 router.get('/AddUser', function(req: Request<unknown, unknown, unknown, AddUserParams>, res: Response) {
   const query = req.query
-  addUser(query.name, query.phone, query.email, query.affiliation).then(r => {
+  addUser(query.name, query.phone, query.email, query.affiliation, query.password).then(r => {
     res.send(r)
   }).catch((r) => res.send(r.body))
+})
+
+router.get('/FindUser', function(req: Request<unknown, unknown, unknown, FindUserParams>, res: Response) {
+  const query = req.query
+  findUser(query.email, query.password).then(r => {
+    res.send(r.data.results.bindings)
+  }).catch(r => res.send(r))
 })
 
 router.get('/AddCategories', function(req: Request<unknown, unknown, unknown, AddCategoriesParams>, res: Response) {
@@ -80,14 +90,14 @@ router.get('/SetAdmin', function(req: Request<unknown, unknown, unknown, SetAdmi
   }).catch(r => res.send(r))
 })
 
-router.get("/Subscribe", function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
+router.get('/Subscribe', function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
   const query = req.query
   subscribe(query.email, query.ODAProblem).then(r => {
     res.send(r)
   }).catch(r => res.send(r))
 })
 
-router.get("/Unsubscribe", function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
+router.get('/Unsubscribe', function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
   const query = req.query
   unsubscribe(query.email, query.ODAProblem).then(r => {
     res.send(r)
