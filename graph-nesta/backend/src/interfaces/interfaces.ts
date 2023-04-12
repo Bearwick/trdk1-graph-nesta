@@ -16,7 +16,6 @@ interface AddOdaProblemParams {
 }
 
 interface AddUserParams {
-  name: string
   phone: number
   email: string
   affiliation: string

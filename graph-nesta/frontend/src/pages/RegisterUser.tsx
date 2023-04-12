@@ -4,12 +4,19 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { addUser, findUser } from "../api/odaAPI";
+import MenuItem from "@mui/material/MenuItem";
 
 function RegisterUser(){
 
-    const[name, setName] = useState("");
+    const[affiliation, setAffiliation] = useState("");
     const[email, setEmail] = useState("");
-    const[tlf, setTlf] = useState("");
+    const[tlf, setTlf] = useState(0);
+    const[password, setPassword] = useState("");
+    const[passwordConfirm, setPasswordConfirm] = useState("");
+    const[showRequiredMessage, setShowRequiredMessage] = useState(false);
+    const[showUserExistMessange, setShowUserExistMessage] = useState(false);
+    const[showErrorMessage, setShowErrorMessage] = useState(false);
 
     const textFieldStyle = {
         backgroundColor: "white",
@@ -24,22 +31,66 @@ function RegisterUser(){
           },
         }
       };
+    
+    const affiliations = [
+        {
+          value: 'Trondheim kommune',
+          label: 'Trondheim kommune',
+        },
+        {
+          value: 'Malvik kommune',
+          label: 'Malvik kommune',
+        },
+        {
+          value: 'Trøndelag fylkeskommune',
+          label: 'Trøndelag fylkeskommune',
+        },
+        {
+          value: 'Steinkjer kommune',
+          label: 'Steinkjer kommune',
+        },
+    ];
  
 
-      const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
+      const handleAffiliationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setAffiliation(event.target.value);
+        setShowRequiredMessage(false);
       }
-
       const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
+        setShowRequiredMessage(false);
+        setShowUserExistMessage(false);
+      }
+      const handleTlfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTlf(event.target.valueAsNumber);
+        setShowRequiredMessage(false);
+      }
+      const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+        setShowRequiredMessage(false);
+
+      }
+      const handlePasswordConfirmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPasswordConfirm(event.target.value);
+        setShowRequiredMessage(false);
       }
 
-      const handleTlfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTlf(event.target.value);
-      }
 
       const handlePost = () => {
-        alert("Navn: " + name + ", E-post: " + email + ", Telefon: " + tlf + "registrert")
+        if (affiliation.length === 0 || email.length === 0 || tlf.toString().length !== 8 || password.length === 0 || password !== passwordConfirm ) {
+          setShowRequiredMessage(true)
+        } else {
+       findUser(email, password).then(r => {
+        if (r.data) {
+          console.log("User allready exists")
+          setShowUserExistMessage(true)
+        } else {
+          addUser(tlf, email, affiliation, password).then(() => {
+            console.log("User added");
+          }).catch(() => {setShowErrorMessage(true)})
+        }
+       }).catch(() => {setShowErrorMessage(true)})
+      }
       }
 
     return(
@@ -49,39 +100,59 @@ function RegisterUser(){
                   <h1 className="text-center mt-20 text-2xl">Registrer bruker</h1>
                   <section className="mt-10 flex flex-col">
                   <section className="flex flex-col gap-4">
-                    <TextField
-                      label="Navn"
-                      size="medium"
-                      onChange={handleNameChange}
-                      sx={ { ...textFieldStyle,     width: "50vw",
-                      maxWidth: "300px", }}
-                    />
+                  <TextField
+                    select
+                    required
+                    label="Tilhørighet"
+                    size="medium"
+                    onChange={handleAffiliationChange}
+                    sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
+                  >
+                    {affiliations.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
 
                     <TextField
+                      required
                       label="E-post"
                       size="medium"
-                      onChange={handleNameChange}
-                      sx={ { ...textFieldStyle,     width: "50vw",
-                      maxWidth: "300px", }}
+                      onChange={handleEmailChange}
+                      sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
+                    />
+                    <TextField
+                      required
+                      label="Tlf"
+                      size="medium"
+                      type="number"
+                      onChange={handleTlfChange}
+                      sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
 
                     <TextField
+                      required
                       label="Passord"
                       type = "password"
                       size="medium"
-                      onChange={handleEmailChange}
-                      sx={ { ...textFieldStyle,     width: "50vw",
-                      maxWidth: "300px", }}
+                      onChange={handlePasswordChange}
+                      sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
 
-
                     <TextField
-                        label="Bekreft passord"
-                        type = "password"
-                        size="medium"
-                        onChange={handleTlfChange}
-                        sx={ { ...textFieldStyle,     width: "50vw",
-                        maxWidth: "300px", }}/>
+                      required
+                      label="Bekreft passord"
+                      type = "password"
+                      size="medium"
+                      onChange={handlePasswordConfirmChange}
+                      sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
+                    />
+
+                    {showRequiredMessage? <p className="mt-0 text-statusRed">Alle feltene må fylles ut!</p> : null}
+                    {showUserExistMessange? <p className="mt-0 text-statusRed">Bruker finnes allerede!</p> : null}
+                    {showErrorMessage? <p className="mt-0 text-statusRed">Det har skjedd en feil...</p> : null}
+
                   </section>
                   <Link to="/LoggInn"><p className="text-right underline hover:text-linkBlue">Har du allerede en konto?</p></Link>
                   </section>

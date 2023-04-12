@@ -76,17 +76,37 @@ export async function getODAproblem(id: string) {
 }
 
 export function makeGetRequest() {
-  console.log("makeGetRequest");
-
-
+  
   axios.get("http://localhost:8080/ontology/NestaGuide").then(
       (response) => {
           const result = response.data;
           console.log(result);
-          console.log("ja?");
       },
       (error) => {
           console.log(error);
       }
   );
+}
+
+export async function addUser(phone: number, email: string, affiliation: string, password
+  : string) {
+    console.log("odaAPI addUser");
+    await axios.get(`http://localhost:8080/ontology/AddUser?`, {
+      params: {
+        phone: phone,
+        email: email,
+        affiliation: affiliation,
+        password: password
+      }
+    })
+}
+
+export async function findUser(email: string, password: string) {
+    console.log("odaAPI findUser");
+    return await axios.get<boolean>(`http://localhost:8080/ontology/FindUser?`, {
+      params: {
+        email: email,
+        password: password
+      }
+    })
 }
