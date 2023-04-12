@@ -27,8 +27,9 @@ const addCategories = async (specProblem: string, dataProduct: string, accessibl
   return await update(queries.addCategories(specProblem, dataProduct, accessibleData, nodeName))
 }
 
-const addUser = async (name: string, phone: number, email: string, affiliation: string, password: string) => {
-  return await update(queries.addUser(name, phone, email, affiliation, password))
+const addUser = async (phone: number, email: string, affiliation: string, password: string) => {
+  console.log(queries.addUser(phone, email, affiliation, password))
+  return await update(queries.addUser(phone, email, affiliation, password))
 }
 
 const findUser = async (email: string, password: string) => {

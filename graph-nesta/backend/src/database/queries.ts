@@ -19,7 +19,6 @@ export default {
     ?definedAction oda:definedActionDescription ?definedActionDescription.
     ?odaProblem oda:createdBy ?user.
     ?user oda:userPhoneNumber ?phoneNumber.
-    ?user oda:userName ?name.
     ?user oda:userMail ?email.
     ?user oda:userAffiliation ?affiliation.
     ?odaProblem oda:ODAprogress ?progress.
@@ -99,7 +98,7 @@ export default {
   }
   `,
 
-  addUser: (name: string, phone: number, email: string, affiliation: string, password: string) => `
+  addUser: (phone: number, email: string, affiliation: string, password: string) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -107,7 +106,6 @@ export default {
   insert data {
     oda:${email.replace("@", "")} rdf:type oda:User.
     oda:${email.replace("@", "")} rdf:type owl:NamedIndividual.
-    oda:${email.replace("@", "")} oda:userName "${name}".
     oda:${email.replace("@", "")} oda:userPhoneNumber "${phone}"^^xsd:int.
     oda:${email.replace("@", "")} oda:userMail "${email}".
     oda:${email.replace("@", "")} oda:userAffiliation "${affiliation}".

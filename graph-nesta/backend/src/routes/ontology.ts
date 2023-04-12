@@ -66,7 +66,7 @@ router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOd
 router.get('/NestaGuide', function(_, res: Response) {
   const path = "./public/NestaGuide.pdf";
   if (fs.existsSync(path)) {
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Need to allow cross domain. Because of CORS-policy. 
+    //res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Need to allow cross domain. Because of CORS-policy.
     res.contentType("application/pdf");
     fs.createReadStream(path).pipe(res);
   } else {
@@ -78,16 +78,21 @@ router.get('/NestaGuide', function(_, res: Response) {
 
 router.get('/AddUser', function(req: Request<unknown, unknown, unknown, AddUserParams>, res: Response) {
   const query = req.query
-  addUser(query.name, query.phone, query.email, query.affiliation, query.password).then(r => {
+  console.log(query)
+  console.log("ontology.ts: adding user")
+  addUser(query.phone, query.email, query.affiliation, query.password).then(r => {
     res.send(r)
-  }).catch((r) => res.send(r.body))
+  }).catch((r) => res.send(r))
 })
 
 router.get('/FindUser', function(req: Request<unknown, unknown, unknown, FindUserParams>, res: Response) {
   const query = req.query
+  
   findUser(query.email, query.password).then(r => {
-    res.send(r.data.results.bindings)
-  }).catch(r => res.send(r))
+    if (r.data.results.bindings.toString().length > 0) {
+      res.send(true)
+    } else {res.send(false)}
+  }).catch(r => res.send(false) )
 })
 
 router.get('/AddCategories', function(req: Request<unknown, unknown, unknown, AddCategoriesParams>, res: Response) {
