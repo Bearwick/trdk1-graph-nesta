@@ -1,6 +1,6 @@
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CategoryButton from "../components/CategoryButton";
 import ChallengeCard from "../components/ChallengeCard";
 import Footer from "../components/Footer";
@@ -8,8 +8,30 @@ import Header from "../components/Header";
 import useFetch from "../hooks/useFetch";
 import type {IfetchType, challengeCardProps, User } from "../types/types";
 import { Status } from "../types/types";
+import { ChallengeContext } from "../globalState/ChallengeContext";
+import { useNavigate } from "react-router-dom";
 
 function Search() {
+
+  const {user, setUser } = useContext(ChallengeContext);
+  const navigate = useNavigate();
+
+  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+  useEffect(() => {
+    if (!user.isLoggedIn) {
+      if (!localStorage.getItem("Email") === null) {
+        const email = localStorage.getItem("Email") ?? "";
+        const password = localStorage.getItem("Password") ?? "";
+        setUser({
+          email,
+          password,
+          isLoggedIn: true
+        });
+      } else {
+        navigate("/LoggInn");
+      }
+    }      
+  },[navigate, setUser, user.isLoggedIn]);
 
   //  const [limit, setLimit] = useState(30); //  offset for fetching the next ODA-problems in the infinite scroll
   const [searchPhrase, setSearch] = useState("");
@@ -145,7 +167,6 @@ function Search() {
     setCategoryFilter(value);
     }
   }
-
 
 
     return (

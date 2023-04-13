@@ -1,13 +1,15 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { addUser, findUser } from "../api/odaAPI";
 import MenuItem from "@mui/material/MenuItem";
 
 function RegisterUser(){
+
+    const navigate = useNavigate();
 
     const[affiliation, setAffiliation] = useState("");
     const[email, setEmail] = useState("");
@@ -87,6 +89,10 @@ function RegisterUser(){
         } else {
           addUser(tlf, email, affiliation, password).then(() => {
             console.log("User added");
+            localStorage.setItem("Email", email);
+            localStorage.setItem("Password", password);
+            navigate("/Hjem");
+
           }).catch(() => {setShowErrorMessage(true)})
         }
        }).catch(() => {setShowErrorMessage(true)})

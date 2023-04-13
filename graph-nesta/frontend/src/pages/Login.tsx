@@ -1,15 +1,20 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { findUser } from "../api/odaAPI";
+import { ChallengeContext } from "../globalState/ChallengeContext";
 
 function Login() {
+  const {setUser} = useContext(ChallengeContext);
 
+  const navigate = useNavigate();
+  const[showNoUser, setShowNoUser] = useState(false);
 
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState( localStorage.getItem("Email") ?? "");
+  const [password, setPassword] = useState(localStorage.getItem("Password") ?? "");
 
 
   const textFieldStyle = {
@@ -26,9 +31,8 @@ function Login() {
     }
   };
 
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   }
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +40,24 @@ function Login() {
   }
 
   const handleLogin = () => {
-    alert("Navn: " + name + ". Passord: " + password);
+
+    findUser(email, password).then(r => {
+      if (r.data) {
+        localStorage.setItem("Email", email);
+        localStorage.setItem("Password", password);
+        
+        setUser({
+          email,
+          password,
+          isLoggedIn: true,
+      });
+        
+        navigate("/Hjem")
+      } else {
+        setShowNoUser(true)
+      }
+    }).catch(() => {setShowNoUser(true)})
+    
   }
 
     return (
@@ -50,7 +71,8 @@ function Login() {
             <TextField
               label="E-post"
               size="medium"
-              onChange={handleNameChange}
+              value={email}
+              onChange={handleEmailChange}
               sx={ { ...textFieldStyle,     width: "50vw",
               maxWidth: "300px", }}
             />
@@ -58,10 +80,12 @@ function Login() {
               label="Passord"
               type = "password"
               size="medium"
+              value={password}
               onChange={handlePasswordChange}
               sx={ { ...textFieldStyle,     width: "50vw",
               maxWidth: "300px", }}
             />
+            {showNoUser? <p className="mt-0 text-statusRed">Ingen bruker funnet</p> : null}
           </section>
           <Link to="/RegistrerBruker"><p className="text-right underline hover:text-linkBlue">Har du ikke bruker?</p></Link>
           </section>

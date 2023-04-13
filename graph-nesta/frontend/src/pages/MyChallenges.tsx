@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 //  import ChallengeCard from "../components/ChallengeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { ChallengeContext } from "../globalState/ChallengeContext";
+import { useNavigate } from "react-router-dom";
 
 function MyChallenges() {
 
-const[isMyChallenges, setIsMyChallenges] = useState(true)
+  const[isMyChallenges, setIsMyChallenges] = useState(true);
+  const {user, setUser } = useContext(ChallengeContext);
+  const navigate = useNavigate();
 
-const handleChallengeShow = ( value: boolean) =>{
-  setIsMyChallenges(value);
-}
+  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+  useEffect(() => {
+    if (!user.isLoggedIn) {
+      if (!localStorage.getItem("Email") === null) {
+        const email = localStorage.getItem("Email") ?? "";
+        const password = localStorage.getItem("Password") ?? "";
+        setUser({
+          email,
+          password,
+          isLoggedIn: true
+        });
+      } else {
+        navigate("/LoggInn");
+      }
+    }      
+  },[navigate, setUser, user.isLoggedIn]);
+
+  const handleChallengeShow = ( value: boolean) =>{
+    setIsMyChallenges(value);
+
+     }
 
     return (
       <div className="text-center">
