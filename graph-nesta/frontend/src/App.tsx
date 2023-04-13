@@ -23,7 +23,7 @@ export default function App() {
     <BrowserRouter>
     <Routes>
         <Route path="Hjem" index element={<Home />} />
-        <Route path="MinProfil" element={<Home />} />
+        <Route path="MinProfil" element={<UserProfile />} />
         <Route path="LoggInn" element={<Login />} />
         <Route path="RegistrerBruker" element={<RegisterUser/>}></Route>
         <Route path="MineUtfordringer" element={<MyChallenges />} />

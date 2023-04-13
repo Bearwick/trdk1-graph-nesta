@@ -1,12 +1,31 @@
 import Button from '@mui/material/Button';
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from '../components/Header';
 import ODACircle from '../components/ODACircle';
 import PDFdownload from '../components/PDFdownload';
+import { ChallengeContext } from '../globalState/ChallengeContext';
 
 function Home() {
+    const {user, setUser } = useContext(ChallengeContext);
+    const navigate = useNavigate();
+
+    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+    useEffect(() => {
+      if (!user.isLoggedIn) {
+        if (!localStorage.getItem("Email") === null) {
+          const email = localStorage.getItem("Email") ?? "";
+          const password = localStorage.getItem("Password") ?? "";
+          setUser({
+            email,
+            password,
+            isLoggedIn: true
+          });
+        }
+      }      
+    },[navigate, setUser, user.isLoggedIn]);
+
 
     return (
       <div className="text-center flex flex-col min-h-screen">

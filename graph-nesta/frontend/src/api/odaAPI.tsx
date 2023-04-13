@@ -93,10 +93,10 @@ export async function addUser(phone: number, email: string, affiliation: string,
     console.log("odaAPI addUser");
     await axios.get(`http://localhost:8080/ontology/AddUser?`, {
       params: {
-        phone: phone,
-        email: email,
-        affiliation: affiliation,
-        password: password
+        phone,
+        email,
+        affiliation,
+        password,
       }
     })
 }
@@ -105,8 +105,8 @@ export async function findUser(email: string, password: string) {
     console.log("odaAPI findUser");
     return await axios.get<boolean>(`http://localhost:8080/ontology/FindUser?`, {
       params: {
-        email: email,
-        password: password
+        email,
+        password,
       }
     })
 }

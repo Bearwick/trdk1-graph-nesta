@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { ChallengeContext } from "../globalState/ChallengeContext";
 
 
 function Header(){
 
     const[show, setShow] = useState(false);
-    const[login,] = useState(false);
+    const {user} = useContext(ChallengeContext);
 
     const onChange = () => {
         setShow(!show)
@@ -30,7 +31,7 @@ function Header(){
                             {popupState.isOpen ? <CloseIcon onClick={onChange} sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}}/>: <MenuIcon onClick={onChange}  sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}} />}
                         </Button>
                         <Menu {...bindMenu(popupState)}>
-                        {login ? <Link to="/MinProfil"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
+                        {user.isLoggedIn ? <Link to="/MinProfil"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
                             <Link to="/MineUtfordringer"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Mine utfordringer</div></Link>
                             <Link to="/NyUtfordring"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Ny utfordring</div></Link>
                             <Link to="/Søk"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Søk</div></Link>

@@ -13,6 +13,12 @@ export interface User {
 
 }
 
+export interface ContextUser {
+    email: string;
+    password: string;
+    isLoggedIn: boolean;
+}
+
 export interface challengeCardProps {
     id: string;
     title: string;
