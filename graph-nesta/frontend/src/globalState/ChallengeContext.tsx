@@ -64,7 +64,7 @@ export default function ChallengeProvider({children} : ChallengeProviderProps){
     const [challenge, setChallenge] = useState<challengeCardProps>({
         id: "",
         title: "Tittel",
-        system: "",
+        vendor: "",
         status: Status.newChallenge,
         specificProblem: "",
         clearDataProduct: "",

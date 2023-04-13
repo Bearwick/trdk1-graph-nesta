@@ -10,16 +10,16 @@ import { Link } from "react-router-dom";
 import validateChallenge from "../utils/validateChallenge";
 
 function ChallengeCard(props: challengeCardProps){
-    
+
     const [statusColor, setStatusColor] = useState("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
- 
+
     const { setChallenge } = useContext(ChallengeContext)
 
     const onChange = () => {
         setChallenge({
             id: props.id,
             title: props.title,
-            system: props.system,
+            vendor: props.vendor,
             status: props.status,
             specificProblem: props.specificProblem,
             clearDataProduct: props.clearDataProduct,
@@ -36,11 +36,11 @@ function ChallengeCard(props: challengeCardProps){
             case Status.newChallenge:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
                 break;
-    
+
             case Status.started:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusOrange");
                 break;
-    
+
             case Status.solved:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen");
                 break;
@@ -64,9 +64,9 @@ function ChallengeCard(props: challengeCardProps){
         <div className="flex flex-col justify-between h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer hover:drop-shadow-3xl hover:bg-buttonHover">
             <Link to={"/inspiserUtfordring"}  onClick={onChange}>
 
-            <section className="flex justify-between  items-center">        
+            <section className="flex justify-between  items-center">
                 <p className="font-bold text-left">{props.title}</p>
-                
+
                 <div className="flex flex-row items-center">
                     <ODACircle style={statusColor} text={""}/>
                     <p className="whitespace-nowrap">{props.status}</p>
@@ -74,14 +74,14 @@ function ChallengeCard(props: challengeCardProps){
 
             </section>
 
-            <section className="text-left pt-2.5 h-40">               
+            <section className="text-left pt-2.5 h-40">
                 <p className="text-sm line-clamp-6">{props.specificProblem}</p>
             </section>
 
             <section className=" items-end flex flex-row justify-between text-xs">
                 <div className="flex flex-row">
                     <PersonalVideoIcon sx={{ fontSize: "1rem"}}/>
-                    <p className="ml-1.5 whitespace-nowrap">{props.system}</p>
+                    <p className="ml-1.5 whitespace-nowrap">{props.vendor}</p>
                 </div>
                 <p>&#x2022;</p>
                 <div className="flex flex-row">

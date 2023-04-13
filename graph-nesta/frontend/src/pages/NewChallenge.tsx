@@ -47,39 +47,44 @@ function NewChallenge() {
   const [accessibleData, setAccessibleData] = useState("");
   const [definedAction, setDefinedAction] = useState("");
 
-  //  State of visualizing in UI that an input field is required.
-  const [titleRequired, setTitleRequired] = useState(false);
-  const [systemRequired, setSystemRequired] = useState(false);
-  const [specificProblemRequired, setSpecificProblemRequired] = useState(false);
-  const [clearDataProductRequired, setClearDataProductRequired] = useState(false);
-  const [accessibleDataRequired, setAccessibleDataRequired] = useState(false);
-  const [definedActionRequired, setDefinedActionRequired] = useState(false);
-  const lengthRequirement = 5;
-  const [requiredTextShow, setRequiredTextShow] = useState(false);
+function NewChallenge () {
 
-  //  State for showing similar challenges.
-  const [showSimilarChallenges, setShowSimilarChallenges] = useState(false);
+  const [title, setTitle] = useState('')
+  const [system, setSystem] = useState('')
+  const [otherSystem, setOtherSystem] = useState('')
+  const [otherSystemShow, setOtherSystemShow] = useState(false)
+  const [status, setStatus] = useState('newChallenge')
+  const [specificProblem, setSpecificProblem] = useState('')
+  const [clearDataProduct, setClearDataProduct] = useState('')
+  const [accessibleData, setAccessibleData] = useState('')
+  const [definedAction, setDefinedAction] = useState('')
+  const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
+  const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSystem(event.target.value)
+    if (event.target.value === 'Annet system') {
+      setOtherSystemShow(true)
+      setShowSimilarChallenges(true)
+    } else {
+      setOtherSystemShow(false)
+      setShowSimilarChallenges(false)
+    }
+  }
 
   //  Styling for mui components (sx).
   const textFieldStyle = {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     '& label.Mui-focused': {
       color: '#0D264A',
-    }, 
+    },
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
         borderColor: '#0D264A',
-      },  '&.Mui-focused fieldset': {
+      },
+      '&.Mui-focused fieldset': {
         borderColor: '#0D264A',
       },
-    }
-  };
-
-  const textFieldRequiredBordersStyle = {
-    '& fieldset.MuiOutlinedInput-notchedOutline': {
-      border: "2px solid #FF002F"
-  },
-  };
+    },
+  }
 
   //  List of systems available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
   const systems = [
@@ -99,133 +104,59 @@ function NewChallenge() {
       value: 'Annet system',
       label: 'Annet system',
     },
-  ];
+  ]
+  const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
-  //  Handle events for changes in inputs.
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-    setTitleRequired(false);
-    setRequiredTextShow(false);
-  }
+    addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, 'andreas.r.berg@live.no', status).then(() => {
+      alert('Success')
+    }).catch(() => {
+      alert('Failure')
+    })
 
-  const handelSystemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value === "Annet system") {
-      setOtherSystemShow(true);
-      setShowSimilarChallenges(true); //  Used for testing component. Should be removed!
-    } else if (event.target.value !== "Annet system" && system === "Annet system") {
-      setOtherSystemShow(false);
-      setOtherSystem("");
-      setShowSimilarChallenges(false); //  Used for testing component. Should be removed!
-    }
-    setSystem(event.target.value);
-    setSystemRequired(false);
-    setRequiredTextShow(false);
-  }
-
-  const handleOtherSystemCHange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOtherSystem(event.target.value);
-  }
-
-  const handleStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStatus(event.target.value);
-  }
-
-  const handleSpecificProblemChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSpecificProblem(event.target.value);
-    setSpecificProblemRequired(false);
-    setRequiredTextShow(false);
-  }
-
-  const handleClearDataProductChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setClearDataProduct(event.target.value);
-    setClearDataProductRequired(false);
-    setRequiredTextShow(false);
-  }
-
-  const handleAccessibleDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAccessibleData(event.target.value);
-    setAccessibleDataRequired(false);
-    setRequiredTextShow(false);
-  }
-
-  const handleDefinedActionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDefinedAction(event.target.value);
-    setDefinedActionRequired(false);
-    setRequiredTextShow(false);
-  }
-
-  //  Checks if the input fields have input.
-  const checkRequiredFields = () => {
-    if (title.length < lengthRequirement) {
-      setTitleRequired(true);
-      setRequiredTextShow(true);
-    }
-    if (system.length < lengthRequirement) {
-      setSystemRequired(true);
-      setRequiredTextShow(true);
-    }
-    if (specificProblem.length < lengthRequirement) {
-      setSpecificProblemRequired(true);
-      setRequiredTextShow(true);
-    }
-    if (clearDataProduct.length < lengthRequirement) {
-      setClearDataProductRequired(true);
-      setRequiredTextShow(true);
-    }
-    if (accessibleData.length < lengthRequirement) {
-      setAccessibleDataRequired(true);
-      setRequiredTextShow(true);
-    }
-    if (definedAction.length < lengthRequirement) {
-      setDefinedActionRequired(true);
-      setRequiredTextShow(true);
-    }
-  }
-
-  //  Pust func. Future work: post the challenge to db. Should also create an interface for challenges. 
-  const postChallenge = () => {
-    if (!requiredTextShow) {
-      
-      alert("Title: " + title + "\nSystem: " + system + "\notherSystem" + otherSystem + "\nStatus: " + status +
-       "\nSpecProblem: " + specificProblem + "\nclearDataProduct: " + clearDataProduct +
-        "\naccessibleData: " + accessibleData + "\ndefinedAction: " + definedAction);
-      }
-  }
-  
-  //  Event handler for send button.
-  const handleSend = () => {
-    checkRequiredFields();
-    postChallenge();
   }
 
   return (
-    <div className="App">
-        <Header />
-        
-        <div className="bg-background  flex flex-col items-center">
-            <h1 className="text-3xl text-text p-5">Ny utfordring!</h1>
+    <div className='App'>
+      <Header />
 
-            <TextField
+      <Box component='form' onSubmit={(e) => {
+        postChallenge(e)
+      }} className='bg-background   flex flex-col items-center'>
+        <h1 className='text-3xl text-text p-5'>Ny utfordring!</h1>
+
+        <TextField
           required
-          id="outlined-required"
-          label="Tittel"
-          size="small"
-          onChange={handleTitleChange}
-          sx={ titleRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle,     width: "60vw",
-          maxWidth: "375px", } : { ...textFieldStyle,     width: "60vw",
-          maxWidth: "375px", }}
+          id='outlined-required'
+          label='Tittel'
+          size='small'
+          name='title'
+          value={title}
+          onChange={e =>
+            { setTitle(e.target.value); }
+          }
+          sx={{
+            ...textFieldStyle,
+            width: '60vw',
+            maxWidth: '375px',
+          }}
         />
 
         <TextField
-    
+
           select
           required
-          label="System"
-          size="small"
-          onChange={handelSystemChange}
-          sx={ systemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "60vw",
-          maxWidth: "375px", marginTop: "10px"} : { ...textFieldStyle, width: "60vw",
-          maxWidth: "375px", marginTop: "10px"}}
+          label='System'
+          name='system'
+          size='small'
+          value={system}
+          onChange={checkSystem}
+          sx={{
+            ...textFieldStyle,
+            width: '60vw',
+            maxWidth: '375px',
+            marginTop: '10px',
+          }}
         >
           {systems.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -235,120 +166,184 @@ function NewChallenge() {
         </TextField>
         {otherSystemShow ? <TextField
           required
-          id="outlined-required"
-          label="Annet system"
-          size="small"
-          onChange={handleOtherSystemCHange}
-          sx={{ backgroundColor: "white", width: "60vw", maxWidth: "375px", marginTop: "10px"}}
+          id='outlined-required'
+          label='Annet system'
+          size='small'
+          value={otherSystem}
+          name='otherSystem'
+          onChange={e => {
+            setSystem(e.target.value)
+            setOtherSystem(e.target.value)
+          }}
+          sx={{
+            backgroundColor: 'white',
+            width: '60vw',
+            maxWidth: '375px',
+            marginTop: '10px',
+          }}
         /> : <div></div>}
 
-        <FormLabel id="demo-radio-buttons-group-label" className="mt-5">Status</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-radio-buttons-group-label"
-        className="mb-5"
-        defaultValue="newChallenge"
-        name="radio-buttons-group"
-        onChange={handleStatusChange}
-      >
-        <FormControlLabel value="newChallenge" control={<Radio sx={{ '&.Mui-checked': {color: "#FF002F"}}}/>} label="Ny utfordring" />
-        <FormControlLabel value="inProcess" control={<Radio sx={{ '&.Mui-checked': {color: "#F0AE2F"}}}/>} label="Påbegynnt" />
-        <FormControlLabel value="Solved" control={<Radio sx={{ '&.Mui-checked': {color: "#2BB728"}}}/>} label="Løst" />
-      </RadioGroup>
-        
-      <div className="flex flex-col">
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
-        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1"} text={"Spesifikt problem"}/>
-        <TextField
-          required
-          id="outlined-multiline-static"
-          multiline
-          rows={8}
-          maxRows={8}
-          label="Spesifikt problem"
-          placeholder= "Problemet vårt er at … [sett inn spesifikk problemstilling]. F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes, men som likevel koster penger for enhetene."
-          size="small"
-          onChange={handleSpecificProblemChange}
-          sx={ specificProblemRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
-         } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
-           }}
-        />
-      </div>
-
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
-        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2"} text={"Dataprodukt"}/>
-        <TextField
-          required
-          id="outlined-multiline-static"
-          multiline
-          rows={8}
-          maxRows={8}
-          label="Tydelig dataprodukt"
-          placeholder="Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser]. F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,"
-          size="small"
-          onChange={handleClearDataProductChange}
-          sx={ clearDataProductRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
-        } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
+        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status</FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby='demo-radio-buttons-group-label'
+          className='mb-5'
+          defaultValue='newChallenge'
+          name='status'
+          value={status}
+          onChange={e => {
+            setStatus(e.target.value)
           }}
-        />
-      </div>
+        >
+          <FormControlLabel value='newChallenge' control={<Radio sx={{ '&.Mui-checked': { color: '#FF002F' } }} />}
+                            label='Ny utfordring' />
+          <FormControlLabel value='inProcess' control={<Radio sx={{ '&.Mui-checked': { color: '#F0AE2F' } }} />}
+                            label='Påbegynnt' />
+          <FormControlLabel value='Solved' control={<Radio sx={{ '&.Mui-checked': { color: '#2BB728' } }} />}
+                            label='Løst' />
+        </RadioGroup>
 
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
-        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3"} text={"Tilgjengelig data"}/>
-        <TextField
-          required
-          id="outlined-multiline-static"
-          multiline
-          rows={8}
-          maxRows={8}
-          label="Tilgjengelige data"
-          placeholder="Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke]. F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,"
-          size="small"
-          onChange={handleAccessibleDataChange}
-          sx={ accessibleDataRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
-        } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
-          }}
-        />
-      </div>
+        <div className='flex flex-col'>
+          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+            <ODACircle
+              style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
+              text={'Spesifikt problem'} />
+            <TextField
+              required
+              id='outlined-multiline-static'
+              multiline
+              value={specificProblem}
+              onChange={e => {
+                setSpecificProblem(e.target.value)
+              }}
+              name='specificProblem'
+              rows={8}
+              maxRows={8}
+              label='Spesifikt problem'
+              placeholder='Problemet vårt er at … [sett inn spesifikk problemstilling]. F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes, men som likevel koster penger for enhetene.'
+              size='small'
+              sx={{
+                ...textFieldStyle,
+                width: '40vw',
+                minWidth: '215px',
+                maxWidth: '600px',
+                height: '100%',
+              }}
+            />
+          </div>
 
-      <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8">
-        <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4"} text={"Definert handling"}/>
-        <TextField
-          required
-          id="outlined-multiline-static"
-          multiline
-          rows={8}
-          maxRows={8}
-          label="Definert handling"
-          placeholder="For å løse dette vil vi … [liste over tiltak du ønsker å implementere]. F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre, og bevisstgjøre enhetsledere på kostnaden ved lisenser."
-          size="small"
-          onChange={handleDefinedActionChange}
-          sx={ definedActionRequired ? { ...textFieldStyle, ...textFieldRequiredBordersStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
-        } : { ...textFieldStyle, width: "40vw", minWidth: "215px", maxWidth: "600px", height: "100%"
-          }}
-        />
-      </div>
-      </div>
-      
-      {showSimilarChallenges ? 
-      <div className=" bg-white h-80 w-4/5 px-3 py-2">
-        <h2 className="text-text underline underline-offset-2 text-left mb-2">Like utfordringer</h2>
-        <div className="flex flex-row flex-nowrap overflow-auto gap-4">
-      
+          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+            <ODACircle
+              style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
+              text={'Dataprodukt'} />
+            <TextField
+              required
+              id='outlined-multiline-static'
+              multiline
+              name='dataProduct'
+              rows={8}
+              maxRows={8}
+              value={clearDataProduct}
+              onChange={e => {
+                setClearDataProduct(e.target.value)
+              }}
+              label='Tydelig dataprodukt'
+              placeholder='Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser]. F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,'
+              size='small'
+              sx={{
+                ...textFieldStyle,
+                width: '40vw',
+                minWidth: '215px',
+                maxWidth: '600px',
+                height: '100%',
+              }}
+            />
+          </div>
+
+          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+            <ODACircle
+              style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
+              text={'Tilgjengelig data'} />
+            <TextField
+              required
+              id='outlined-multiline-static'
+              multiline
+              rows={8}
+              maxRows={8}
+              value={accessibleData}
+              onChange={e => {
+                setAccessibleData(e.target.value)
+              }}
+              name='accessibleData'
+              label='Tilgjengelige data'
+              placeholder='Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke]. F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,'
+              size='small'
+              sx={{
+                ...textFieldStyle,
+                width: '40vw',
+                minWidth: '215px',
+                maxWidth: '600px',
+                height: '100%',
+              }}
+            />
+          </div>
+
+          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+            <ODACircle
+              style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
+              text={'Definert handling'} />
+            <TextField
+              required
+              id='outlined-multiline-static'
+              multiline
+              rows={8}
+              maxRows={8}
+              name='definedAction'
+              label='Definert handling'
+              value={definedAction}
+              onChange={e => {
+                setDefinedAction(e.target.value)
+              }}
+              placeholder='For å løse dette vil vi … [liste over tiltak du ønsker å implementere]. F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre, og bevisstgjøre enhetsledere på kostnaden ved lisenser.'
+              size='small'
+              sx={{
+                ...textFieldStyle,
+                width: '40vw',
+                minWidth: '215px',
+                maxWidth: '600px',
+                height: '100%',
+              }}
+            />
+          </div>
         </div>
-      </div> 
-      : ""}
 
-      {requiredTextShow ? <p className="text-statusRed">Fyll inn de påkrevde boksene!</p> : ""}
+        {showSimilarChallenges ?
+          <div className=' bg-white h-80 w-4/5 px-3 py-2'>
+            <h2 className='text-text underline underline-offset-2 text-left mb-2'>Like utfordringer</h2>
+            <div className='flex flex-row flex-nowrap overflow-auto gap-4'>
 
-      <Button variant="contained" onClick={handleSend} sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
-      backgroundColor: '#3d3f6b',
-  }}}>Send</Button>
-      </div>
+            </div>
+          </div>
+          : ''}
 
-      <Footer />   
+
+        <Button variant='contained' type='submit' sx={{
+
+          color: 'white',
+          backgroundColor: '#0D264A',
+          width: '150px',
+          borderRadius: '45px',
+          marginBottom: '2rem',
+          marginTop: '1rem',
+          '&:hover': {
+            backgroundColor: '#3d3f6b',
+          },
+        }}>Send</Button>
+      </Box>
+
+      <Footer />
     </div>
   )
 }
 
-export default NewChallenge;
+export default NewChallenge

@@ -13,6 +13,7 @@ interface AddOdaProblemParams {
   definedAction: string
   supplier: string
   userMail: string
+  status: string
 }
 
 interface AddUserParams {

@@ -27,7 +27,7 @@ export default {
     Filter (regex(?title, "${category}") || regex(?specificProblemDescription, "${category}")).
     
 } limit ${limit} offset ${offset}`,
-  addODAProblem: (nodeName: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string) => `
+  addODAProblem: (nodeName: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string, status) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -53,7 +53,7 @@ export default {
     oda:${nodeName} oda:hasVendor oda:${supplier}.
     
     oda:${nodeName} oda:ODATitle "${title}".
-    oda:${nodeName} oda:ODAprogress "Ny Utfordring".
+    oda:${nodeName} oda:ODAprogress "${status}".
     oda:${nodeName}SpecificProblem oda:specificProblemDescription "${specificProblem}".
     oda:${nodeName}ClearDataProduct oda:dataProductDescription "${clearDataProduct}".
     oda:${nodeName}AccessibleData oda:accesibleDataDescription "${accessibleData}".
