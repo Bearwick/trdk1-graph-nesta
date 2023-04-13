@@ -2,7 +2,7 @@ import React from 'react'
 import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import ChallengeCard from '../../components/ChallengeCard'
-import { challengeCardProps, Status, User } from '../../types/types'
+import { type challengeCardProps, type Status } from '../../types/types'
 import { MemoryRouter } from 'react-router-dom'
 import { ChallengeContext } from '../../globalState/ChallengeContext'
 
@@ -10,7 +10,7 @@ import { ChallengeContext } from '../../globalState/ChallengeContext'
 const challengeCorrectData: challengeCardProps = {
     id: '123',
     title: 'Test Challenge',
-    system: 'Test System',
+    vendor: 'Test System',
     status: Status.newChallenge,
     specificProblem: 'Test Specific Problem',
     clearDataProduct: 'Test Clear Data Product',
@@ -23,7 +23,7 @@ const challengeCorrectData: challengeCardProps = {
 const challengeEmptyTitle: challengeCardProps = {
     id: '1234',
     title: '',
-    system: 'aa',
+    vendor: 'aa',
     status: Status.newChallenge,
     specificProblem: 'aa',
     clearDataProduct: 'aa',
@@ -36,7 +36,7 @@ const challengeEmptyTitle: challengeCardProps = {
 const challengeNegativeSubCount: challengeCardProps = {
     id: '12345',
     title: 'Test Challenge',
-    system: 'Test System',
+    vendor: 'Test System',
     status: Status.newChallenge,
     specificProblem: 'Test Specific Problem',
     clearDataProduct: 'Test Clear Data Product',
@@ -49,7 +49,7 @@ const challengeNegativeSubCount: challengeCardProps = {
 const challengeInvalidEmail: challengeCardProps = {
     id: '12345',
     title: 'Test Challenge',
-    system: 'Test System',
+    vendor: 'Test System',
     status: Status.newChallenge,
     specificProblem: 'Test Specific Problem',
     clearDataProduct: 'Test Clear Data Product',
@@ -62,7 +62,7 @@ const challengeInvalidEmail: challengeCardProps = {
 const challengeInvalidPhoneNumb: challengeCardProps = {
     id: '12345',
     title: 'Test Challenge',
-    system: 'Test System',
+    vendor: 'Test System',
     status: Status.newChallenge,
     specificProblem: 'Test Specific Problem',
     clearDataProduct: 'Test Clear Data Product',
@@ -87,11 +87,11 @@ describe("Renders with no errors", () => {
         expect(screen.getByText(challengeCorrectData.title)).toBeInTheDocument()
         expect(screen.getByText(challengeCorrectData.status)).toBeInTheDocument()
         expect(screen.getByText(challengeCorrectData.specificProblem)).toBeInTheDocument()
-        expect(screen.getByText(challengeCorrectData.system)).toBeInTheDocument()
+        expect(screen.getByText(challengeCorrectData.vendor)).toBeInTheDocument()
         expect(screen.getByText(challengeCorrectData.subCount)).toBeInTheDocument()
         expect(screen.getByText(challengeCorrectData.owner.affiliation)).toBeInTheDocument()
     });
-    
+
     it("calls setChallenge on click", () => {
         const setChallengeMock = jest.fn();
         render(

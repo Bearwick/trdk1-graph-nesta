@@ -18,6 +18,7 @@ import {
   type SetAdminParams,
   type SubscribeParams,
 } from '../interfaces/interfaces'
+import { setObject } from '../middleware/convertData'
 
 const router = Router()
 
@@ -52,13 +53,14 @@ router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaPr
   const searchString: string = req.query.searchString
   const category: string = req.query.category
   getODAProblems(limit, offset, searchString, category).then(r => {
-    res.send(r.data.results.bindings)
+    console.log(r.data.results.bindings[0].odaProblem)
+    res.send(setObject(r))
   }).catch((r) => res.send(r))
 })
 
 router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOdaProblemParams>, res: Response) {
   const query = req.query
-  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.definedAction, query.supplier, query.userMail).then(r => {
+  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.definedAction, query.supplier, query.userMail, query.status).then(r => {
     res.send(r)
   }).catch((r) => res.send(r))
 })
@@ -66,7 +68,6 @@ router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOd
 router.get('/NestaGuide', function(_, res: Response) {
   const path = "./public/NestaGuide.pdf";
   if (fs.existsSync(path)) {
-    //res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Need to allow cross domain. Because of CORS-policy.
     res.contentType("application/pdf");
     fs.createReadStream(path).pipe(res);
   } else {
@@ -87,12 +88,12 @@ router.get('/AddUser', function(req: Request<unknown, unknown, unknown, AddUserP
 
 router.get('/FindUser', function(req: Request<unknown, unknown, unknown, FindUserParams>, res: Response) {
   const query = req.query
-  
+
   findUser(query.email, query.password).then(r => {
     if (r.data.results.bindings.toString().length > 0) {
       res.send(true)
     } else {res.send(false)}
-  }).catch(r => res.send(false) )
+  }).catch(() => res.send(false) )
 })
 
 router.get('/AddCategories', function(req: Request<unknown, unknown, unknown, AddCategoriesParams>, res: Response) {

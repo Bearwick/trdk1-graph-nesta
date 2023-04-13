@@ -2,12 +2,12 @@ import type { challengeCardProps } from "../types/types";
 import validateUser from "./validateUser";
 
 function validateChallenge(challenge: challengeCardProps): void {
-    
+
     if (challenge.title === "") {
         throw new Error("Tittel-feltet er tomt")
     }
 
-    if (challenge.system === "") {
+    if (challenge.vendor === "") {
         throw new Error("System-feltet er tomt")
     }
 

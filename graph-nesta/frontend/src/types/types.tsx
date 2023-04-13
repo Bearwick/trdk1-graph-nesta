@@ -22,7 +22,7 @@ export interface ContextUser {
 export interface challengeCardProps {
     id: string;
     title: string;
-    system: string;
+    vendor: string;
     status: Status;
     specificProblem: string;
     clearDataProduct: string;

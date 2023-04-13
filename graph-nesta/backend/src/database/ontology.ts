@@ -13,12 +13,12 @@ const update = async (query: string) => {
 const getODAProblems = async (limit: number, offset: number, searchString: string, category: string) => {
   return await get(queries.getODAProblems(limit, offset, searchString, category))
 }
-const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string) => {
+const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string, status: string) => {
   // Assumes title is unique, otherwise we could end up in a situation where a single ODA problem can have many accessible datas etc.
   // Eventually add a check for this
   // Query will also need to update which user has made the query etc.
   const nodeName: string = title.replace(/\s/g, '')
-  return await update(queries.addODAProblem(nodeName, title, specificProblem, clearDataProduct, accessibleData, definedAction, supplier, userMail))
+  return await update(queries.addODAProblem(nodeName, title, specificProblem, clearDataProduct, accessibleData, definedAction, supplier, userMail, status))
 }
 
 const addCategories = async (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string) => {

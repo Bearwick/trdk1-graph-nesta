@@ -41,7 +41,7 @@ function Search() {
 
   //  Infinite scroll
   const [limit, ] = useState(20);
- 
+
   const placeHolder : User = {
     email: "edvard.bjornevik@nesodden.kommune.no",
     telephone: "123 45 678",
@@ -66,7 +66,7 @@ function Search() {
   const odaPlaceholder : challengeCardProps = {
     id: "12345",
     title: "Lisens",
-    system: "Bluegaarden",
+    vendor: "Bluegaarden",
     status: Status.newChallenge,
     specificProblem: "Lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt.",
     clearDataProduct: "Områdekart som viser sannsynligheten for ringepigging for en gitt dato",
@@ -109,7 +109,7 @@ function Search() {
     backgroundColor: "white",
       '& label.Mui-focused': {
         color: '#0D264A',
-      }, 
+      },
       '& .MuiOutlinedInput-root': {
         '&:hover fieldset': {
           borderColor: '#0D264A',
@@ -213,23 +213,26 @@ function Search() {
                 <p className="">{ searchHits } treff</p>
 
           </div>
-          
 
-              {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> : 
+
+              {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> :
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
                <ChallengeCard { ...odaPlaceholder } />
-               <ChallengeCard id={"12345"} title={"Økonomi"} system={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder2}/>
-               <ChallengeCard id={"12345"} title={"Skole"} system={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder3}/>
-               <ChallengeCard id={"12345"} title={"Turn down for what!"} system={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder4}/>
+               <ChallengeCard id={"12345"} title={"Økonomi"} vendor={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder2}/>
+               <ChallengeCard id={"12345"} title={"Skole"} vendor={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder3}/>
+               <ChallengeCard id={"12345"} title={"Turn down for what!"} vendor={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder4}/>
+              {ODAproblems.map(data =>
+              <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={5} owner={data.owner} subs={subPlaceholder2}/>
+              )}
                </div>
         }
 
-             
-           
+
+
           </div>
           <Footer />
       </div>
     )
   }
-  
+
   export default Search;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getODAproblems } from "../api/odaAPI";
+import { getOdaProblems } from "../api/odaAPI";
 import type { IfetchType, challengeCardProps } from "../types/types";
 
 
@@ -15,9 +15,10 @@ function useFetch(query:IfetchType, offset: number) {
         multiplier = 1;
     }
 
-      getODAproblems(offset, query.limit*multiplier, query.categoryFilter, query.searchPhrase, query.orderBy)
-        .then( res => res.json())
-        .then(setODAproblems)
+      getOdaProblems(offset, query.limit*multiplier, query.categoryFilter, query.searchPhrase)
+        .then(res => {
+          setODAproblems(res.data)
+        })
         .catch(() => {setIsError(true)})
         .finally(() => {setIsLoading(false)})
   }, [offset]);

@@ -33,12 +33,12 @@ function InspectChallenge() {
     const [statusColor, setStatusColor] = useState("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
     const {challenge, } = useContext(ChallengeContext);
 
-    //  Sets the const´s above by using global state. 
+    //  Sets the const´s above by using global state.
     useEffect(() => {
 
         setTitle(challenge.title);
         setStatus(challenge.status);
-        setSystem(challenge.system);
+        setSystem(challenge.vendor);
         setSubCount(challenge.subCount);
         setAffiliation(challenge.owner.affiliation);
         setSpecificProblem(challenge.specificProblem);
@@ -62,11 +62,11 @@ function InspectChallenge() {
             case Status.newChallenge:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
                 break;
-    
+
             case Status.started:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusOrange");
                 break;
-    
+
             case Status.solved:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen");
                 break;
@@ -75,27 +75,27 @@ function InspectChallenge() {
 
     // TODO: update database.
     const handleSubClick = () => {
-        setIsSubbed(!isSubbed);   
+        setIsSubbed(!isSubbed);
     }
 
 
     return (
       <div className="App">
         <Header />
-        
+
         <div className="bg-background flex flex-col items-center">
             <div className="text-text px-5 py-3 w-full items-center justify-center flex flex-col mb-5">
-       
-                <h1 className="text-4xl mb-2.5">{ title }</h1>
-              
 
-                
+                <h1 className="text-4xl mb-2.5">{ title }</h1>
+
+
+
             <section className=" items-end flex flex-row justify-between text-xs mb-1.5 gap-2">
                 <div className="flex flex-row">
                     <PersonalVideoIcon sx={{ fontSize: "1rem"}}/>
                     <p className="ml-1.5 whitespace-nowrap">{system}</p>
                 </div>
-  
+
                 <div className="flex flex-row">
                     <PeopleIcon sx={{fontSize: "1rem"}}/>
                     <p className="ml-1.5 whitespace-nowrap">{subCount}</p>
@@ -138,7 +138,7 @@ function InspectChallenge() {
           <div className="flex flex-col w-[65vw] text-left mb-5 gap-1">
             <h2 className="text-text underline underline-offset2 text-2xl">Kontaktinformasjon</h2>
 
-         
+
             <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><EmailIcon sx={{fontSize: "1rem"}}/>{ email }</div>
             <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><PhoneIcon sx={{fontSize: "1rem"}}/>{ telephone }</div>
             <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><LocationCityIcon sx={{fontSize: "1rem"}}/>{ affiliation }</div>
@@ -150,24 +150,24 @@ function InspectChallenge() {
                 <h1 className="text-text underline underline-offset2 text-2xl flex flex-row items-center whitespace-nowrap">  <PeopleIcon sx={{fontSize: "2rem", marginRight: "0.5rem"}}/>{ subCount } har samme problem</h1>
                 <Button variant="contained" onClick={handleSubClick} sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", '&:hover': {backgroundColor: '#3d3f6b',}}}> {isSubbed ? "Fjern fra listen": "Abonner"}</Button>
             </div>
-            
-            {isSubs ? 
-             
-            subs.map((userprops: User) => 
+
+            {isSubs ?
+
+            subs.map((userprops: User) =>
              <div key={userprops.email}>
                 <SubInfoComponent { ...userprops } />
             </div>
              )
             : null
-            }      
-         
+            }
+
           </div>
 
         </div>
-          
+
           <Footer />
       </div>
     );
   }
-  
+
   export default InspectChallenge;
