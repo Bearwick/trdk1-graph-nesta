@@ -7,16 +7,15 @@ import Search from './pages/Search'
 import ErrorPage from './pages/ErrorPage'
 import UserProfile from './pages/UserProfile'
 import RegisterUser from './pages/RegisterUser';
+import InspectChallenge from './pages/InspectChallenge'
+import AdminStaging from './pages/AdminStaging'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ChallengeProvider from './globalState/ChallengeContext';
 import React from 'react'
-import InspectChallenge from './pages/InspectChallenge'
-
 
 export default function App() {
   
-
   return (
 
     <ChallengeProvider>
@@ -32,7 +31,8 @@ export default function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<Home />} />
         <Route path="BrukerProfil" element={<UserProfile />} />
-        <Route path="inspiserUtfordring" element={<InspectChallenge />} />
+        <Route path="GodkjennProblem" element={<AdminStaging />} />
+        <Route path="inspiserUtfordring" element={<InspectChallenge />} />   
     </Routes>
   </BrowserRouter>
   </ChallengeProvider>

@@ -33,8 +33,12 @@ function Header(){
                         <Menu {...bindMenu(popupState)}>
                         {user.isLoggedIn ? <Link to="/MinProfil"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
                             <Link to="/MineUtfordringer"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Mine utfordringer</div></Link>
-                            <Link to="/NyUtfordring"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Ny utfordring</div></Link>
+                            <Link to="/NyUtfordring"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Nytt problem</div></Link>
                             <Link to="/Søk"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Søk</div></Link>
+                            {user.isAdmin ? <div className="flex flex-col">
+                                <Link to="/GodkjennProblem"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Godkjenn problem</div></Link>  
+                                <Link to="/RegistrerBruker"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Ny bruker</div></Link></div> 
+                                : null}
                         </Menu>
                         </React.Fragment>
                     )}
