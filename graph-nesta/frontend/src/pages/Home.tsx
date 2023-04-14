@@ -42,15 +42,19 @@ function Home() {
             <p className="max-w-2xl text-sm sm:text-base mb-5">Alle norske kommuner har samme lovpålagte ansvarsområder. Det betyr at en annen kommune kanskje har eller har hatt samme utfordring! Søk etter din utfordring, kanskje er den allerede løst eller noen arbeider med en løsning. Hvis ikke, opprett en ny utfordring! </p>
             </div>
             
-            <div className="flex flex-col gap-4 sm:flex-row sm:gap-2 mb-2">
+          <div className="flex flex-row gap-4 md:gap-2 mb-2">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-2">
             <Link to="/Søk"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
                 Søk</Button></Link>
           <Link to="/NyUtfordring"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-          Ny utfordring</Button></Link>
-          {user.isAdmin ? <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-          Ny bruker</Button></Link> : null}
-
-            </div>
+          Nytt problem</Button></Link>
+          </div>
+          
+          {user.isAdmin ? <div className="flex flex-col md:flex-row gap-4 md:gap-2"><Link to="/GodkjennProblem"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+          Godkjenn problem</Button></Link>  <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+          Ny bruker</Button></Link></div>: null}
+        
+          </div>
           
           </div>
 
