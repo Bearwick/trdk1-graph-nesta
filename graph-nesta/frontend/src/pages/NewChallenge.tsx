@@ -24,8 +24,8 @@ function NewChallenge() {
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
   useEffect(() => {
     if (!user.isLoggedIn) {
-      if (!localStorage.getItem("Email") === null) {
-        const email = localStorage.getItem("Email") ?? "";
+      const email = localStorage.getItem("Email") ?? "";
+      if (email) {
         const password = localStorage.getItem("Password") ?? "";
         setUser({
           email,
@@ -97,10 +97,13 @@ function NewChallenge() {
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, 'andreas.r.berg@live.no', status).then(() => {
-      alert('Success')
+    addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
+      console.log('ODAproblem posted succesfully')
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // for safari, chrome, edge, etc.
+      navigate("/Hjem");
     }).catch(() => {
-      alert('Failure')
+      console.log('Failure posting ODAproblem')
     })
 
   }
@@ -193,7 +196,7 @@ function NewChallenge() {
         </RadioGroup>
 
         <div className='flex flex-col'>
-          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
               text={'Spesifikt problem'} />
@@ -207,7 +210,6 @@ function NewChallenge() {
               }}
               name='specificProblem'
               rows={8}
-              maxRows={8}
               label='Spesifikt problem'
               placeholder='Problemet vårt er at … [sett inn spesifikk problemstilling]. F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes, men som likevel koster penger for enhetene.'
               size='small'
@@ -221,7 +223,7 @@ function NewChallenge() {
             />
           </div>
 
-          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
               text={'Dataprodukt'} />
@@ -231,7 +233,6 @@ function NewChallenge() {
               multiline
               name='dataProduct'
               rows={8}
-              maxRows={8}
               value={clearDataProduct}
               onChange={e => {
                 setClearDataProduct(e.target.value)
@@ -249,7 +250,7 @@ function NewChallenge() {
             />
           </div>
 
-          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-rowh-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
               text={'Tilgjengelig data'} />
@@ -258,7 +259,6 @@ function NewChallenge() {
               id='outlined-multiline-static'
               multiline
               rows={8}
-              maxRows={8}
               value={accessibleData}
               onChange={e => {
                 setAccessibleData(e.target.value)
@@ -277,7 +277,7 @@ function NewChallenge() {
             />
           </div>
 
-          <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
               text={'Definert handling'} />
@@ -286,7 +286,6 @@ function NewChallenge() {
               id='outlined-multiline-static'
               multiline
               rows={8}
-              maxRows={8}
               name='definedAction'
               label='Definert handling'
               value={definedAction}
