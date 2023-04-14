@@ -1,11 +1,12 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { addUser, findUser } from "../api/odaAPI";
 import MenuItem from "@mui/material/MenuItem";
+import { ChallengeContext } from "../globalState/ChallengeContext";
 
 function RegisterUser(){
 
@@ -19,6 +20,15 @@ function RegisterUser(){
     const[showRequiredMessage, setShowRequiredMessage] = useState(false);
     const[showUserExistMessange, setShowUserExistMessage] = useState(false);
     const[showErrorMessage, setShowErrorMessage] = useState(false);
+    const[showAddedUserText, setShowAddedUserText] = useState(false);
+
+    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+    const { user } = useContext(ChallengeContext);
+    useEffect(() => {
+      if (!user.isAdmin) {
+          navigate("/LoggInn");
+        }   
+    },[navigate, user.isAdmin]);
 
     const textFieldStyle = {
         backgroundColor: "white",
@@ -89,9 +99,7 @@ function RegisterUser(){
         } else {
           addUser(tlf, email, affiliation, password).then(() => {
             console.log("User added");
-            localStorage.setItem("Email", email);
-            localStorage.setItem("Password", password);
-            navigate("/Hjem");
+            setShowAddedUserText(true);
 
           }).catch(() => {setShowErrorMessage(true)})
         }
@@ -155,12 +163,12 @@ function RegisterUser(){
                       sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
 
-                    {showRequiredMessage? <p className="mt-0 text-statusRed">Alle feltene må fylles ut!</p> : null}
-                    {showUserExistMessange? <p className="mt-0 text-statusRed">Bruker finnes allerede!</p> : null}
-                    {showErrorMessage? <p className="mt-0 text-statusRed">Det har skjedd en feil...</p> : null}
+                    {showRequiredMessage ? <p className="mt-0 text-statusRed">Alle feltene må fylles ut!</p> : null}
+                    {showUserExistMessange ? <p className="mt-0 text-statusRed">Bruker finnes allerede!</p> : null}
+                    {showErrorMessage ? <p className="mt-0 text-statusRed">Det har skjedd en feil...</p> : null}
+                    {showAddedUserText ? <p className="mt-0 text-statusGreen">Bruker lagt ti!</p>: null}
 
                   </section>
-                  <Link to="/LoggInn"><p className="text-right underline hover:text-linkBlue">Har du allerede en konto?</p></Link>
                   </section>
                   <Button variant="contained" onClick={handlePost} sx={{ color: "white", backgroundColor: "#0D264A", width: "180px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
                     backgroundColor: '#3d3f6b',

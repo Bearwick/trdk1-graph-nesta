@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { findUser } from "../api/odaAPI";
@@ -50,6 +50,7 @@ function Login() {
           email,
           password,
           isLoggedIn: true,
+          isAdmin: true,
       });
         
         navigate("/Hjem")
@@ -87,7 +88,6 @@ function Login() {
             />
             {showNoUser? <p className="mt-0 text-statusRed">Ingen bruker funnet</p> : null}
           </section>
-          <Link to="/RegistrerBruker"><p className="text-right underline hover:text-linkBlue">Har du ikke bruker?</p></Link>
           </section>
 
             <Button variant="contained" onClick={handleLogin} sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {

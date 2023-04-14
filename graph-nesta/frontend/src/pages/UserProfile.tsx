@@ -19,7 +19,8 @@ function UserProfile() {
           setUser({
             email,
             password,
-            isLoggedIn: true
+            isLoggedIn: true,
+            isAdmin: false,
           });
         } else {
           navigate("/LoggInn");
@@ -35,7 +36,8 @@ function UserProfile() {
         setUser({
             email: "",
             password: "",
-            isLoggedIn: false
+            isLoggedIn: false,
+            isAdmin: false,
           });
 
         navigate("/LoggInn");

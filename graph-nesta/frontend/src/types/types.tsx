@@ -17,6 +17,7 @@ export interface ContextUser {
     email: string;
     password: string;
     isLoggedIn: boolean;
+    isAdmin: boolean;
 }
 
 export interface challengeCardProps {

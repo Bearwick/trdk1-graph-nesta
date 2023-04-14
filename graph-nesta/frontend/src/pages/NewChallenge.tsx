@@ -30,7 +30,8 @@ function NewChallenge() {
         setUser({
           email,
           password,
-          isLoggedIn: true
+          isLoggedIn: true,
+          isAdmin: false,
         });
       } else {
         navigate("/LoggInn");
@@ -250,7 +251,7 @@ function NewChallenge() {
             />
           </div>
 
-          <div className='flex flex-col sm:flex-rowh-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
               text={'Tilgjengelig data'} />
