@@ -18,8 +18,9 @@ function Search() {
 
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
   useEffect(() => {
+    alert(user.isLoggedIn);
     if (!user.isLoggedIn) {
-      if (!localStorage.getItem("Email") === null) {
+      if (localStorage.getItem("Email")) {
         const email = localStorage.getItem("Email") ?? "";
         const password = localStorage.getItem("Password") ?? "";
         setUser({
@@ -221,13 +222,13 @@ function Search() {
                <ChallengeCard id={"12345"} title={"Økonomi"} vendor={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder2}/>
                <ChallengeCard id={"12345"} title={"Skole"} vendor={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder3}/>
                <ChallengeCard id={"12345"} title={"Turn down for what!"} vendor={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder4}/>
-              {ODAproblems.map(data =>
-              <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={5} owner={data.owner} subs={subPlaceholder2}/>
-              )}
+              
+              {ODAproblems.map((data) => (
+                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={5} owner={data.owner} subs={subPlaceholder2}/>
+              ))}
+
                </div>
         }
-
-
 
           </div>
           <Footer />

@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import ODACircle from '../components/ODACircle';
 import { useNavigate } from 'react-router-dom';
 import { ChallengeContext } from '../globalState/ChallengeContext';
+import Box from '@mui/material/Box';
+import { addOdaProblem } from '../api/odaAPI';
 //  import ChallengeCard from '../components/ChallengeCard';
 
 function NewChallenge() {
@@ -35,19 +37,6 @@ function NewChallenge() {
       }
     }      
   },[navigate, setUser, user.isLoggedIn]);
-
-  //  Input constants.
-  const [title, setTitle] = useState("");
-  const [system, setSystem] = useState("");
-  const [otherSystem, setOtherSystem] = useState("");
-  const [otherSystemShow, setOtherSystemShow] = useState(false);
-  const [status, setStatus] = useState("newChallenge");
-  const [specificProblem, setSpecificProblem] = useState("");
-  const [clearDataProduct, setClearDataProduct] = useState("");
-  const [accessibleData, setAccessibleData] = useState("");
-  const [definedAction, setDefinedAction] = useState("");
-
-function NewChallenge () {
 
   const [title, setTitle] = useState('')
   const [system, setSystem] = useState('')
@@ -346,4 +335,4 @@ function NewChallenge () {
   )
 }
 
-export default NewChallenge
+export default NewChallenge;
