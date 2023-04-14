@@ -14,8 +14,8 @@ function MyChallenges() {
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
   useEffect(() => {
     if (!user.isLoggedIn) {
-      if (!localStorage.getItem("Email") === null) {
-        const email = localStorage.getItem("Email") ?? "";
+      const email = localStorage.getItem("Email") ?? "";
+      if (email) {
         const password = localStorage.getItem("Password") ?? "";
         setUser({
           email,

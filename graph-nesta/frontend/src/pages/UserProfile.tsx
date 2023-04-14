@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Footer from "../components/Footer";
 import Nav from "../components/Header";
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,6 +9,24 @@ import { ChallengeContext } from '../globalState/ChallengeContext';
 function UserProfile() {
     const { user, setUser } = useContext(ChallengeContext);
     const navigate = useNavigate();
+  
+    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+    useEffect(() => {
+      if (!user.isLoggedIn) {
+        const email = localStorage.getItem("Email") ?? "";
+        if (email) {
+          const password = localStorage.getItem("Password") ?? "";
+          setUser({
+            email,
+            password,
+            isLoggedIn: true
+          });
+        } else {
+          navigate("/LoggInn");
+        }
+      }      
+    },[navigate, setUser, user.isLoggedIn]);
+
 
     const handleLogout = () => {
         localStorage.setItem("Email", "")

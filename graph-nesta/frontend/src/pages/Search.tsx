@@ -20,8 +20,8 @@ function Search() {
   useEffect(() => {
     alert(user.isLoggedIn);
     if (!user.isLoggedIn) {
-      if (localStorage.getItem("Email")) {
-        const email = localStorage.getItem("Email") ?? "";
+      const email = localStorage.getItem("Email") ?? "";
+      if (email) {
         const password = localStorage.getItem("Password") ?? "";
         setUser({
           email,
