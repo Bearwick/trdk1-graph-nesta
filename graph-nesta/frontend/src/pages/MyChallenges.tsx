@@ -20,7 +20,8 @@ function MyChallenges() {
         setUser({
           email,
           password,
-          isLoggedIn: true
+          isLoggedIn: true,
+          isAdmin: false,
         });
       } else {
         navigate("/LoggInn");

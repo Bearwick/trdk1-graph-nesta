@@ -38,7 +38,8 @@ const initialChallengeCard: ChallengeContextInterface = {
     user: {
         email: "-",
         password: "-",
-        isLoggedIn: false
+        isLoggedIn: false,
+        isAdmin: false
     },
     setUser: (_user : ContextUser) => {}
 } as any // as ChallengeContextInferface
@@ -58,7 +59,8 @@ export default function ChallengeProvider({children} : ChallengeProviderProps){
     const [user, setUser] = useState({
         email: "",
         password: "",
-        isLoggedIn: false
+        isLoggedIn: false,
+        isAdmin: false
     })
     
     const [challenge, setChallenge] = useState<challengeCardProps>({

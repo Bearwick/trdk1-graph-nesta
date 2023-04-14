@@ -20,7 +20,8 @@ function Home() {
           setUser({
             email,
             password,
-            isLoggedIn: true
+            isLoggedIn: true,
+            isAdmin: false,
           });
         }
       }      
@@ -46,6 +47,8 @@ function Home() {
                 Søk</Button></Link>
           <Link to="/NyUtfordring"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
           Ny utfordring</Button></Link>
+          {user.isAdmin ? <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+          Ny bruker</Button></Link> : null}
 
             </div>
           
