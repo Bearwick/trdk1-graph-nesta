@@ -148,7 +148,16 @@ export default {
     ?u oda:userMail "${userEmail}".
     bind(?u as ?user)
   }
-  `
+  `,
+  getUser: (userEmail: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  select * where {
+    ?user oda:userMail "${userEmail}".
+    ?user oda:userMail ?mail.
+    ?user oda:userPhoneNumber ?phone.
+    ?user oda:userAffiliation ?affiliation.
+    ?user oda:isAdmin ?isAdmin
+}`
 
 
 }
