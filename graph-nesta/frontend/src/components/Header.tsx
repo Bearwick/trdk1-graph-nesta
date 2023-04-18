@@ -31,13 +31,13 @@ function Header(){
                             {popupState.isOpen ? <CloseIcon onClick={onChange} sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}}/>: <MenuIcon onClick={onChange}  sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}} />}
                         </Button>
                         <Menu {...bindMenu(popupState)}>
-                        {user.isLoggedIn ? <Link to="/MinProfil"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
-                            <Link to="/MineUtfordringer"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Mine utfordringer</div></Link>
-                            <Link to="/NyUtfordring"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Nytt problem</div></Link>
-                            <Link to="/Søk"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Søk</div></Link>
+                        {user.isLoggedIn ? <Link to="/MinProfil"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
+                            <Link to="/MineProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Mine problem</div></Link>
+                            <Link to="/NyUtfordring"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Nytt problem</div></Link>
+                            <Link to="/Søk"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Søk</div></Link>
                             {user.isAdmin ? <div className="flex flex-col">
-                                <Link to="/GodkjennProblem"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Godkjenn problem</div></Link>  
-                                <Link to="/RegistrerBruker"><div className="text-left pl-4 h-10 hover:bg-menuHover flex items-center">Ny bruker</div></Link></div> 
+                                <Link to="/GodkjennProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Godkjenn problem</div></Link>  
+                                <Link to="/RegistrerBruker"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Ny bruker</div></Link></div> 
                                 : null}
                         </Menu>
                         </React.Fragment>
