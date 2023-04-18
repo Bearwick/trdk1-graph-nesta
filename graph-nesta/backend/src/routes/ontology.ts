@@ -4,7 +4,7 @@ import {
   addCategories,
   addODAProblem,
   addUser, findUser,
-  getODAProblems,
+  getODAProblems, getUser,
   setAdmin,
   subscribe,
   unsubscribe,
@@ -121,6 +121,13 @@ router.get('/Unsubscribe', function(req: Request<unknown, unknown, unknown, Subs
   const query = req.query
   unsubscribe(query.email, query.ODAProblem).then(r => {
     res.send(r)
+  }).catch(r => res.send(r))
+})
+
+router.get('/UserInfo', function(req: Request<unknown, unknown, unknown, FindUserParams>, res: Response) {
+  const {email} = req.query
+  getUser(email).then(r => {
+    res.send(r.data.results.bindings)
   }).catch(r => res.send(r))
 })
 

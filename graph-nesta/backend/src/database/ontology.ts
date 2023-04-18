@@ -48,4 +48,8 @@ const subscribe = async (email: string, ODAProblem: string) => {
 const unsubscribe = async(email: string, ODAProblem: string) => {
   return await update(queries.unsubscribe(email, ODAProblem))
 }
-export { getODAProblems, addODAProblem, addUser, addCategories, setAdmin, subscribe, unsubscribe, findUser }
+
+const getUser = async(email: string) => {
+  return await get(queries.getUser(email))
+}
+export { getODAProblems, addODAProblem, addUser, addCategories, setAdmin, subscribe, unsubscribe, findUser, getUser }
