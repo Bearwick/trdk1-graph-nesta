@@ -25,7 +25,7 @@ export default function App() {
         <Route path="MinProfil" element={<UserProfile />} />
         <Route path="LoggInn" element={<Login />} />
         <Route path="RegistrerBruker" element={<RegisterUser/>}></Route>
-        <Route path="MineUtfordringer" element={<MyChallenges />} />
+        <Route path="MineProblem" element={<MyChallenges />} />
         <Route path="NyUtfordring" element={<NewChallenge />} />
         <Route path="Søk" element={<Search />} />
         <Route path="*" element={<ErrorPage />} />

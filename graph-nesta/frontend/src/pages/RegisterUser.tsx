@@ -7,11 +7,12 @@ import Header from "../components/Header";
 import { addUser, findUser } from "../api/odaAPI";
 import MenuItem from "@mui/material/MenuItem";
 import { ChallengeContext } from "../globalState/ChallengeContext";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 function RegisterUser(){
 
     const navigate = useNavigate();
-
+    const[newUserIsAdmin, setNewUserIsAdmin] = useState(false)
     const[affiliation, setAffiliation] = useState("");
     const[email, setEmail] = useState("");
     const[tlf, setTlf] = useState(0);
@@ -111,9 +112,29 @@ function RegisterUser(){
         <div className="App">
             <Header/>
                 <main className="min-h-[82vh] flex flex-col items-center">
-                  <h1 className="text-center mt-20 text-2xl">Registrer bruker</h1>
-                  <section className="mt-10 flex flex-col">
+                  <h1 className="text-center mt-20 text-2xl">Registrer ny bruker</h1>
+                  <section className="mt-5 flex flex-col">
+
+                  <RadioGroup
+                    row
+                    aria-labelledby='demo-radio-buttons-group-label'
+                    className='mb-5'
+                    defaultValue='newChallenge'
+                    name='Brukertype'
+                    value={newUserIsAdmin}
+                    onChange={e => {
+                      setNewUserIsAdmin(e.target.value === "true")
+                    }}
+                  >
+                    <FormControlLabel value={false} control={<Radio sx={{ '&.Mui-checked': { color: '#2BB728' } }} />}
+                                      label='Vanlig bruker' />
+                    <FormControlLabel value={true} control={<Radio sx={{ '&.Mui-checked': { color: '#FF002F' } }} />}
+                                      label='Administrator' />
+                  </RadioGroup>
+
+
                   <section className="flex flex-col gap-4">
+
                   <TextField
                     select
                     required
@@ -166,7 +187,7 @@ function RegisterUser(){
                     {showRequiredMessage ? <p className="mt-0 text-statusRed">Alle feltene må fylles ut!</p> : null}
                     {showUserExistMessange ? <p className="mt-0 text-statusRed">Bruker finnes allerede!</p> : null}
                     {showErrorMessage ? <p className="mt-0 text-statusRed">Det har skjedd en feil...</p> : null}
-                    {showAddedUserText ? <p className="mt-0 text-statusGreen">Bruker lagt ti!</p>: null}
+                    {showAddedUserText ? <p className="mt-0 text-statusGreen">Bruker lagt til!</p>: null}
 
                   </section>
                   </section>
@@ -175,12 +196,9 @@ function RegisterUser(){
                     }}}   ><p className="whitespace-nowrap">Registrer bruker</p></Button>
                   
                 </main>
-
-
             <Footer/>
         </div>
     )
-
 
 }
 
