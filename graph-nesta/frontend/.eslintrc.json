@@ -11,7 +11,7 @@
   ],
   "overrides": [
     {
-      "files": ["*.jsx", "*.tsx"],
+      "files": ["*.jsx", "*.tsx", "*.ts"],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/strict-boolean-expressions": "off"

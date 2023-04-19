@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, cleanup } from "@testing-library/react";
 import CategoryButton from "../../components/CategoryButton";
+import renderer from "react-test-renderer";
 
 afterEach(() => {
     cleanup();
@@ -32,4 +33,13 @@ it("Component reacts to click events", () => {
     const button = screen.getByTestId("categoryButton");
     button.click();
     expect(testVariable).toEqual(1);
+});
+
+it("Matches snapshot", () => {
+    const snapshot = renderer.create(<CategoryButton
+        text="Oh snap!"
+        focused="I guess"
+        onClick={() => {}}
+    />).toJSON();
+    expect(snapshot).toMatchSnapshot();
 });
