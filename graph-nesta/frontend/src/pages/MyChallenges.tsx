@@ -5,6 +5,9 @@ import Header from "../components/Header";
 import { ChallengeContext } from "../globalState/ChallengeContext";
 import { useNavigate } from "react-router-dom";
 import { findUser, getUserInfo } from "../api/odaAPI";
+import useFetch from '../hooks/useFetch';
+import { type IfetchType } from '../types/types';
+import ChallengeCard from '../components/ChallengeCard';
 
 function MyChallenges () {
 
@@ -48,9 +51,44 @@ function MyChallenges () {
       }
     },[navigate, setUser, user.isLoggedIn]);
 
+
+  const [ searchPhrase ] = useState("");
+  const [ orderBy ] = useState("Løst");
+  const [ categoryFilter ] = useState("");
+  const [ limit ] = useState(20);
+  // initial IfetchType object
+  const querySearch: IfetchType = {
+    limit,
+    categoryFilter,
+    searchPhrase,
+    orderBy,
+    email: user.email,
+    relation: 1,
+  }
+
+
+  const [query, setQuery] = useState<IfetchType>(querySearch);
+  const [ page ] = useState(0);
+  const { isLoading, isError, ODAproblems } = useFetch(query, page);
+  //  const loader = useRef(null);
+
+  //  Fetches ODAproblems
+  const fetchODAproblems = (limit: number, categoryFilter: string, searchPhrase: string, orderBy: string, relation: number) => {
+    const newQuery:IfetchType = {
+      limit,
+      categoryFilter,
+      searchPhrase,
+      orderBy,
+      email: user.email,
+      relation,
+    }
+    setQuery(newQuery);
+}
+
+
   const handleChallengeShow = (value: boolean) => {
     setIsMyChallenges(value)
-
+    fetchODAproblems(limit, searchPhrase, categoryFilter, orderBy, value ? 1 : 0);
   }
 
   return (
@@ -73,9 +111,15 @@ function MyChallenges () {
           </div>
         </div>
 
-        <div className='flex flex-wrap justify-center overflow gap-4 mt-16 mb-5'>
-
-        </div>
+        {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> : ODAproblems.length < 1 ? isMyChallenges? <p>Det har ingen problem...</p> : <p>Du har ingen abonnerte problem...</p>
+        :
+            <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
+           
+              { ODAproblems.map((data) => (
+                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={data.subCount} owner={data.owner} subs={data.subs}/>
+              ))}
+              </div>
+        }
       </div>
       <Footer />
     </div>

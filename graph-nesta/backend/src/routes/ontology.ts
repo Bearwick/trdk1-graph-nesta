@@ -52,7 +52,7 @@ router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaPr
   getODAProblems(limit, offset, searchString, category, email, relation).then(r => {
     console.log(r.data.results.bindings[0].odaProblem)
     res.send(setObject(r))
-  }).catch((r) => res.send(r))
+  }).catch((r) => res.send([]))
 })
 
 router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOdaProblemParams>, res: Response) {
