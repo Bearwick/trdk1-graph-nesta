@@ -11,7 +11,7 @@ function EditUserProfile() {
         mailState: "test@kommune.no",
         phoneNumberState: "12345678"
     }
-    // Teh state of all inputfields
+    // The state of all inputfields
     const [state, setState] = useState(initialState);
 
     // The saved value of the inputfield

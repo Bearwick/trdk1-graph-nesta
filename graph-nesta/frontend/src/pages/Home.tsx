@@ -6,24 +6,38 @@ import Header from '../components/Header';
 import ODACircle from '../components/ODACircle';
 import PDFdownload from '../components/PDFdownload';
 import { ChallengeContext } from '../globalState/ChallengeContext';
+import { findUser, getUserInfo } from '../api/odaAPI';
 
 function Home() {
     const {user, setUser } = useContext(ChallengeContext);
     const navigate = useNavigate();
 
     //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
-    useEffect(() => {
+    useEffect(() => {  
+
       if (!user.isLoggedIn) {
         const email = localStorage.getItem("Email") ?? "";
-        if (email) {
-          const password = localStorage.getItem("Password") ?? "";
-          setUser({
-            email,
-            password,
-            isLoggedIn: true,
-            isAdmin: false,
-          });
-        }
+        const password = localStorage.getItem("Password") ?? "";
+
+        findUser(email, password).then(r => {
+          if (r.data) {
+            getUserInfo(email).then(userInfo => {
+              if (userInfo.data) {
+                setUser({...userInfo.data, isLoggedIn: true});
+              }
+            }).catch(() => {console.log("no user!")})
+            
+          } else {
+            setUser({
+              email: "",
+              password: "",
+              affiliation: "",
+              telephone: "",
+              isLoggedIn: false,
+              isAdmin: false,
+            });
+          }
+        }).catch(() => {console.log("no user!")})
       }      
     },[navigate, setUser, user.isLoggedIn]);
 
@@ -50,9 +64,13 @@ function Home() {
           Nytt problem</Button></Link>
           </div>
           
-          {user.isAdmin ? <div className="flex flex-col md:flex-row gap-4 md:gap-2"><Link to="/GodkjennProblem"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-          Godkjenn problem</Button></Link>  <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-          Ny bruker</Button></Link></div>: null}
+          {user.isAdmin.toString() === "true" ? 
+            <div className="flex flex-col md:flex-row gap-4 md:gap-2">
+              <Link to="/GodkjennProblem"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+                Godkjenn problem</Button></Link>
+              <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+                Ny bruker</Button></Link>
+            </div> : null}
         
           </div>
           

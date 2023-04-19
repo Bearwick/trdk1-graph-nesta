@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { ChallengeContext } from "../globalState/ChallengeContext";
 import { useNavigate } from "react-router-dom";
+import { findUser, getUserInfo } from "../api/odaAPI";
 
 function MyChallenges() {
 
@@ -11,23 +12,38 @@ function MyChallenges() {
   const {user, setUser } = useContext(ChallengeContext);
   const navigate = useNavigate();
 
-  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
-  useEffect(() => {
-    if (!user.isLoggedIn) {
-      const email = localStorage.getItem("Email") ?? "";
-      if (email) {
+    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+    useEffect(() => {
+      if (!user.isLoggedIn) {
+        const email = localStorage.getItem("Email") ?? "";
         const password = localStorage.getItem("Password") ?? "";
-        setUser({
-          email,
-          password,
-          isLoggedIn: true,
-          isAdmin: false,
-        });
-      } else {
-        navigate("/LoggInn");
-      }
-    }      
-  },[navigate, setUser, user.isLoggedIn]);
+
+        findUser(email, password).then(r => {
+          if (r.data) {
+            getUserInfo(email).then(userInfo => {
+              if (userInfo.data) {
+                setUser({...userInfo.data, isLoggedIn: true});
+              }
+            }).catch(() => {
+              console.log("no user!")
+              navigate("/LoggInn");})
+            
+          } else {
+            setUser({
+              email: "",
+              password: "",
+              affiliation: "",
+              telephone: "",
+              isLoggedIn: false,
+              isAdmin: false,
+            });
+            navigate("/LoggInn");
+          }
+        }).catch(() => {
+          console.log("no user!")
+          navigate("/LoggInn");})
+      }      
+    },[navigate, setUser, user.isLoggedIn]);
 
   const handleChallengeShow = ( value: boolean) =>{
     setIsMyChallenges(value);

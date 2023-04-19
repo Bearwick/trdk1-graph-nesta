@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { findUser } from "../api/odaAPI";
+import { findUser, getUserInfo } from "../api/odaAPI";
 import { ChallengeContext } from "../globalState/ChallengeContext";
 
 function Login() {
@@ -45,13 +45,11 @@ function Login() {
       if (r.data) {
         localStorage.setItem("Email", email);
         localStorage.setItem("Password", password);
-        
-        setUser({
-          email,
-          password,
-          isLoggedIn: true,
-          isAdmin: true,
-      });
+        getUserInfo(email).then(userInfo => {
+          if (userInfo.data) {
+              setUser({...userInfo.data, isLoggedIn: true});
+          }
+        }).catch(() => {setShowNoUser(true)})
         
         navigate("/Hjem")
       } else {

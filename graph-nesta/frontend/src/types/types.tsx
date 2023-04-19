@@ -16,6 +16,8 @@ export interface User {
 export interface ContextUser {
     email: string;
     password: string;
+    affiliation: string;
+    telephone: string;
     isLoggedIn: boolean;
     isAdmin: boolean;
 }
