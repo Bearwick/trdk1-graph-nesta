@@ -1,57 +1,33 @@
 import axios, { type AxiosResponse } from 'axios'
 import { type ContextUser, type challengeCardProps, type User } from '../types/types'
 
-export async function getODAproblems(offset: number, limit: number, searchPhrase: string, categoryFilter: string, orderBy: string) { // For fetchin when searching
-    return await fetch('http://localhost:8080/graphql', { //  need changing ofc.
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-    query: `
-        query getODAproblems($offset: Int, $limit: Int, $categoryFilter: String, $searchWord: String, $orderBy: String) {
-        getODAproblems(offset: $offset, limit: $limit, categoryFilter: $categoryFilter, searchWord: $searchWord, orderBy: $orderBy) {
-          id
-          title
-          system
-          status
-          affiliation
-          specificProblem
-          clearDataProduct
-          accessibleData
-          definedAction
-          owner
-          subs
-        }
-      }
-      `,
-    variables: {
-        offset,
-        limit,
-        categoryFilter,
-        searchPhrase,
-        orderBy,
-    },
-}),
-})
-  .then(async (res: Response) => await res.json())
-  .then((result) => {return result.data.getODAproblems})
-  .catch((error) => {console.log(error); return null;});
-}
 
-
-export const getOdaProblems = async(offset: number, limit: number, searchString: string, category: string): Promise<AxiosResponse<challengeCardProps[]>> => {
+export const getOdaProblems = async(offset: number, limit: number, searchString: string, category: string, email?: string, relation?: number): Promise<AxiosResponse<challengeCardProps[]>> => {
   return await axios.get<challengeCardProps[]>("http://localhost:8080/ontology/ODAProblem", {
     params: {
       offset,
       limit,
       searchString,
-      category
+      category,
+      email,
+      relation,
+    }
+  })
+}
+
+export const getUserOdaProblems = async(offset: number, limit: number, searchString: string, category: string, email: string, relation: number): Promise<AxiosResponse<challengeCardProps[]>> => {
+  return await axios.get<challengeCardProps[]>("http://localhost:8080/ontology/ODAProblem", {
+    params: {
+      offset,
+      limit,
+      searchString,
+      category,
+      email,
+      relation,
     }
   })
 }
 export function makeGetRequest() {
-
   axios.get("http://localhost:8080/ontology/NestaGuide").then(
       (response) => {
           const result = response.data;

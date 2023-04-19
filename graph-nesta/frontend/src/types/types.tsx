@@ -42,6 +42,17 @@ export interface IfetchType {
     searchPhrase: string
     categoryFilter: string
     orderBy: string
+    email?: string
+    relation?: number
+}
+
+export interface IfetchTypeMyProblems {
+    limit: number
+    searchPhrase: string
+    categoryFilter: string
+    orderBy: string
+    email?: string
+    relation?: number
 }
 
 
