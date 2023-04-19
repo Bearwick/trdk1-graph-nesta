@@ -2,6 +2,7 @@ import React from "react";
 import { cleanup, render, screen } from '@testing-library/react';
 import { User } from "../../types/types";
 import SubInfoComponent from "../../components/SubInfoComponent";
+import renderer from "react-test-renderer";
 
 const userValidInfo: User = {
     email: "testmail@testkommune.no",
@@ -55,3 +56,14 @@ it("Throws an error on invalid phone number", () => {
     );
     expect(screen.getByText("En feil oppstod: Error: Ugyldig telefonnummer"))
 });
+
+it("Matches snapshot", () => {
+    const snapshot = renderer.create(
+        <SubInfoComponent 
+            email={userValidInfo.email}
+            telephone={userValidInfo.telephone}
+            affiliation={userValidInfo.affiliation}
+        />
+    );
+    expect(snapshot).toMatchSnapshot();
+})

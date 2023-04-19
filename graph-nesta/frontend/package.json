@@ -20,6 +20,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "react-test-renderer": "^18.2.0",
     "swagger-ui-express": "^4.6.2",
     "web-vitals": "^2.1.4"
   },
@@ -51,6 +52,7 @@
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
+    "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "cypress": "^12.8.1",
     "eslint": "^8.34.0",
