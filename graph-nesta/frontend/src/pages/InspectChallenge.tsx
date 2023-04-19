@@ -6,10 +6,10 @@ import ODACircle from '../components/ODACircle';
 import { Status } from '../types/types';
 import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
 import PeopleIcon from '@mui/icons-material/People';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
 import SubInfoComponent from '../components/SubInfoComponent';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 import { ChallengeContext } from '../globalState/ChallengeContext';
 import { type User } from "../types/types";
 import { useNavigate } from 'react-router-dom';
@@ -34,6 +34,7 @@ function InspectChallenge() {
     const [isSubbed, setIsSubbed] = useState(false);
     const [statusColor, setStatusColor] = useState("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
     const {challenge, } = useContext(ChallengeContext);
+    const[challengeIsLoaded, setChallengeIsLoaded] = useState(false);
 
     const {user, setUser } = useContext(ChallengeContext);
     const navigate = useNavigate();
@@ -70,24 +71,29 @@ function InspectChallenge() {
               console.log("no user!")
               navigate("/LoggInn");})
           }      
-
-        setTitle(challenge.title);
-        setStatus(challenge.status);
-        setSystem(challenge.vendor);
-        setSubCount(challenge.subCount);
-        setAffiliation(challenge.owner.affiliation);
-        setSpecificProblem(challenge.specificProblem);
-        setEmail(challenge.owner.email);
-        setTelephone(challenge.owner.telephone);
-        setClearDataProduct(challenge.clearDataProduct);
-        setAccessibility(challenge.accessibleData);
-        setDefinedAction(challenge.definedAction);
-        setSubs([]);
+        
+        if (!challengeIsLoaded) {
+          setTitle(challenge.title);
+          setStatus(challenge.status);
+          setSystem(challenge.vendor);
+          setSubCount(challenge.subCount);
+          setAffiliation(challenge.owner.affiliation);
+          setSpecificProblem(challenge.specificProblem);
+          setEmail(challenge.owner.email);
+          setTelephone(challenge.owner.telephone);
+          setClearDataProduct(challenge.clearDataProduct);
+          setAccessibility(challenge.accessibleData);
+          setDefinedAction(challenge.definedAction);
+          setSubs([]);
+          setChallengeIsLoaded(true);
+        }
 
         //  Adds all subs of a challenge to the subs Array.
-        challenge.subs.forEach(sub => {
-            setSubs(subs => [...subs, sub]);
-        });
+        if (challenge.subs) {
+          challenge.subs.forEach(sub => {
+              setSubs(subs => [...subs, sub]);
+          });
+        }
         if (subs.length > 0 && subs[0].email !== "-") {
             setIsSubs(true);
         }
@@ -106,7 +112,7 @@ function InspectChallenge() {
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen");
                 break;
         }
-    }, [challenge, status, subs, navigate, setUser, user.isLoggedIn])
+    }, [challenge, status, subs, navigate, setUser, user.isLoggedIn, challengeIsLoaded])
 
     // TODO: update database.
     const handleSubClick = () => {
@@ -122,8 +128,6 @@ function InspectChallenge() {
             <div className="text-text px-5 py-3 w-full items-center justify-center flex flex-col mb-5">
 
                 <h1 className="text-4xl mb-2.5">{ title }</h1>
-
-
 
             <section className=" items-end flex flex-row justify-between text-xs mb-1.5 gap-2">
                 <div className="flex flex-row">
@@ -173,10 +177,9 @@ function InspectChallenge() {
           <div className="flex flex-col w-[65vw] text-left mb-5 gap-1">
             <h2 className="text-text underline underline-offset2 text-2xl">Kontaktinformasjon</h2>
 
-
-            <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><EmailIcon sx={{fontSize: "1rem"}}/>{ email }</div>
-            <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><PhoneIcon sx={{fontSize: "1rem"}}/>{ telephone }</div>
             <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><LocationCityIcon sx={{fontSize: "1rem"}}/>{ affiliation }</div>
+            <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><EmailIcon sx={{fontSize: "1rem"}}/>{ email }</div>
+            <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><PhoneIcon sx={{fontSize: "1rem"}}/>+47 { telephone }</div>
           </div>
 
           <div className="flex flex-col w-[65vw] text-left mb-5 gap-1">

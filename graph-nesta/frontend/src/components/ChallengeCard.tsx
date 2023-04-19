@@ -16,6 +16,7 @@ function ChallengeCard(props: challengeCardProps){
     const { setChallenge } = useContext(ChallengeContext)
 
     const onChange = () => {
+
         setChallenge({
             id: props.id,
             title: props.title,

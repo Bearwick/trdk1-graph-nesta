@@ -6,8 +6,7 @@ import ChallengeCard from "../components/ChallengeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import useFetch from "../hooks/useFetch";
-import type {IfetchType, challengeCardProps, User } from "../types/types";
-import { Status } from "../types/types";
+import type {IfetchType } from "../types/types";
 import { ChallengeContext } from "../globalState/ChallengeContext";
 import { useNavigate } from "react-router-dom";
 import { findUser, getUserInfo } from "../api/odaAPI";
@@ -58,44 +57,6 @@ function Search() {
 
   //  Infinite scroll
   const [limit, ] = useState(20);
-
-  const placeHolder : User = {
-    email: "edvard.bjornevik@nesodden.kommune.no",
-    telephone: "123 45 678",
-    affiliation: "Trondheim",
-  }
-
-  const subUserPlaceHolder : User = {
-    email: "subPlaceholder@mail.com",
-    telephone: "123 45 678",
-    affiliation: "Malvik",
-  }
-
-  //  dummy data
-  const subPlaceholder: User[] = [subUserPlaceHolder];
-
-  const subPlaceholder2: User[] = [subUserPlaceHolder, subUserPlaceHolder];
-
-  const subPlaceholder3: User[] = [subUserPlaceHolder, subUserPlaceHolder, placeHolder];
-
-  const subPlaceholder4: User[] = [subUserPlaceHolder, subUserPlaceHolder, placeHolder, placeHolder];
-
-  const odaPlaceholder : challengeCardProps = {
-    id: "12345",
-    title: "Lisens",
-    vendor: "Bluegaarden",
-    status: Status.newChallenge,
-    specificProblem: "Lisens om ringepigging hadde vært en god ting for mindreårige. Da de ikke kan bli straffet, men fortsatt utgjør denne ugjerningen. I flere tilfeller har vi sett større grupper med tenåringer gå sammen i systematisk ringepigging. Om kommunen kunne laget et digitalt system for lisens for ringepinng, hadde det vært lurt.",
-    clearDataProduct: "Områdekart som viser sannsynligheten for ringepigging for en gitt dato",
-    accessibleData: "Nasjonale ringepigging-datasett",
-    definedAction: "Lage en nettside med områdekart. Dette kan vi gi ut til innbyggerne som kan forhindre ringepigging før det skjer.",
-    subCount: subPlaceholder.length,
-    owner: placeHolder,
-    subs: subPlaceholder,
-  }
-
-
-
 
   //  List of filters available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
   const filters = [
@@ -166,7 +127,6 @@ function Search() {
     setSearch(event.target.value);
     setPage(0);
     fetchODAproblems(limit, searchPhrase, categoryFilter, orderBy);
-    alert(ODAproblems);
   }
 
   //  Handle event changes for filter.
@@ -231,19 +191,14 @@ function Search() {
 
           </div>
 
-
               {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> :
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
-               <ChallengeCard { ...odaPlaceholder } />
-               <ChallengeCard id={"12345"} title={"Økonomi"} vendor={"Bluegaarden"} status={Status.solved} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder2}/>
-               <ChallengeCard id={"12345"} title={"Skole"} vendor={"Bluegaarden"} status={Status.started} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder3}/>
-               <ChallengeCard id={"12345"} title={"Turn down for what!"} vendor={"Bluegaarden"} status={Status.newChallenge} specificProblem={"lisens om ringepigging"} clearDataProduct={"www"} accessibleData={"www"} definedAction={"www"} subCount={11} owner={placeHolder} subs={subPlaceholder4}/>
-              
+           
               {ODAproblems.map((data) => (
-                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={5} owner={data.owner} subs={subPlaceholder2}/>
+                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={data.subCount} owner={data.owner} subs={data.subs}/>
               ))}
 
-               </div>
+              </div>
         }
 
           </div>

@@ -3,7 +3,11 @@ import Footer from "../components/Footer";
 import Nav from "../components/Header";
 import { Link, useNavigate } from 'react-router-dom';
 import userIcon from '../images/userProfileIcon.webp';
-import editIcon from '../images/editProfileIcon.svg';
+import adminIcon from '../images/adminProfileIcon.webp';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+//  import editIcon from '../images/editProfileIcon.svg';
 import { ChallengeContext } from '../globalState/ChallengeContext';
 import { findUser, getUserInfo } from '../api/odaAPI';
 
@@ -61,6 +65,10 @@ function UserProfile() {
         navigate("/LoggInn");
     }
 
+    //  <Link to={'/RedigerMinProfil'}>
+    //    <img className={'h-5 w-5'} src={editIcon} alt={'edit button icon'} />
+    //  </Link>
+
     return (
         <div className="UserProfile ">
            <Nav />
@@ -69,24 +77,23 @@ function UserProfile() {
                    Min Profil
                </h1>
                <div className={'profileImage h-80 w-80'}>
-                   <img src={userIcon} alt={'image of userProfileIcon'}/>
+                  {user.isAdmin.toString() === "true" ? <img src={adminIcon} alt={'image of adminProfileIcon'}/> : <img src={userIcon} alt={'image of userProfileIcon'}/>}
                </div>
-               <div className="text-left">
-               <h2 className={'subheading text-xl underline flex flex-row space-x-4 mb-2 text-left'}>
-                   <p> Kontaktinformasjon</p>
-                   <Link to={'/RedigerMinProfil'}>
-                        <img className={'h-5 w-5'} src={editIcon} alt={'edit button icon'} />
-                   </Link>
-               </h2>
-               <div className={'userInformation text-base text-left'}>
-                   <p>Tilhører: {user.affiliation} </p>
-                   <p>Epost: {user.email}</p>
-                   <p>+47 {user.telephone}</p>
-               </div>
-               </div>
-               <Link className={'mt-6 mb-6'} to={'/MineUtfordringer'}>
+              
+               <div className="flex flex-col text-left my-5 gap-1">
+                  <h2 className="text-text underline underline-offset2 text-2xl">Kontaktinformasjon</h2>
+
+                  <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><LocationCityIcon sx={{fontSize: "1rem"}}/>{ user.affiliation }</div>
+                  <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><EmailIcon sx={{fontSize: "1rem"}}/>{ user.email }</div>
+                  <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><PhoneIcon sx={{fontSize: "1rem"}}/>+47 { user.telephone }</div>
+              </div>
+
+
+
+
+               <Link className={'mt-6 mb-6'} to={'/MineProblem'}>
                 <button className={'myProblemsButton bg-buttonDark hover:bg-buttonHover text-white rounded-full h-9 w-40'}>
-                       Mine utfordringer
+                       Mine problem
                 </button>
                </Link>
                 <button onClick={handleLogout} className={'bg-buttonDark hover:bg-statusRed text-white rounded-full h-9 w-40'}>
