@@ -1,6 +1,6 @@
 export default {
   // OUTDATED
-  getODAProblems: (limit: number, offset: number, searchString: string, category: string) => `
+  getODAProblems: (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number) => `
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX oda: <urn:absolute:ODA2.0#>
@@ -22,6 +22,8 @@ export default {
     ?user oda:userMail ?email.
     ?user oda:userAffiliation ?affiliation.
     ?odaProblem oda:ODAprogress ?progress.
+    ${relation && email ? '?user2 oda:userMail "'.concat(email.toString(), '".'): ""}
+    ${relation && +relation === 0 ? '?user2 oda:subscribedTo ?odaProblem.': relation && +relation === 1 ? '?user2 oda:creatorOf ?odaProblem.': ""}
     
     Filter (regex(?title, "${searchString}") || regex(?specificProblemDescription, "${searchString}")).
     Filter (regex(?title, "${category}") || regex(?specificProblemDescription, "${category}")).
@@ -98,7 +100,7 @@ export default {
   }
   `,
 
-  addUser: (phone: number, email: string, affiliation: string, password: string) => `
+  addUser: (phone: number, email: string, affiliation: string, password: string, setAdmin: boolean) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -109,7 +111,7 @@ export default {
     oda:${email.replace("@", "")} oda:userPhoneNumber "${phone}"^^xsd:int.
     oda:${email.replace("@", "")} oda:userMail "${email}".
     oda:${email.replace("@", "")} oda:userAffiliation "${affiliation}".
-    oda:${email.replace("@", "")} oda:isAdmin false.
+    oda:${email.replace("@", "")} oda:isAdmin ${(setAdmin).toString()}.
     oda:${email.replace("@", "")} oda:userPassword "${password}".          
 } `,
   findUser: (email: string, password: string) => `
@@ -157,7 +159,24 @@ export default {
     ?user oda:userPhoneNumber ?phone.
     ?user oda:userAffiliation ?affiliation.
     ?user oda:isAdmin ?isAdmin
-}`
+}`,
+  isSubbed: (userEmail: string, ODAProblem: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  PREFIX problem: <${ODAProblem}>
+select * {
+?user oda:userMail "${userEmail}".
+?user oda:subscribedTo problem:.
+}`,
+  getSubscribers: (ODAProblem: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  PREFIX problem: <${ODAProblem}>
+  select * {
+    ?user oda:subscribedTo problem:.
+    ?user oda:userMail ?email.
+    ?user oda:userPhoneNumber ?phone.
+    ?user oda:userAffiliation ?affiliation.
+}
+  `
 
 
 }

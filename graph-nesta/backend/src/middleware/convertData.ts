@@ -29,6 +29,19 @@ export function setObject (r: AxiosResponse<any, any>) {
   return odaProblems
 }
 
+export function convertSubscribers(r: AxiosResponse<any, any>) {
+  const subscribers: User[] = r.data.results.bindings.map(subscriber => {
+    const owner: User = {
+      email: subscriber.email.value,
+      affiliation: subscriber.affiliation.value,
+      telephone: subscriber.phone.value,
+    }
+    return owner
+  })
+  return subscribers
+
+}
+
 export function convertUser (r: AxiosResponse<any, any>) {
   const userData = r.data.results.bindings[0]
   const user: UserInfo = {

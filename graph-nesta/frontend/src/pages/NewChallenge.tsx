@@ -1,31 +1,34 @@
 import '../App.css'
 import React, { useContext, useEffect, useState } from 'react'
-import TextField from '@mui/material/TextField';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import MenuItem from '@mui/material/MenuItem';
-import Radio from '@mui/material/Radio';
-import FormLabel from '@mui/material/FormLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Button from '@mui/material/Button';
-import ODACircle from '../components/ODACircle';
-import { useNavigate } from 'react-router-dom';
-import { ChallengeContext } from '../globalState/ChallengeContext';
-import Box from '@mui/material/Box';
-import { addOdaProblem, findUser, getUserInfo } from '../api/odaAPI';
+import TextField from '@mui/material/TextField'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import MenuItem from '@mui/material/MenuItem'
+import Radio from '@mui/material/Radio'
+import FormLabel from '@mui/material/FormLabel'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Button from '@mui/material/Button'
+import ODACircle from '../components/ODACircle'
+import { useNavigate } from 'react-router-dom'
+import { ChallengeContext } from '../globalState/ChallengeContext'
+import Box from '@mui/material/Box'
+import { addOdaProblem, findUser, getUserInfo } from '../api/odaAPI'
 //  import ChallengeCard from '../components/ChallengeCard';
 
-function NewChallenge() {
+function NewChallenge () {
 
-  const {user, setUser } = useContext(ChallengeContext);
-  const navigate = useNavigate();
+  const {
+    user,
+    setUser,
+  } = useContext(ChallengeContext)
+  const navigate = useNavigate()
 
-    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
-    useEffect(() => {
-      if (!user.isLoggedIn) {
-        const email = localStorage.getItem("Email") ?? "";
-        const password = localStorage.getItem("Password") ?? "";
+  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
+  useEffect(() => {
+    if (!user.isLoggedIn) {
+      const email = localStorage.getItem('Email') ?? ''
+        const password = localStorage.getItem('Password') ?? ''
 
         findUser(email, password).then(r => {
           if (r.data) {
@@ -36,7 +39,7 @@ function NewChallenge() {
             }).catch(() => {
               console.log("no user!")
               navigate("/LoggInn");})
-            
+
           } else {
             setUser({
               email: "",
@@ -45,14 +48,15 @@ function NewChallenge() {
               telephone: "",
               isLoggedIn: false,
               isAdmin: false,
-            });
+            })
             navigate("/LoggInn");
           }
         }).catch(() => {
           console.log("no user!")
-          navigate("/LoggInn");})
-      }      
-    },[navigate, setUser, user.isLoggedIn]);
+          navigate('/LoggInn')
+      })
+    }
+  }, [navigate, setUser, user.isLoggedIn])
 
   const [title, setTitle] = useState('')
   const [system, setSystem] = useState('')
@@ -115,9 +119,9 @@ function NewChallenge() {
 
     addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
       console.log('ODAproblem posted succesfully')
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // for safari, chrome, edge, etc.
-      navigate("/Hjem");
+      document.body.scrollTop = 0 // For Safari
+      document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
+      navigate('/Hjem')
     }).catch(() => {
       console.log('Failure posting ODAproblem')
     })
@@ -140,8 +144,9 @@ function NewChallenge() {
           size='small'
           name='title'
           value={title}
-          onChange={e =>
-            { setTitle(e.target.value); }
+          onChange={e => {
+            setTitle(e.target.value)
+          }
           }
           sx={{
             ...textFieldStyle,
@@ -350,4 +355,4 @@ function NewChallenge() {
   )
 }
 
-export default NewChallenge;
+export default NewChallenge

@@ -4,7 +4,7 @@ import {
   addCategories,
   addODAProblem,
   addUser, findUser,
-  getODAProblems, getUser,
+  getODAProblems, getSubscribers, getUser, isSubbed,
   setAdmin,
   subscribe,
   unsubscribe,
@@ -18,7 +18,7 @@ import {
   type SetAdminParams,
   type SubscribeParams,
 } from '../interfaces/interfaces'
-import { convertUser, setObject } from '../middleware/convertData'
+import { convertSubscribers, convertUser, setObject } from '../middleware/convertData'
 
 const router = Router()
 
@@ -48,11 +48,8 @@ const router = Router()
  *
  */
 router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaProblemParams>, res: Response) {
-  const limit: number = req.query.limit
-  const offset: number = req.query.offset
-  const searchString: string = req.query.searchString
-  const category: string = req.query.category
-  getODAProblems(limit, offset, searchString, category).then(r => {
+  const {limit, offset, searchString, category, email, relation} = req.query
+  getODAProblems(limit, offset, searchString, category, email, relation).then(r => {
     console.log(r.data.results.bindings[0].odaProblem)
     res.send(setObject(r))
   }).catch((r) => res.send(r))
@@ -81,7 +78,7 @@ router.get('/AddUser', function(req: Request<unknown, unknown, unknown, AddUserP
   const query = req.query
   console.log(query)
   console.log("ontology.ts: adding user")
-  addUser(query.phone, query.email, query.affiliation, query.password).then(r => {
+  addUser(query.phone, query.email, query.affiliation, query.password, query.admin).then(r => {
     res.send(r)
   }).catch((r) => res.send(r))
 })
@@ -129,6 +126,25 @@ router.get('/UserInfo', function(req: Request<unknown, unknown, unknown, FindUse
   getUser(email).then(r => {
     res.send(convertUser(r))
   }).catch(r => res.send(r))
+})
+
+router.get("/IsSubscribed", function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
+  const {email, ODAProblem} = req.query
+  isSubbed(email, ODAProblem).then(r => {
+    console.log(r.data.results.bindings)
+    if (r.data.results.bindings.toString().length > 0) {
+      res.send(true)
+    } else {
+      res.send(false)
+    }
+  }).catch(() => res.send(false))
+})
+
+router.get("/GetSubscribers", function(req: Request<unknown, unknown, unknown, SubscribeParams>, res: Response) {
+  const {ODAProblem} = req.query
+  getSubscribers(ODAProblem).then(r => {
+    res.send(convertSubscribers(r))
+  }).catch(() => res.send([]))
 })
 
 export default router
