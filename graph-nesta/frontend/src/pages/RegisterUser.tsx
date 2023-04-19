@@ -23,19 +23,19 @@ function RegisterUser(){
     const[showErrorMessage, setShowErrorMessage] = useState(false);
     const[showAddedUserText, setShowAddedUserText] = useState(false);
 
-    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
     const { user } = useContext(ChallengeContext);
     useEffect(() => {
       if (!(user.isAdmin.toString() === "true")) {
           navigate("/LoggInn");
-        }   
+        }
     },[navigate, user.isAdmin]);
 
     const textFieldStyle = {
         backgroundColor: "white",
         '& label.Mui-focused': {
           color: '#0D264A',
-        }, 
+        },
         '& .MuiOutlinedInput-root': {
           '&:hover fieldset': {
             borderColor: '#0D264A',
@@ -44,7 +44,7 @@ function RegisterUser(){
           },
         }
       };
-    
+
     const affiliations = [
         {
           value: 'Trondheim kommune',
@@ -63,7 +63,7 @@ function RegisterUser(){
           label: 'Steinkjer kommune',
         },
     ];
- 
+
 
       const handleAffiliationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAffiliation(event.target.value);
@@ -98,7 +98,7 @@ function RegisterUser(){
           console.log("User allready exists")
           setShowUserExistMessage(true)
         } else {
-          addUser(tlf, email, affiliation, password).then(() => {
+          addUser(tlf, email, affiliation, password, newUserIsAdmin).then(() => {
             console.log("User added");
             setShowAddedUserText(true);
 
@@ -194,7 +194,7 @@ function RegisterUser(){
                   <Button variant="contained" onClick={handlePost} sx={{ color: "white", backgroundColor: "#0D264A", width: "180px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
                     backgroundColor: '#3d3f6b',
                     }}}   ><p className="whitespace-nowrap">Registrer bruker</p></Button>
-                  
+
                 </main>
             <Footer/>
         </div>

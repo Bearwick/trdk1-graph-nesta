@@ -3,6 +3,8 @@ interface OdaProblemParams {
   offset: number
   searchString: string
   category: string
+  email: string
+  relation: number
 }
 
 interface AddOdaProblemParams {
@@ -21,6 +23,7 @@ interface AddUserParams {
   email: string
   affiliation: string
   password: string
+  admin: boolean
 }
 
 interface FindUserParams {
@@ -53,5 +56,5 @@ export {
   type AddUserParams,
   type SetAdminParams,
   type SubscribeParams,
-  type FindUserParams
+  type FindUserParams,
 }

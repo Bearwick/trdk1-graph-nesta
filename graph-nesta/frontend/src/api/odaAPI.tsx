@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from 'axios'
-import { type ContextUser, type challengeCardProps } from '../types/types'
+import { type ContextUser, type challengeCardProps, type User } from '../types/types'
 
 export async function getODAproblems(offset: number, limit: number, searchPhrase: string, categoryFilter: string, orderBy: string) { // For fetchin when searching
     return await fetch('http://localhost:8080/graphql', { //  need changing ofc.
@@ -64,14 +64,15 @@ export function makeGetRequest() {
 }
 
 export async function addUser(phone: number, email: string, affiliation: string, password
-  : string) {
+  : string, admin: boolean) {
     console.log("odaAPI addUser");
     await axios.get(`http://localhost:8080/ontology/AddUser?`, {
       params: {
         phone,
         email,
         affiliation,
-        password
+        password,
+        admin
       }
     })
 }
@@ -107,6 +108,41 @@ export async function addOdaProblem(title: string, specificProblem: string, clea
       supplier,
       userMail,
       status
+    }
+  })
+}
+
+export async function subscribe(id: string, email: string, subscribe: boolean) {
+  if (subscribe) {
+    return await axios.get("http://localhost:8080/ontology/Subscribe", {
+      params: {
+        ODAProblem: id,
+        email
+      }
+    })
+  } else {
+    return await axios.get("http://localhost:8080/ontology/Unsubscribe", {
+      params: {
+        ODAProblem: id,
+        email
+      }
+    })
+  }
+}
+
+export async function isSubscribed(id: string, email: string) {
+  return await axios.get<boolean>("http://localhost:8080/ontology/IsSubscribed", {
+    params: {
+      ODAProblem: id,
+      email
+    }
+  })
+}
+
+export async function getSubscribers(id: string) {
+  return await axios.get<User[]>("http://localhost:8080/ontology/getSubscribers", {
+    params: {
+      ODAProblem: id
     }
   })
 }

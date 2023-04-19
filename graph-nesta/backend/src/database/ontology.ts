@@ -10,8 +10,8 @@ const update = async (query: string) => {
   ${encodeURIComponent(query)}`)
 }
 
-const getODAProblems = async (limit: number, offset: number, searchString: string, category: string) => {
-  return await get(queries.getODAProblems(limit, offset, searchString, category))
+const getODAProblems = async (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number) => {
+  return await get(queries.getODAProblems(limit, offset, searchString, category, email, relation))
 }
 const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string, status: string) => {
   // Assumes title is unique, otherwise we could end up in a situation where a single ODA problem can have many accessible datas etc.
@@ -27,16 +27,16 @@ const addCategories = async (specProblem: string, dataProduct: string, accessibl
   return await update(queries.addCategories(specProblem, dataProduct, accessibleData, nodeName))
 }
 
-const addUser = async (phone: number, email: string, affiliation: string, password: string) => {
-  console.log(queries.addUser(phone, email, affiliation, password))
-  return await update(queries.addUser(phone, email, affiliation, password))
+const addUser = async (phone: number, email: string, affiliation: string, password: string, setAdmin: boolean) => {
+  console.log(queries.addUser(phone, email, affiliation, password, setAdmin))
+  return await update(queries.addUser(phone, email, affiliation, password, setAdmin))
 }
 
 const findUser = async (email: string, password: string) => {
   return await get(queries.findUser(email, password))
 }
 
-const setAdmin = async(email: string, setAdmin: boolean) => {
+const setAdmin = async (email: string, setAdmin: boolean) => {
   return await update(queries.setAdmin(email, setAdmin))
 
 }
@@ -45,11 +45,32 @@ const subscribe = async (email: string, ODAProblem: string) => {
   return await update(queries.subscribe(email, ODAProblem))
 }
 
-const unsubscribe = async(email: string, ODAProblem: string) => {
+const unsubscribe = async (email: string, ODAProblem: string) => {
   return await update(queries.unsubscribe(email, ODAProblem))
 }
 
-const getUser = async(email: string) => {
+const isSubbed = async (email: string, ODAProblem: string) => {
+  console.log(ODAProblem)
+  return await get(queries.isSubbed(email, ODAProblem))
+}
+
+const getSubscribers = async (ODAProblem: string) => {
+  return await get(queries.getSubscribers(ODAProblem))
+}
+
+const getUser = async (email: string) => {
   return await get(queries.getUser(email))
 }
-export { getODAProblems, addODAProblem, addUser, addCategories, setAdmin, subscribe, unsubscribe, findUser, getUser }
+export {
+  getODAProblems,
+  addODAProblem,
+  addUser,
+  addCategories,
+  setAdmin,
+  subscribe,
+  unsubscribe,
+  findUser,
+  getUser,
+  isSubbed,
+  getSubscribers,
+}

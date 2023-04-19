@@ -14,6 +14,7 @@ import { ChallengeContext } from '../globalState/ChallengeContext';
 import { type User } from "../types/types";
 import { useNavigate } from 'react-router-dom';
 import { findUser, getUserInfo } from '../api/odaAPI';
+import { getSubscribers, isSubscribed, subscribe } from '../api/odaAPI'
 
 function InspectChallenge() {
 
@@ -45,7 +46,7 @@ function InspectChallenge() {
         if (!user.isLoggedIn) {
             const email = localStorage.getItem("Email") ?? "";
             const password = localStorage.getItem("Password") ?? "";
-    
+
             findUser(email, password).then(r => {
               if (r.data) {
                 getUserInfo(email).then(userInfo => {
@@ -55,7 +56,7 @@ function InspectChallenge() {
                 }).catch(() => {
                   console.log("no user!")
                   navigate("/LoggInn");})
-                
+
               } else {
                 setUser({
                   email: "",
@@ -70,8 +71,8 @@ function InspectChallenge() {
             }).catch(() => {
               console.log("no user!")
               navigate("/LoggInn");})
-          }      
-        
+          }
+
         if (!challengeIsLoaded) {
           setTitle(challenge.title);
           setStatus(challenge.status);
@@ -112,11 +113,33 @@ function InspectChallenge() {
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen");
                 break;
         }
-    }, [challenge, status, subs, navigate, setUser, user.isLoggedIn, challengeIsLoaded])
+      isSubscribed(challenge.id, user.email).then(r => {
+        if (r.data) {
+          console.log(r)
+          setIsSubbed(true)
+        }
+      }).catch(() => {
+        setIsSubbed(false)
+        console.log("yoyo")
+
+      })
+      getSubscribers(challenge.id).then(r => {
+        setSubs(r.data)
+      }).catch(() => "")
+
+    }, [challenge, user, status])
 
     // TODO: update database.
     const handleSubClick = () => {
-        setIsSubbed(!isSubbed);
+        if(isSubbed) {
+          subscribe(challenge.id, user.email, false).then(() => {
+            setIsSubbed(false)
+          }).catch(() => "")
+        } else {
+          subscribe(challenge.id, user.email, true).then(() => {
+            setIsSubbed(true)
+          }).catch(() => "")
+        }
     }
 
 
