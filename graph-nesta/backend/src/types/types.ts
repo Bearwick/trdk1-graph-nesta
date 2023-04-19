@@ -17,6 +17,14 @@ interface User {
   affiliation: string;
 }
 
+interface UserInfo {
+  email: string;
+  telephone: string;
+  affiliation: string;
+  isAdmin: boolean
+}
+
+
 enum Status {
   newChallenge = "Ny utfordring",
   started = "Påbegynnt",
@@ -26,5 +34,7 @@ enum Status {
 export {
   type OdaProblem,
   type User,
+  type UserInfo,
   Status
+
 }

@@ -24,7 +24,7 @@ export default function App() {
         <Route path="Hjem" index element={<Home />} />
         <Route path="MinProfil" element={<UserProfile />} />
         <Route path="LoggInn" element={<Login />} />
-        <Route path="RegistrerBruker" element={<RegisterUser/>}></Route>
+        <Route path="RegistrerBruker" element={<RegisterUser/>} />
         <Route path="MineProblem" element={<MyChallenges />} />
         <Route path="NyUtfordring" element={<NewChallenge />} />
         <Route path="Søk" element={<Search />} />

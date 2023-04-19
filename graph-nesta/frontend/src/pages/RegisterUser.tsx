@@ -26,7 +26,7 @@ function RegisterUser(){
     //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
     const { user } = useContext(ChallengeContext);
     useEffect(() => {
-      if (!user.isAdmin) {
+      if (!(user.isAdmin.toString() === "true")) {
           navigate("/LoggInn");
         }   
     },[navigate, user.isAdmin]);

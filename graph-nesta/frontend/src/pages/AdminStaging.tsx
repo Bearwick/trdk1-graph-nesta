@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 function AdminStaging() {
 
-  const {user } = useContext(ChallengeContext);
+  const { user } = useContext(ChallengeContext);
   const navigate = useNavigate();
 
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
   useEffect(() => {
-    if (!user.isAdmin) {
+    if (!(user.isAdmin.toString() === "true")) {
         navigate("/LoggInn");
       }   
   },[navigate, user.isAdmin]);
@@ -22,7 +22,7 @@ function AdminStaging() {
           <Header />
               
           <div className="flex flex-col items-center min-h-[82vh]">
-          <h1 className='text-3xl text-text p-5'>Godkjenn problem for {user.email}</h1>
+          <h1 className='text-3xl text-text p-5'>Godkjenn problem for {user.affiliation}</h1>
   
             <div className="flex flex-wrap justify-center overflow gap-4 mt-16 mb-5">
     

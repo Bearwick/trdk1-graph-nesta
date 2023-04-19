@@ -18,7 +18,7 @@ import {
   type SetAdminParams,
   type SubscribeParams,
 } from '../interfaces/interfaces'
-import { setObject } from '../middleware/convertData'
+import { convertUser, setObject } from '../middleware/convertData'
 
 const router = Router()
 
@@ -127,7 +127,7 @@ router.get('/Unsubscribe', function(req: Request<unknown, unknown, unknown, Subs
 router.get('/UserInfo', function(req: Request<unknown, unknown, unknown, FindUserParams>, res: Response) {
   const {email} = req.query
   getUser(email).then(r => {
-    res.send(r.data.results.bindings)
+    res.send(convertUser(r))
   }).catch(r => res.send(r))
 })
 

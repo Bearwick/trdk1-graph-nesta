@@ -12,6 +12,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { ChallengeContext } from '../globalState/ChallengeContext';
 import { type User } from "../types/types";
+import { useNavigate } from 'react-router-dom';
+import { findUser, getUserInfo } from '../api/odaAPI';
 
 function InspectChallenge() {
 
@@ -33,8 +35,41 @@ function InspectChallenge() {
     const [statusColor, setStatusColor] = useState("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
     const {challenge, } = useContext(ChallengeContext);
 
+    const {user, setUser } = useContext(ChallengeContext);
+    const navigate = useNavigate();
+
     //  Sets the const´s above by using global state.
     useEffect(() => {
+
+        if (!user.isLoggedIn) {
+            const email = localStorage.getItem("Email") ?? "";
+            const password = localStorage.getItem("Password") ?? "";
+    
+            findUser(email, password).then(r => {
+              if (r.data) {
+                getUserInfo(email).then(userInfo => {
+                  if (userInfo.data) {
+                    setUser({...userInfo.data, isLoggedIn: true});
+                  }
+                }).catch(() => {
+                  console.log("no user!")
+                  navigate("/LoggInn");})
+                
+              } else {
+                setUser({
+                  email: "",
+                  password: "",
+                  affiliation: "",
+                  telephone: "",
+                  isLoggedIn: false,
+                  isAdmin: false,
+                });
+                navigate("/LoggInn");
+              }
+            }).catch(() => {
+              console.log("no user!")
+              navigate("/LoggInn");})
+          }      
 
         setTitle(challenge.title);
         setStatus(challenge.status);
@@ -71,7 +106,7 @@ function InspectChallenge() {
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen");
                 break;
         }
-    }, [challenge, status, subs])
+    }, [challenge, status, subs, navigate, setUser, user.isLoggedIn])
 
     // TODO: update database.
     const handleSubClick = () => {

@@ -1,4 +1,4 @@
-import { type OdaProblem, Status, type User } from '../types/types'
+import { type OdaProblem, Status, type User, type UserInfo } from '../types/types'
 import { type AxiosResponse } from 'axios'
 
 export function setObject (r: AxiosResponse<any, any>) {
@@ -27,4 +27,16 @@ export function setObject (r: AxiosResponse<any, any>) {
 
     })
   return odaProblems
+}
+
+export function convertUser (r: AxiosResponse<any, any>) {
+  const userData = r.data.results.bindings[0]
+  const user: UserInfo = {
+    email: userData.mail.value,
+    telephone: userData.phone.value,
+    affiliation: userData.affiliation.value,
+    isAdmin: userData.isAdmin.value
+  }
+  return user
+
 }

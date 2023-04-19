@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from 'axios'
-import { type challengeCardProps } from '../types/types'
+import { type ContextUser, type challengeCardProps } from '../types/types'
 
 export async function getODAproblems(offset: number, limit: number, searchPhrase: string, categoryFilter: string, orderBy: string) { // For fetchin when searching
     return await fetch('http://localhost:8080/graphql', { //  need changing ofc.
@@ -84,6 +84,16 @@ export async function findUser(email: string, password: string) {
         password
       }
     })
+}
+
+export async function getUserInfo(email: string) {
+  console.log("odaAPI fetching user info");
+
+  return await axios.get<ContextUser>(`http://localhost:8080/ontology/UserInfo?`, {
+    params: {
+      email,
+    }
+  })
 }
 
 export async function addOdaProblem(title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string, status: string) {

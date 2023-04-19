@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import userIcon from '../images/userProfileIcon.webp';
 import editIcon from '../images/editProfileIcon.svg';
 import { ChallengeContext } from '../globalState/ChallengeContext';
+import { findUser, getUserInfo } from '../api/odaAPI';
 
 function UserProfile() {
     const { user, setUser } = useContext(ChallengeContext);
@@ -14,17 +15,32 @@ function UserProfile() {
     useEffect(() => {
       if (!user.isLoggedIn) {
         const email = localStorage.getItem("Email") ?? "";
-        if (email) {
-          const password = localStorage.getItem("Password") ?? "";
-          setUser({
-            email,
-            password,
-            isLoggedIn: true,
-            isAdmin: false,
-          });
-        } else {
-          navigate("/LoggInn");
-        }
+        const password = localStorage.getItem("Password") ?? "";
+
+        findUser(email, password).then(r => {
+          if (r.data) {
+            getUserInfo(email).then(userInfo => {
+              if (userInfo.data) {
+                setUser({...userInfo.data, isLoggedIn: true});
+              }
+            }).catch(() => {
+              console.log("no user!")
+              navigate("/LoggInn");})
+            
+          } else {
+            setUser({
+              email: "",
+              password: "",
+              affiliation: "",
+              telephone: "",
+              isLoggedIn: false,
+              isAdmin: false,
+            });
+            navigate("/LoggInn");
+          }
+        }).catch(() => {
+          console.log("no user!")
+          navigate("/LoggInn");})
       }      
     },[navigate, setUser, user.isLoggedIn]);
 
@@ -36,6 +52,8 @@ function UserProfile() {
         setUser({
             email: "",
             password: "",
+            affiliation: "",
+            telephone: "",
             isLoggedIn: false,
             isAdmin: false,
           });
@@ -61,9 +79,9 @@ function UserProfile() {
                    </Link>
                </h2>
                <div className={'userInformation text-base text-left'}>
-                   <p>Tilhører: test kommune </p>
+                   <p>Tilhører: {user.affiliation} </p>
                    <p>Epost: {user.email}</p>
-                   <p>+47 123 45 678</p>
+                   <p>+47 {user.telephone}</p>
                </div>
                </div>
                <Link className={'mt-6 mb-6'} to={'/MineUtfordringer'}>
