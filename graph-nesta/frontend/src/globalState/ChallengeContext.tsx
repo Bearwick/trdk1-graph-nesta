@@ -79,6 +79,7 @@ export default function ChallengeProvider({children} : ChallengeProviderProps){
         subCount: 0,
         owner: initialUser,
         subs: initialSubs,
+        edit: false,
 
     });
 

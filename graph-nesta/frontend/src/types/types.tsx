@@ -34,6 +34,7 @@ export interface challengeCardProps {
     subCount: number;
     owner: User;
     subs: User[];
+    edit: boolean;
 
 }
 

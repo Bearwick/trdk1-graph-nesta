@@ -13,6 +13,7 @@ import AdminStaging from './pages/AdminStaging'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ChallengeProvider from './globalState/ChallengeContext';
 import React from 'react'
+import EditProblem from './pages/EditProblem'
 
 export default function App() {
   
@@ -32,7 +33,9 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="BrukerProfil" element={<UserProfile />} />
         <Route path="GodkjennProblem" element={<AdminStaging />} />
-        <Route path="inspiserUtfordring" element={<InspectChallenge />} />   
+        <Route path="inspiserUtfordring" element={<InspectChallenge />} />
+        <Route path="RedigerProblem" element={<EditProblem />} />
+ 
     </Routes>
   </BrowserRouter>
   </ChallengeProvider>
