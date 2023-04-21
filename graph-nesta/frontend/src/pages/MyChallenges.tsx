@@ -3,11 +3,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { ChallengeContext } from "../globalState/ChallengeContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { findUser, getUserInfo } from "../api/odaAPI";
 import useFetch from '../hooks/useFetch';
 import { type IfetchType } from '../types/types';
 import ChallengeCard from '../components/ChallengeCard';
+import { Breadcrumbs, Typography } from '@mui/material';
 
 function MyChallenges () {
 
@@ -94,7 +95,15 @@ function MyChallenges () {
   return (
     <div className='text-center'>
       <Header />
-
+      <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link className={"hover:underline"}  to="/Hjem">
+              Hjem
+            </Link>
+           
+            <Typography color="text.primary">Mine utfordringer</Typography>
+          </Breadcrumbs>
+        </div>
       <div className='flex flex-col items-center min-h-[82vh]'>
         <div className='flex flex-row text-center gap-1 mt-10'>
           <div onClick={() => {

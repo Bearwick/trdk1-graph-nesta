@@ -27,13 +27,13 @@ export default function App() {
         <Route path="LoggInn" element={<Login />} />
         <Route path="RegistrerBruker" element={<RegisterUser/>} />
         <Route path="MineProblem" element={<MyChallenges />} />
-        <Route path="NyUtfordring" element={<NewChallenge />} />
+        <Route path="NyttProblem" element={<NewChallenge />} />
         <Route path="Søk" element={<Search />} />
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<Home />} />
         <Route path="BrukerProfil" element={<UserProfile />} />
         <Route path="GodkjennProblem" element={<AdminStaging />} />
-        <Route path="inspiserUtfordring" element={<InspectChallenge />} />
+        <Route path="InspiserProblem" element={<InspectChallenge />} />
         <Route path="RedigerProblem" element={<EditProblem />} />
  
     </Routes>

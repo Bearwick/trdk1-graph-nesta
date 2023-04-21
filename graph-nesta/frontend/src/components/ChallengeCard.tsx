@@ -64,7 +64,7 @@ function ChallengeCard(props: challengeCardProps){
     return(
 
         <div className="flex flex-col justify-between h-64 w-80 bg-buttonDark px-5 py-5 text-white cursor-pointer hover:drop-shadow-3xl hover:bg-buttonHover">
-            <Link to={props.edit? "/RedigerProblem":"/inspiserUtfordring"}  onClick={onChange}>
+            <Link to={props.edit? "/RedigerProblem":"/InspiserProblem"}  onClick={onChange}>
 
             <section className="flex justify-between  items-center">
                 <p className="font-bold text-left">{props.title}</p>

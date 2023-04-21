@@ -3,10 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { ChallengeContext } from "../globalState/ChallengeContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {type IfetchType } from "../types/types";
 import useFetch from "../hooks/useFetch";
 import ChallengeCard from "../components/ChallengeCard";
+import { Breadcrumbs, Typography } from "@mui/material";
 
 function AdminStaging() {
 
@@ -42,7 +43,16 @@ function AdminStaging() {
     return (
       <div className="text-center">
           <Header />
-              
+          
+          <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link className={"hover:underline"} to="/Hjem">
+              Hjem
+            </Link>
+           
+            <Typography color="text.primary">Godkjenn problem</Typography>
+          </Breadcrumbs>
+        </div>
           <div className="flex flex-col items-center min-h-[82vh]">
           <h1 className='text-3xl text-text p-5'>Godkjenn problem for {user.affiliation}</h1>
   

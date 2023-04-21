@@ -12,8 +12,9 @@ import PhoneIcon from '@mui/icons-material/Phone'
 import LocationCityIcon from '@mui/icons-material/LocationCity'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import { type User } from '../types/types'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getSubscribers, isSubscribed, subscribe, findUser, getUserInfo } from '../api/odaAPI'
+import { Breadcrumbs, Typography } from '@mui/material'
 
 function InspectChallenge () {
 
@@ -160,7 +161,25 @@ function InspectChallenge () {
     <div className='App'>
       <Header />
 
-      <div className='bg-background flex flex-col items-center'>
+      <div className="bg-background flex flex-col">
+
+        <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link className={"hover:underline"}  to="/Hjem">
+              Hjem
+            </Link>
+            <Link className={"hover:underline"}  to="/Søk">
+              Søk
+            </Link>
+           
+            <Typography color="text.primary">Inspiser problem</Typography>
+          </Breadcrumbs>
+        </div>
+
+        <div className="items-center justify-center flex flex-col">
+
+
+
         <div className='text-text px-5 py-3 w-full items-center justify-center flex flex-col mb-5'>
 
           <h1 className='text-4xl mb-2.5'>{title}</h1>
@@ -241,13 +260,16 @@ function InspectChallenge () {
                 fontSize: '2rem',
                 marginRight: '0.5rem',
               }} />{subs.length} har samme problem</h1>
+            {user.email === challenge.owner.email ? null :  
             <Button variant='contained' onClick={handleSubClick} sx={{
               color: 'white',
               backgroundColor: '#0D264A',
               width: '200px',
               borderRadius: '45px',
               '&:hover': { backgroundColor: '#3d3f6b' },
-            }}> {isSubbed ? 'Fjern fra listen' : 'Abonner'}</Button>
+            }}> {isSubbed ? 'Fjern fra listen' : 'Abonner'}
+            </Button>
+            }
           </div>
 
           {
@@ -261,6 +283,7 @@ function InspectChallenge () {
 
         </div>
 
+      </div>
       </div>
 
       <Footer />
