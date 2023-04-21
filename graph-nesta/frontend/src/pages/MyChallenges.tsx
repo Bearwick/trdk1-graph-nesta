@@ -111,12 +111,12 @@ function MyChallenges () {
           </div>
         </div>
 
-        {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> : ODAproblems.length < 1 ? isMyChallenges? <p>Det har ingen problem...</p> : <p>Du har ingen abonnerte problem...</p>
+        {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> : ODAproblems.length < 1 ? isMyChallenges? <p>Du har ingen problem...</p> : <p>Du har ingen abonnerte problem...</p>
         :
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
            
               { ODAproblems.map((data) => (
-                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={data.subCount} owner={data.owner} subs={data.subs}/>
+                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={data.subCount} owner={data.owner} subs={data.subs} edit={false}/>
               ))}
               </div>
         }

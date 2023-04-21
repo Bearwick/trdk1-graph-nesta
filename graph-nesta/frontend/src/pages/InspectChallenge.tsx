@@ -138,10 +138,20 @@ function InspectChallenge () {
     if (isSubbed) {
       subscribe(challenge.id, user.email, false).then(() => {
         setIsSubbed(false)
+        getSubscribers(challenge.id).then(r => {
+          console.log(r.data)
+          setSubs(r.data)
+        }).catch(() => {
+        })
       }).catch(() => '')
     } else {
       subscribe(challenge.id, user.email, true).then(() => {
         setIsSubbed(true)
+        getSubscribers(challenge.id).then(r => {
+          console.log(r.data)
+          setSubs(r.data)
+        }).catch(() => {
+        })
       }).catch(() => '')
     }
   }

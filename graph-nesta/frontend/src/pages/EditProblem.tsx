@@ -13,57 +13,49 @@ import ODACircle from '../components/ODACircle'
 import { useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
-import { addOdaProblem, findUser, getUserInfo } from '../api/odaAPI'
+//  import { addOdaProblem } from '../api/odaAPI'
+import { Status } from '../types/types'
 //  import ChallengeCard from '../components/ChallengeCard';
 
-function NewChallenge () {
+function EditProblem () {
 
-  const { user, setUser } = useContext(ChallengeContext)
+  const { user, challenge} = useContext(ChallengeContext)
   const navigate = useNavigate()
 
-  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
+  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
   useEffect(() => {
-    if (!user.isLoggedIn) {
-      const email = localStorage.getItem('Email') ?? ''
-        const password = localStorage.getItem('Password') ?? ''
+    if (!(user.isAdmin.toString() === "true")) {
+        navigate("/LoggInn");
+      }   
 
-        findUser(email, password).then(r => {
-          if (r.data) {
-            getUserInfo(email).then(userInfo => {
-              if (userInfo.data) {
-                setUser({...userInfo.data, isLoggedIn: true});
-              }
-            }).catch(() => {
-              console.log("no user!")
-              navigate("/LoggInn");})
+    switch (challenge.status) {
+      case Status.newChallenge:
+        setStatus("newChallenge")
+        break;
 
-          } else {
-            setUser({
-              email: "",
-              password: "",
-              affiliation: "",
-              telephone: "",
-              isLoggedIn: false,
-              isAdmin: false,
-            })
-            navigate("/LoggInn");
-          }
-        }).catch(() => {
-          console.log("no user!")
-          navigate('/LoggInn')
-      })
-    }
-  }, [navigate, setUser, user.isLoggedIn])
+      case Status.started:
+        setStatus("inProcess")
+        break;
 
-  const [title, setTitle] = useState('')
-  const [system, setSystem] = useState('')
-  const [otherSystem, setOtherSystem] = useState('')
+      case Status.solved:
+        setStatus("Solved")
+        break;
+  }
+
+  },[navigate, user.isAdmin]);
+
+  const [title, setTitle] = useState(challenge.title)
+  const [system, setSystem] = useState(challenge.vendor)
+  const [otherSystem, setOtherSystem] = useState("")
   const [otherSystemShow, setOtherSystemShow] = useState(false)
-  const [status, setStatus] = useState('newChallenge')
-  const [specificProblem, setSpecificProblem] = useState('')
-  const [clearDataProduct, setClearDataProduct] = useState('')
-  const [accessibleData, setAccessibleData] = useState('')
-  const [definedAction, setDefinedAction] = useState('')
+  const [status, setStatus] = useState("newChallenge")
+  const [specificProblem, setSpecificProblem] = useState(challenge.specificProblem)
+  const [specificProblemCategory, setSpecificProblemCategory] = useState("")
+  const [clearDataProduct, setClearDataProduct] = useState(challenge.clearDataProduct)
+  const [clearDataProductCategory, setClearDataProductCategory] = useState("")
+  const [accessibleData, setAccessibleData] = useState(challenge.accessibleData)
+  const [accessibleDataCategory, setAccessibleDataCategory] = useState("")
+  const [definedAction, setDefinedAction] = useState(challenge.definedAction)
   const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
@@ -75,6 +67,16 @@ function NewChallenge () {
       setShowSimilarChallenges(false)
     }
   }
+  const handleSpecificProblemCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSpecificProblemCategory(event.target.value)
+  }
+  const handleClearDataProductCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setClearDataProductCategory(event.target.value)
+  }
+  const handleAccessibleDataCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAccessibleDataCategory(event.target.value)
+  }
+
 
   //  Styling for mui components (sx).
   const textFieldStyle = {
@@ -111,9 +113,72 @@ function NewChallenge () {
       label: 'Annet system',
     },
   ]
+   //  List of specific problem categories. 
+   const specificProblemCategories = [
+    {
+      value: 'Tilgjengelighetsproblem',
+      label: 'Tilgjengelighetsproblem',
+    },
+    {
+      value: 'Identifisere målproblem',
+      label: 'Identifisere målproblem',
+    },
+    {
+      value: 'Utdatert dataproblem',
+      label: 'Utdatert dataproblem',
+    },
+    {
+      value: 'Prioriteringsproblem',
+      label: 'Prioriteringsproblem',
+    },
+    {
+      value: 'Problem med reaktive tjenester',
+      label: 'Problem med reaktive tjenester',
+    },
+    {
+      value: 'Annet problem',
+      label: 'Annet problem',
+    },
+  ]
+  //  List of accessible data categories
+  const acessibleDataCategories = [
+    {
+      value: "Virksomhet/tredjepartsdata", // Spør Jesper om hva third sector data er. For riktig oversettelse, men egt ikke så viktig lol.
+      label: "Virksomhet/tredjepartsdata",
+    },
+    {
+      value: "Befolkningsdata",
+      label: "Befolkningsdata",
+    },
+    {
+      value: "Åpen data",
+      label: "Åpen data",
+    },
+    {
+      value: "Data fra offentlig sektor",
+      label: "Data fra offentlig sektor",
+    },
+    {
+      value: "Annen data",
+      label: "Annen data",
+    },
+  ]
+  //  List of clear data product categories
+  const clearDataProductCategories = [
+    {
+      value: "Ressurs",
+      label: "Ressurs",
+    },
+    {
+      value: "Redskap",
+      label: "Redskap",
+    },
+  ]
+
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
+    /*
     addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
       console.log('ODAproblem posted succesfully')
       document.body.scrollTop = 0 // For Safari
@@ -122,7 +187,8 @@ function NewChallenge () {
     }).catch(() => {
       console.log('Failure posting ODAproblem')
     })
-
+    */
+    navigate('/GodkjennProblem')
   }
 
   return (
@@ -131,8 +197,9 @@ function NewChallenge () {
 
       <Box component='form' onSubmit={(e) => {
         postChallenge(e)
-      }} className='bg-background   flex flex-col items-center'>
-        <h1 className='text-3xl text-text p-5'>Ny utfordring!</h1>
+      }} className='bg-background flex flex-col items-center'>
+        <h1 className='text-3xl text-text mt-5'>Godkjenn problem for</h1>
+        <h1 className='text-2xl text-text mb-5'>{challenge.owner.email}</h1>
 
         <TextField
           required
@@ -191,7 +258,7 @@ function NewChallenge () {
             maxWidth: '375px',
             marginTop: '10px',
           }}
-        /> : <div></div>}
+        /> : null}
 
         <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status</FormLabel>
         <RadioGroup
@@ -241,6 +308,33 @@ function NewChallenge () {
             />
           </div>
 
+          <div className="flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8">
+            <div className="rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48"></div>
+
+          <TextField
+
+          select
+          required
+          label='Kategoriser spesifikt problem'
+          name='Kategoriser spesifikt problem'
+          size='small'
+          value={specificProblemCategory}
+          onChange={handleSpecificProblemCategoryChange}
+          sx={{
+            ...textFieldStyle,
+            width: '40vw',
+            minWidth: '215px',
+            maxWidth: '375px',
+          }}
+        >
+          {specificProblemCategories.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        </div>
+
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
@@ -267,6 +361,32 @@ function NewChallenge () {
               }}
             />
           </div>
+          <div className="flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8">
+            <div className="rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48"></div>
+
+          <TextField
+
+          select
+          required
+          label='Kategoriser dataprodukt'
+          name='Kategoriser dataprodukt'
+          size='small'
+          value={clearDataProductCategory}
+          onChange={handleClearDataProductCategoryChange}
+          sx={{
+            ...textFieldStyle,
+            width: '40vw',
+            minWidth: '215px',
+            maxWidth: '375px',
+          }}
+        >
+          {clearDataProductCategories.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
@@ -294,6 +414,32 @@ function NewChallenge () {
               }}
             />
           </div>
+          <div className="flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8">
+            <div className="rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48"></div>
+
+          <TextField
+
+          select
+          required
+          label='Kategoriser tilgjengelig data'
+          name='Kategoriser tilgjengelig data'
+          size='small'
+          value={accessibleDataCategory}
+          onChange={handleAccessibleDataCategoryChange}
+          sx={{
+            ...textFieldStyle,
+            width: '40vw',
+            minWidth: '215px',
+            maxWidth: '375px',
+          }}
+        >
+          {acessibleDataCategories.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
@@ -337,14 +483,14 @@ function NewChallenge () {
 
           color: 'white',
           backgroundColor: '#0D264A',
-          width: '150px',
+          width: '200px',
           borderRadius: '45px',
           marginBottom: '2rem',
           marginTop: '1rem',
           '&:hover': {
-            backgroundColor: '#3d3f6b',
+            backgroundColor: '#2BB728',
           },
-        }}>Send</Button>
+        }}>Godkjenn problem</Button>
       </Box>
 
       <Footer />
@@ -352,4 +498,4 @@ function NewChallenge () {
   )
 }
 
-export default NewChallenge
+export default EditProblem
