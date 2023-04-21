@@ -1,13 +1,13 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { addUser, findUser } from "../api/odaAPI";
 import MenuItem from "@mui/material/MenuItem";
 import { ChallengeContext } from "../globalState/ChallengeContext";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Breadcrumbs, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 
 function RegisterUser(){
 
@@ -111,8 +111,18 @@ function RegisterUser(){
     return(
         <div className="App">
             <Header/>
+
+            <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link className={"hover:underline"} to="/Hjem">
+              Hjem
+            </Link>
+           
+            <Typography color="text.primary">Registrer ny bruker</Typography>
+          </Breadcrumbs>
+        </div>
                 <main className="min-h-[82vh] flex flex-col items-center">
-                  <h1 className="text-center mt-20 text-2xl">Registrer ny bruker</h1>
+                  <h1 className="text-center mt-10 text-2xl">Registrer ny bruker</h1>
                   <section className="mt-5 flex flex-col">
 
                   <RadioGroup

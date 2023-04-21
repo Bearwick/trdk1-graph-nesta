@@ -33,7 +33,7 @@ function Header(){
                         <Menu {...bindMenu(popupState)}>
                         {user.isLoggedIn ? <Link to="/MinProfil"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
                             <Link to="/MineProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Mine problem</div></Link>
-                            <Link to="/NyUtfordring"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Nytt problem</div></Link>
+                            <Link to="/NyttProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Nytt problem</div></Link>
                             <Link to="/Søk"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Søk</div></Link>
                             {user.isAdmin.toString() === "true" ? <div className="flex flex-col">
                                 <Link to="/GodkjennProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Godkjenn problem</div></Link>  

@@ -10,11 +10,12 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Button from '@mui/material/Button'
 import ODACircle from '../components/ODACircle'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 //  import { addOdaProblem } from '../api/odaAPI'
 import { Status } from '../types/types'
+import { Breadcrumbs,  Typography } from '@mui/material'
 //  import ChallengeCard from '../components/ChallengeCard';
 
 function EditProblem () {
@@ -194,6 +195,18 @@ function EditProblem () {
   return (
     <div className='App'>
       <Header />
+      <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link className={"hover:underline"} to="/Hjem">
+              Hjem
+            </Link>
+            <Link color="inherit" className={"hover:underline"} to="/GodkjennProblem">
+              Godkjenn problem
+            </Link>
+           
+            <Typography color="text.primary">{challenge.title}</Typography>
+          </Breadcrumbs>
+      </div>
 
       <Box component='form' onSubmit={(e) => {
         postChallenge(e)

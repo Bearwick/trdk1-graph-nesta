@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Footer from "../components/Footer";
 import Nav from "../components/Header";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import userIcon from '../images/userProfileIcon.webp';
 import adminIcon from '../images/adminProfileIcon.webp';
 import EmailIcon from '@mui/icons-material/Email';
@@ -10,6 +10,7 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 //  import editIcon from '../images/editProfileIcon.svg';
 import { ChallengeContext } from '../globalState/ChallengeContext';
 import { findUser, getUserInfo } from '../api/odaAPI';
+import { Breadcrumbs, Typography } from '@mui/material';
 
 function UserProfile() {
     const { user, setUser } = useContext(ChallengeContext);
@@ -72,7 +73,19 @@ function UserProfile() {
     return (
         <div className="UserProfile ">
            <Nav />
-           <div className={'UserProfilePage bg-background text-text flex flex-col place-items-center pb-20'}>
+           <div className={'UserProfilePage bg-background text-text flex flex-col pb-20'}>
+
+              <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
+                <Breadcrumbs aria-label="breadcrumb">
+                  <Link className={"hover:underline"} to="/Hjem">
+                    Hjem
+                  </Link>
+                
+                  <Typography color="text.primary">Min profil</Typography>
+                </Breadcrumbs>
+              </div>
+
+              <div className="items-center flex flex-col">
                <h1 className={'heading text-5xl mt-5 pb-3'}>
                    Min Profil
                </h1>
@@ -91,7 +104,7 @@ function UserProfile() {
 
 
 
-               <Link className={'mt-6 mb-6'} to={'/MineProblem'}>
+               <Link className={"my-4"}  to={'/MineProblem'}>
                 <button className={'myProblemsButton bg-buttonDark hover:bg-buttonHover text-white rounded-full h-9 w-40'}>
                        Mine problem
                 </button>
@@ -99,6 +112,7 @@ function UserProfile() {
                 <button onClick={handleLogout} className={'bg-buttonDark hover:bg-statusRed text-white rounded-full h-9 w-40'}>
                        Logg ut
                 </button>
+           </div>
            </div>
             <Footer />
         </div>

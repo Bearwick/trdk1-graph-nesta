@@ -8,8 +8,9 @@ import Header from "../components/Header";
 import useFetch from "../hooks/useFetch";
 import type {IfetchType } from "../types/types";
 import { ChallengeContext } from "../globalState/ChallengeContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { findUser, getUserInfo } from "../api/odaAPI";
+import { Breadcrumbs, Typography } from "@mui/material";
 
 function Search() {
 
@@ -149,7 +150,19 @@ function Search() {
     return (
       <div className="App">
           <Header />
-          <div className="bg-background flex flex-col items-center mb-5 min-h-screen">
+          <div className="bg-background flex flex-col mb-5 min-h-screen">
+
+        <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link className={"hover:underline"} to="/Hjem">
+              Hjem
+            </Link>
+           
+            <Typography color="text.primary">Søk</Typography>
+          </Breadcrumbs>
+        </div>
+
+        <div className="items-center ">
 
           <div className="flex flex-col mt-5 items-center">
             <div className="flex flex-row gap-1">
@@ -200,7 +213,7 @@ function Search() {
 
               </div>
         }
-
+          </div>
           </div>
           <Footer />
       </div>
