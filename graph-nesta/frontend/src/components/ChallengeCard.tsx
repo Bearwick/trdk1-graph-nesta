@@ -67,7 +67,7 @@ function ChallengeCard(props: challengeCardProps){
             <Link to={props.edit? "/RedigerProblem":"/InspiserProblem"}  onClick={onChange}>
 
             <section className="flex justify-between  items-center">
-                <p className="font-bold text-left">{props.title}</p>
+                <p className="font-bold text-left truncate max-w-[15ch]">{props.title}</p>
 
                 <div className="flex flex-row items-center">
                     <ODACircle style={statusColor} text={""}/>
@@ -93,7 +93,7 @@ function ChallengeCard(props: challengeCardProps){
                 <p>&#x2022;</p>
                 <div className="flex flex-row">
                     <LocationCityIcon sx={{fontSize: "1rem"}}/>
-                    <p className="ml-1.5 whitespace-nowrap">{props.owner.affiliation}</p>
+                    <p className="ml-1.5 whitespace-nowrap truncate max-w-[20ch]">{props.owner.affiliation}</p>
                 </div>
             </section>
             </Link>
