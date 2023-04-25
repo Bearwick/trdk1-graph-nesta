@@ -4,6 +4,7 @@ import initialRoutes from './routes/ontology'
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import cors from "cors";
+import bodyParser from 'body-parser'
 
 const options = {
   definition: {
@@ -31,10 +32,12 @@ const corsOptions: cors.CorsOptions = {
 // Then pass these options to cors:
 const swaggerSpec = swaggerJSDoc(options);
 const app = express()
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors(corsOptions));
 app.use('/ontology', initialRoutes)
+
 app.listen(config.PORT, () => {
   console.log(`app listening on port ${config.PORT}`)
 })

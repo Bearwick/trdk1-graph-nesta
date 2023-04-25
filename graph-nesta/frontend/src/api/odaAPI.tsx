@@ -78,18 +78,17 @@ export async function getUserInfo(email: string) {
 }
 
 export async function addOdaProblem(title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string, status: string) {
-  return await axios.get("http://localhost:8080/ontology/AddProblem", {
-    params: {
-      title,
-      specificProblem,
-      clearDataProduct,
-      accessibleData,
-      definedAction,
-      supplier,
-      userMail,
-      status
-    }
+  const test = axios.post("http://localhost:8080/ontology/AddProblem", {
+    title,
+    specificProblem,
+    clearDataProduct,
+    accessibleData,
+    definedAction,
+    supplier,
+    userMail,
+    status,
   })
+  return await test
 }
 
 export async function subscribe(id: string, email: string, subscribe: boolean) {
