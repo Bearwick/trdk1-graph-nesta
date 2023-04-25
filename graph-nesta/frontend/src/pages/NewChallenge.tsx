@@ -65,15 +65,12 @@ function NewChallenge () {
   const [clearDataProduct, setClearDataProduct] = useState('')
   const [accessibleData, setAccessibleData] = useState('')
   const [definedAction, setDefinedAction] = useState('')
-  const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
     if (event.target.value === 'Annet system') {
       setOtherSystemShow(true)
-      setShowSimilarChallenges(true)
     } else {
       setOtherSystemShow(false)
-      setShowSimilarChallenges(false)
     }
   }
 
@@ -333,16 +330,6 @@ function NewChallenge () {
             />
           </div>
         </div>
-
-        {showSimilarChallenges ?
-          <div className=' bg-white h-80 w-4/5 px-3 py-2'>
-            <h2 className='text-text underline underline-offset-2 text-left mb-2'>Like utfordringer</h2>
-            <div className='flex flex-row flex-nowrap overflow-auto gap-4'>
-
-            </div>
-          </div>
-          : ''}
-
 
         <Button variant='contained' type='submit' sx={{
 
