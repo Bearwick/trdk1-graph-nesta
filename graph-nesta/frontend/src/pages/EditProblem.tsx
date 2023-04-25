@@ -13,11 +13,9 @@ import ODACircle from '../components/ODACircle'
 import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
-//  import { addOdaProblem } from '../api/odaAPI'
 import { type Categories, Status } from '../types/types'
 import { Breadcrumbs,  Typography } from '@mui/material'
 import { approve, getCategories } from '../api/odaAPI'
-//  import ChallengeCard from '../components/ChallengeCard';
 
 function EditProblem () {
 
@@ -58,17 +56,14 @@ function EditProblem () {
   const [accessibleData, setAccessibleData] = useState(challenge.accessibleData)
   const [accessibleDataCategory, setAccessibleDataCategory] = useState("")
   const [definedAction, setDefinedAction] = useState(challenge.definedAction)
-  const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
   const [categories, setCategories] = useState<Categories>()
   const [error, setError] = useState(false);
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
     if (event.target.value === 'Annet system') {
       setOtherSystemShow(true)
-      setShowSimilarChallenges(true)
     } else {
       setOtherSystemShow(false)
-      setShowSimilarChallenges(false)
     }
   }
   const handleSpecificProblemCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -438,14 +433,6 @@ function EditProblem () {
           </div>
         </div>
 
-        {showSimilarChallenges ?
-          <div className=' bg-white h-80 w-4/5 px-3 py-2'>
-            <h2 className='text-text underline underline-offset-2 text-left mb-2'>Like utfordringer</h2>
-            <div className='flex flex-row flex-nowrap overflow-auto gap-4'>
-
-            </div>
-          </div>
-          : ''}
 
         {error? <p>En feil har oppstått</p>: null}
         <Button variant='contained' type='submit' sx={{

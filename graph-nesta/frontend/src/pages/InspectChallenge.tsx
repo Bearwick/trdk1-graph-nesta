@@ -36,7 +36,7 @@ function InspectChallenge () {
   const [statusColor, setStatusColor] = useState('rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed')
   const { challenge } = useContext(ChallengeContext)
   const [challengeIsLoaded, setChallengeIsLoaded] = useState(false)
-  const [showSimilarChallenges] = useState(true)
+  const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
 
   const {
     user,
@@ -146,7 +146,12 @@ function InspectChallenge () {
     console.log(subs)
   }, [subs])
 
-  // TODO: update database.
+  //  Handles similarChallenges show
+  const handleSimilarChallengesShow = () => {
+    setShowSimilarChallenges(!showSimilarChallenges)
+  }
+
+  //  updates database of subs
   const handleSubClick = () => {
     if (isSubbed) {
       subscribe(challenge.id, user.email, false).then(() => {
@@ -252,6 +257,35 @@ function InspectChallenge () {
             </div>
           </div>
 
+          <Button variant='contained' onClick={handleSimilarChallengesShow} sx={{
+                  color: 'white',
+                  backgroundColor: '#0D264A',
+                  width: '250px',
+                  borderRadius: '45px',
+                  '&:hover': { backgroundColor: '#3d3f6b' },
+                }}> {showSimilarChallenges ? 'Fjern lignende problem' : 'Vis lignende problem'} 
+          </Button>
+
+          {showSimilarChallenges ?
+            <div className='my-8 w-[65vw]'>
+              <div className={ODAproblems.length > 1 ?'bg-white flex flex-row px-3 py-2 flex-nowrap overflow-auto gap-4': "text-center"}>
+                
+                {ODAproblems.length > 1 ? 
+                  
+                  ODAproblems.map((data) => { return data.id !== challenge.id ?
+                    <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)}
+                                  status={data.status} specificProblem={data.specificProblem}
+                                  clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData}
+                                  definedAction={data.definedAction} subCount={data.subCount} owner={data.owner}
+                                  subs={data.subs} edit={false} /> 
+                  : null})
+                
+                : <p>Ingen lignende problem funnet!</p>}
+             
+              </div>
+            </div>
+            : null}
+
           <div className='flex flex-col w-[65vw] text-left mb-5 gap-1'>
             <h2 className='text-text underline underline-offset2 text-2xl'>Kontaktinformasjon</h2>
 
@@ -263,20 +297,6 @@ function InspectChallenge () {
               sx={{ fontSize: '1rem' }} />+47 {telephone}</div>
           </div>
 
-          {showSimilarChallenges ?
-            <div className=' bg-white h-80 w-[65vw] px-3 py-2'>
-              <h2 className='text-text underline underline-offset-2 text-left mb-2'>Like utfordringer</h2>
-              <div className='flex flex-row flex-nowrap overflow-auto gap-4'>
-                {ODAproblems.map((data) => (
-                  <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)}
-                                 status={data.status} specificProblem={data.specificProblem}
-                                 clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData}
-                                 definedAction={data.definedAction} subCount={data.subCount} owner={data.owner}
-                                 subs={data.subs} edit={false} />
-                ))}
-              </div>
-            </div>
-            : null}
 
           <div className='flex flex-col w-[65vw] text-left mb-5 gap-1'>
 

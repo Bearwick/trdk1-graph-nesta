@@ -36,11 +36,13 @@ function AdminStaging () {
   const { user } = useContext(ChallengeContext)
   const navigate = useNavigate()
 
+
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
   useEffect(() => {
     if (!(user.isAdmin.toString() === 'true')) {
       navigate('/LoggInn')
     }
+
   }, [navigate, user.isAdmin])
 
   return (
