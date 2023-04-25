@@ -11,7 +11,6 @@ import {
 } from '../database/ontology'
 import {
   type AddCategoriesParams,
-  type AddOdaProblemParams,
   type AddUserParams, type CategoryParams,
   type FindUserParams,
   type OdaProblemParams,
@@ -55,9 +54,9 @@ router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaPr
   }).catch(() => res.send([]))
 })
 
-router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOdaProblemParams>, res: Response) {
-  const query = req.query
-  addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.definedAction, query.supplier, query.userMail, query.status).then(r => {
+router.post('/AddProblem', function(req: Request, res: Response) {
+  const data = req.body
+  addODAProblem(data.title, data.specificProblem, data.clearDataProduct, data.accessibleData, data.definedAction, data.supplier, data.userMail, data.status).then(r => {
     res.send(r.request)
   }).catch((r) => res.send(r.request))
 })
