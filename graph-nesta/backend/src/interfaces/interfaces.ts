@@ -5,6 +5,8 @@ interface OdaProblemParams {
   category: string
   email: string
   relation: number
+  approved: boolean
+  similarProblem: string
 }
 
 interface AddOdaProblemParams {
@@ -49,6 +51,12 @@ interface SubscribeParams {
   ODAProblem: string
 }
 
+interface CategoryParams {
+  specificProblem: string[]
+  dataProduct: string[]
+  accessibleData: string[]
+}
+
 export {
   type OdaProblemParams,
   type AddOdaProblemParams,
@@ -57,4 +65,5 @@ export {
   type SetAdminParams,
   type SubscribeParams,
   type FindUserParams,
+  type CategoryParams
 }

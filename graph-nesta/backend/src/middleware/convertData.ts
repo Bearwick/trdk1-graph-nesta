@@ -9,8 +9,7 @@ export function setObject (r: AxiosResponse<any, any>) {
         affiliation: odaProblem.affiliation.value,
         telephone: odaProblem.phoneNumber.value,
       }
-      const status: Status = (odaProblem.progress.value === "newChallenge") ? Status.newChallenge : (odaProblem.progress.value === "inProcess") ? Status.started : Status.solved
-
+      const status: Status = (odaProblem.progress.value === 'newChallenge') ? Status.newChallenge : (odaProblem.progress.value === 'inProcess') ? Status.started : Status.solved
       const problem: OdaProblem = {
         accessibleData: odaProblem.accessibleDataDescription.value,
         clearDataProduct: odaProblem.dataProductDescription.value,
@@ -29,7 +28,7 @@ export function setObject (r: AxiosResponse<any, any>) {
   return odaProblems
 }
 
-export function convertSubscribers(r: AxiosResponse<any, any>) {
+export function convertSubscribers (r: AxiosResponse<any, any>) {
   const subscribers: User[] = r.data.results.bindings.map(subscriber => {
     const owner: User = {
       email: subscriber.email.value,
@@ -48,8 +47,15 @@ export function convertUser (r: AxiosResponse<any, any>) {
     email: userData.mail.value,
     telephone: userData.phone.value,
     affiliation: userData.affiliation.value,
-    isAdmin: userData.isAdmin.value
+    isAdmin: userData.isAdmin.value,
   }
   return user
+
+}
+
+export function convertCategory (r: AxiosResponse<any, any>) {
+  return r.data.results.bindings.map(r => {
+    return r.category.value
+  }).slice(2)
 
 }

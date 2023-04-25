@@ -17,7 +17,7 @@ function Search() {
   const {user, setUser } = useContext(ChallengeContext);
   const navigate = useNavigate();
 
-    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+    //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
     useEffect(() => {
       if (!user.isLoggedIn) {
         const email = localStorage.getItem("Email") ?? "";
@@ -32,7 +32,7 @@ function Search() {
             }).catch(() => {
               console.log("no user!")
               navigate("/LoggInn");})
-            
+
           } else {
             setUser({
               email: "",
@@ -47,7 +47,7 @@ function Search() {
         }).catch(() => {
           console.log("no user!")
           navigate("/LoggInn");})
-      }      
+      }
     },[navigate, setUser, user.isLoggedIn]);
 
   //  const [limit, setLimit] = useState(30); //  offset for fetching the next ODA-problems in the infinite scroll
@@ -57,7 +57,7 @@ function Search() {
   const [searchHits, ] = useState(11);
 
   //  Infinite scroll
-  const [limit, ] = useState(20);
+  const [limit, ] = useState(40);
 
   //  List of filters available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
   const filters = [
@@ -206,7 +206,7 @@ function Search() {
 
               {isLoading ? <h1>Laster innhold...</h1> : isError? <h1>En feil har oppstått...</h1> :
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
-           
+
               {ODAproblems.map((data) => (
                 <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={data.subCount} owner={data.owner} subs={data.subs} edit={false}/>
               ))}

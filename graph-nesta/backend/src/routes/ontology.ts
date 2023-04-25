@@ -3,7 +3,7 @@ import * as fs from "fs";
 import {
   addCategories,
   addODAProblem,
-  addUser, findUser,
+  addUser, findUser, getCategories,
   getODAProblems, getSubscribers, getUser, isSubbed,
   setAdmin,
   subscribe,
@@ -12,13 +12,14 @@ import {
 import {
   type AddCategoriesParams,
   type AddOdaProblemParams,
-  type AddUserParams,
+  type AddUserParams, type CategoryParams,
   type FindUserParams,
   type OdaProblemParams,
   type SetAdminParams,
   type SubscribeParams,
 } from '../interfaces/interfaces'
-import { convertSubscribers, convertUser, setObject } from '../middleware/convertData'
+import { convertCategory, convertSubscribers, convertUser, setObject } from '../middleware/convertData'
+import axios from 'axios'
 
 const router = Router()
 
@@ -48,18 +49,17 @@ const router = Router()
  *
  */
 router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaProblemParams>, res: Response) {
-  const {limit, offset, searchString, category, email, relation} = req.query
-  getODAProblems(limit, offset, searchString, category, email, relation).then(r => {
-    console.log(r.data.results.bindings[0].odaProblem)
+  const {limit, offset, searchString, category, email, relation, approved, similarProblem} = req.query
+  getODAProblems(limit, offset, searchString, category, email, relation, approved, similarProblem).then(r => {
     res.send(setObject(r))
-  }).catch((r) => res.send([]))
+  }).catch(() => res.send([]))
 })
 
 router.get('/AddProblem', function(req: Request<unknown, unknown, unknown, AddOdaProblemParams>, res: Response) {
   const query = req.query
   addODAProblem(query.title, query.specificProblem, query.clearDataProduct, query.accessibleData, query.definedAction, query.supplier, query.userMail, query.status).then(r => {
-    res.send(r)
-  }).catch((r) => res.send(r))
+    res.send(r.request)
+  }).catch((r) => res.send(r.request))
 })
 
 router.get('/NestaGuide', function(_, res: Response) {
@@ -145,6 +145,18 @@ router.get("/GetSubscribers", function(req: Request<unknown, unknown, unknown, S
   getSubscribers(ODAProblem).then(r => {
     res.send(convertSubscribers(r))
   }).catch(() => res.send([]))
+})
+
+router.get("/GetCategories", function(req: Request, res: Response) {
+  getCategories().then(axios.spread((...r) => {
+    const categories: CategoryParams = {
+      specificProblem: convertCategory(r[0]),
+      accessibleData: convertCategory(r[1]),
+      dataProduct: convertCategory(r[2])
+    }
+    res.send(categories)
+  })).catch(() => res.send("error"))
+
 })
 
 export default router
