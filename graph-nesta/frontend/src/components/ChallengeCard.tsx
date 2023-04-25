@@ -76,7 +76,7 @@ function ChallengeCard(props: challengeCardProps){
 
             </section>
 
-            <section className="text-left pt-2.5 h-40">
+            <section className="text-left pt-2.5 h-44">
                 <p className="text-sm line-clamp-6">{props.specificProblem}</p>
             </section>
 

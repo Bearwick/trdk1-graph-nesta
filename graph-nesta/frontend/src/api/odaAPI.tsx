@@ -1,9 +1,9 @@
 import axios, { type AxiosResponse } from 'axios'
-import { type ContextUser, type challengeCardProps, type User } from '../types/types'
+import { type ContextUser, type challengeCardProps, type User, type Categories } from '../types/types'
 
 
-export const getOdaProblems = async(offset: number, limit: number, searchString: string, category: string, email?: string, relation?: number): Promise<AxiosResponse<challengeCardProps[]>> => {
-  return await axios.get<challengeCardProps[]>("http://localhost:8080/ontology/ODAProblem", {
+export const getOdaProblems = async(offset: number, limit: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string): Promise<AxiosResponse<challengeCardProps[]>> => {
+  const q = await axios.get<challengeCardProps[]>("http://localhost:8080/ontology/ODAProblem", {
     params: {
       offset,
       limit,
@@ -11,8 +11,12 @@ export const getOdaProblems = async(offset: number, limit: number, searchString:
       category,
       email,
       relation,
+      approved,
+      similarProblem
     }
   })
+  console.log(q)
+  return q
 }
 
 export const getUserOdaProblems = async(offset: number, limit: number, searchString: string, category: string, email: string, relation: number): Promise<AxiosResponse<challengeCardProps[]>> => {
@@ -121,4 +125,18 @@ export async function getSubscribers(id: string) {
       ODAProblem: id
     }
   })
+}
+
+export async function getCategories() {
+  return await axios.get<Categories>("http://localhost:8080/ontology/GetCategories")
+}
+
+export async function approve(specProblem: string, accessibleData: string, dataProduct: string, nodeName: string) {
+  const test = await axios.get("http://localhost:8080/ontology/AddCategories", {
+    params: {
+      specProblem, dataProduct, accessibleData, nodeName
+    }
+  })
+  console.log(test)
+  return test
 }

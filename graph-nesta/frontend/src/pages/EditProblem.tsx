@@ -14,8 +14,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 //  import { addOdaProblem } from '../api/odaAPI'
-import { Status } from '../types/types'
+import { type Categories, Status } from '../types/types'
 import { Breadcrumbs,  Typography } from '@mui/material'
+import { approve, getCategories } from '../api/odaAPI'
 //  import ChallengeCard from '../components/ChallengeCard';
 
 function EditProblem () {
@@ -23,11 +24,11 @@ function EditProblem () {
   const { user, challenge} = useContext(ChallengeContext)
   const navigate = useNavigate()
 
-  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
+  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
   useEffect(() => {
     if (!(user.isAdmin.toString() === "true")) {
         navigate("/LoggInn");
-      }   
+      }
 
     switch (challenge.status) {
       case Status.newChallenge:
@@ -58,6 +59,8 @@ function EditProblem () {
   const [accessibleDataCategory, setAccessibleDataCategory] = useState("")
   const [definedAction, setDefinedAction] = useState(challenge.definedAction)
   const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
+  const [categories, setCategories] = useState<Categories>()
+  const [error, setError] = useState(false);
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
     if (event.target.value === 'Annet system') {
@@ -114,70 +117,24 @@ function EditProblem () {
       label: 'Annet system',
     },
   ]
-   //  List of specific problem categories. 
-   const specificProblemCategories = [
-    {
-      value: 'Tilgjengelighetsproblem',
-      label: 'Tilgjengelighetsproblem',
-    },
-    {
-      value: 'Identifisere målproblem',
-      label: 'Identifisere målproblem',
-    },
-    {
-      value: 'Utdatert dataproblem',
-      label: 'Utdatert dataproblem',
-    },
-    {
-      value: 'Prioriteringsproblem',
-      label: 'Prioriteringsproblem',
-    },
-    {
-      value: 'Problem med reaktive tjenester',
-      label: 'Problem med reaktive tjenester',
-    },
-    {
-      value: 'Annet problem',
-      label: 'Annet problem',
-    },
-  ]
   //  List of accessible data categories
-  const acessibleDataCategories = [
-    {
-      value: "Virksomhet/tredjepartsdata", // Spør Jesper om hva third sector data er. For riktig oversettelse, men egt ikke så viktig lol.
-      label: "Virksomhet/tredjepartsdata",
-    },
-    {
-      value: "Befolkningsdata",
-      label: "Befolkningsdata",
-    },
-    {
-      value: "Åpen data",
-      label: "Åpen data",
-    },
-    {
-      value: "Data fra offentlig sektor",
-      label: "Data fra offentlig sektor",
-    },
-    {
-      value: "Annen data",
-      label: "Annen data",
-    },
-  ]
-  //  List of clear data product categories
-  const clearDataProductCategories = [
-    {
-      value: "Ressurs",
-      label: "Ressurs",
-    },
-    {
-      value: "Redskap",
-      label: "Redskap",
-    },
-  ]
+
+
+  useEffect(() => {
+    getCategories().then((r) => {
+      setCategories(r.data)
+    }).catch(() => {
+      setError(true)
+    })
+  }, [])
 
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
+      navigate('/GodkjennProblem')
+    }).catch((r) => {
+      console.log(r)
+    })
 
     /*
     addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
@@ -189,7 +146,6 @@ function EditProblem () {
       console.log('Failure posting ODAproblem')
     })
     */
-    navigate('/GodkjennProblem')
   }
 
   return (
@@ -203,7 +159,7 @@ function EditProblem () {
             <Link color="inherit" className={"hover:underline"} to="/GodkjennProblem">
               Godkjenn problem
             </Link>
-           
+
             <Typography color="text.primary">{challenge.title}</Typography>
           </Breadcrumbs>
       </div>
@@ -340,9 +296,9 @@ function EditProblem () {
             maxWidth: '375px',
           }}
         >
-          {specificProblemCategories.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {categories?.specificProblem.map((value) => (
+            <MenuItem key={value} value={value}>
+              {value}
             </MenuItem>
           ))}
         </TextField>
@@ -393,9 +349,9 @@ function EditProblem () {
             maxWidth: '375px',
           }}
         >
-          {clearDataProductCategories.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {categories?.dataProduct.map((value) => (
+            <MenuItem key={value} value={value}>
+              {value}
             </MenuItem>
           ))}
         </TextField>
@@ -446,9 +402,9 @@ function EditProblem () {
             maxWidth: '375px',
           }}
         >
-          {acessibleDataCategories.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {categories?.accessibleData.map((value) => (
+            <MenuItem key={value} value={value}>
+              {value}
             </MenuItem>
           ))}
         </TextField>
@@ -491,7 +447,7 @@ function EditProblem () {
           </div>
           : ''}
 
-
+        {error? <p>En feil har oppstått</p>: null}
         <Button variant='contained' type='submit' sx={{
 
           color: 'white',

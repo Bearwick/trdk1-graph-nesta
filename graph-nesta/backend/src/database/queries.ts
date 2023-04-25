@@ -32,12 +32,36 @@ export default {
     ?odaProblem oda:ODAprogress ?progress.
     ${relation && email ? '?user2 oda:userMail "'.concat(email.toString(), '".'): ""}
     ${relation && +relation === 0 ? '?user2 oda:subscribedTo ?odaProblem.': relation && +relation === 1 ? '?user2 oda:creatorOf ?odaProblem.': ""}
-    ${approved && approved ? '?odaProblem oda:approved true.': approved && !approved ? '?odaProblem oda:approved false.': ""}
+    ${approved?.toString() === "true" ?  '?odaProblem oda:approved true.': approved?.toString() === "false" ? '?odaProblem oda:approved false.': ""}
     Filter (regex(?title, "${searchString}") || regex(?specificProblemDescription, "${searchString}")).
     Filter (regex(?title, "${category}") || regex(?specificProblemDescription, "${category}")).
     
 } limit ${limit} offset ${offset}`,
+  // This one is badly designed. a better solution than using nodeName is found in getSubscribers. Simply prefix the whole id as seen in that method, so you wont have to substring the id in frontend.
   addCategories: (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string) => `
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  prefix oda: <urn:absolute:ODA2.0#>
+  delete {
+    oda:${nodeName} oda:approved false.
+  }
+  insert {
+    ?dataProduct rdf:type oda:${dataProduct}.
+    ?specProblem rdf:type oda:${specProblem}.
+    ?acData rdf:type oda:${accessibleData}.
+    oda:${nodeName} oda:approved true.
+  }
+  where {
+    oda:${nodeName} oda:hasSpecificProblem ?sp.
+    oda:${nodeName} oda:hasAccesibleData ?ad.
+    oda:${nodeName} oda:hasClearDataProduct ?dp.
+    bind(?sp as ?specProblem).
+    bind(?ad as ?acData).
+    bind(?dp as ?dataProduct).
+    
+  }
+  `,
+  addInference: (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   prefix oda: <urn:absolute:ODA2.0#>
@@ -49,6 +73,7 @@ export default {
     ?specProblemCategory oda:sameCategoryAs ?specProblem.
     ?dataProductCategory oda:sameCategoryAs ?dataProduct.
     ?acDataCategory oda:sameCategoryAs ?acData.
+    oda:${nodeName} oda:approved true.
   }
   where {
     
@@ -64,9 +89,7 @@ export default {
     bind(?sp as ?specProblem).
     bind(?ad as ?acData).
     bind(?dp as ?dataProduct).
-    
-  }
-  `,
+    `,
   addUser: (phone: number, email: string, affiliation: string, password: string, setAdmin: boolean) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

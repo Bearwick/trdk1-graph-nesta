@@ -23,10 +23,11 @@ const addODAProblem = async (title: string, specificProblem: string, clearDataPr
 }
 
 const addCategories = async (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string) => {
-  console.log(`http://localhost:7200/repositories/dataDrivenMunicipalities/statements?update=
-  ${encodeURIComponent(queries.addCategories(specProblem, dataProduct, accessibleData, nodeName))}`)
-  return await update(queries.addCategories(specProblem, dataProduct, accessibleData, nodeName))
+  const q1 = update(queries.addInference(specProblem, dataProduct, accessibleData, nodeName))
+  const q2 = update(queries.addCategories(specProblem, dataProduct, accessibleData, nodeName))
+  return await axios.all([q1, q2])
 }
+
 
 const addUser = async (phone: number, email: string, affiliation: string, password: string, setAdmin: boolean) => {
   console.log(queries.addUser(phone, email, affiliation, password, setAdmin))
