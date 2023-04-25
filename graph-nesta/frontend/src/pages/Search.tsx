@@ -104,6 +104,7 @@ function Search() {
     categoryFilter,
     searchPhrase,
     orderBy,
+    approved: true
   }
 
   const [query, setQuery] = useState<IfetchType>(querySearch);
@@ -118,6 +119,7 @@ function Search() {
       categoryFilter,
       searchPhrase,
       orderBy,
+      approved: true
     }
     setQuery(newQuery);
 }
@@ -157,7 +159,7 @@ function Search() {
             <Link className={"hover:underline"} to="/Hjem">
               Hjem
             </Link>
-           
+
             <Typography color="text.primary">Søk</Typography>
           </Breadcrumbs>
         </div>

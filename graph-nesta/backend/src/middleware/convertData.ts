@@ -55,7 +55,7 @@ export function convertUser (r: AxiosResponse<any, any>) {
 
 export function convertCategory (r: AxiosResponse<any, any>) {
   return r.data.results.bindings.map(r => {
-    return r.category.value
+    return r.category.value.substring(20)
   }).slice(2)
 
 }

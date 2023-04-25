@@ -94,8 +94,8 @@ router.get('/FindUser', function(req: Request<unknown, unknown, unknown, FindUse
 })
 
 router.get('/AddCategories', function(req: Request<unknown, unknown, unknown, AddCategoriesParams>, res: Response) {
-  const query = req.query
-  addCategories(query.specProblem, query.dataProduct, query.accessibleData, query.nodeName).then(r => {
+  const {specProblem, dataProduct, accessibleData, nodeName} = req.query
+  addCategories(specProblem, dataProduct, accessibleData, nodeName).then(r => {
     res.send(r)
   }).catch(r => res.send(r))
 })
