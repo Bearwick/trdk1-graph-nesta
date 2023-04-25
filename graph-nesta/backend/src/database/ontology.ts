@@ -10,12 +10,13 @@ const update = async (query: string) => {
   ${encodeURIComponent(query)}`)
 }
 
-const getODAProblems = async (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number) => {
-  return await get(queries.getODAProblems(limit, offset, searchString, category, email, relation))
+const getODAProblems = async (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string) => {
+  // console.log(encodeURIComponent(queries.getODAProblems(limit, offset, searchString, category, email, relation)))
+  return await get(queries.getODAProblems(limit, offset, searchString, category, email, relation, approved, similarProblem))
 }
 const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string, status: string) => {
   // Assumes title is unique, otherwise we could end up in a situation where a single ODA problem can have many accessible datas etc.
-  // Eventually add a check for this
+  // Eventually add a check for thiss
   // Query will also need to update which user has made the query etc.
   const nodeName: string = title.replace(/\s/g, '')
   return await update(queries.addODAProblem(nodeName, title, specificProblem, clearDataProduct, accessibleData, definedAction, supplier, userMail, status))
@@ -61,6 +62,23 @@ const getSubscribers = async (ODAProblem: string) => {
 const getUser = async (email: string) => {
   return await get(queries.getUser(email))
 }
+const getSpecificProblemCategories = async () => {
+  return await get(queries.specProbCategories())
+}
+const getAccessibleDataCategories = async () => {
+  return await get(queries.acDataCategories())
+}
+
+const getDataProductCategories = async () => {
+  return await get(queries.dataProdCategories())
+}
+
+const getCategories = async () => {
+  const reqOne = get(queries.specProbCategories())
+  const reqTwo = get(queries.acDataCategories())
+  const reqThree = get(queries.dataProdCategories())
+  return await axios.all([reqOne, reqTwo, reqThree])
+}
 export {
   getODAProblems,
   addODAProblem,
@@ -73,4 +91,8 @@ export {
   getUser,
   isSubbed,
   getSubscribers,
+  getSpecificProblemCategories,
+  getAccessibleDataCategories,
+  getDataProductCategories,
+  getCategories,
 }
