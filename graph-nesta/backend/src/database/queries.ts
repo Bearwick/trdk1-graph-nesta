@@ -30,6 +30,16 @@ export default {
     ?user oda:userMail ?email.
     ?user oda:userAffiliation ?affiliation.
     ?odaProblem oda:ODAprogress ?progress.
+    ?odaProblem oda:approved ?approved.
+    optional{
+        {
+        select ?odaProblem (count(?sub) as ?subCount) {
+            ?sub rdf:type oda:User.
+            ?odaProblem oda:hasSubscriber ?sub.
+        } group by ?odaProblem
+            
+    }
+    }
     ${relation && email ? '?user2 oda:userMail "'.concat(email.toString(), '".'): ""}
     ${relation && +relation === 0 ? '?user2 oda:subscribedTo ?odaProblem.': relation && +relation === 1 ? '?user2 oda:creatorOf ?odaProblem.': ""}
     ${approved?.toString() === "true" ?  '?odaProblem oda:approved true.': approved?.toString() === "false" ? '?odaProblem oda:approved false.': ""}
@@ -89,6 +99,7 @@ export default {
     bind(?sp as ?specProblem).
     bind(?ad as ?acData).
     bind(?dp as ?dataProduct).
+    }
     `,
   addUser: (phone: number, email: string, affiliation: string, password: string, setAdmin: boolean) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
@@ -150,7 +161,7 @@ export default {
     oda:${nodeName} oda:hasVendor oda:${supplier}.
     oda:${nodeName} oda:approved false.
     oda:${nodeName} oda:ODATitle "${title}".
-    oda:${nodeName} oda:ODAprogress "${status}".
+    oda:${nodeName} oda:ODAprogress "${status.toString()}".
     oda:${nodeName}SpecificProblem oda:specificProblemDescription "${specificProblem}".
     oda:${nodeName}ClearDataProduct oda:dataProductDescription "${clearDataProduct}".
     oda:${nodeName}AccessibleData oda:accesibleDataDescription "${accessibleData}".

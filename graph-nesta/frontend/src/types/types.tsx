@@ -33,6 +33,7 @@ export interface challengeCardProps {
   owner: User;
   subs: User[];
   edit: boolean;
+  approved: boolean;
 
 }
 

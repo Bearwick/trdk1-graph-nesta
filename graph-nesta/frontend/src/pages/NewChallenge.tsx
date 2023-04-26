@@ -215,7 +215,7 @@ function NewChallenge () {
           }}
         >
           <FormControlLabel value='newChallenge' control={<Radio sx={{ '&.Mui-checked': { color: '#FF002F' } }} />}
-                            label='Ny utfordring' />
+                            label='Nytt problem' />
           <FormControlLabel value='inProcess' control={<Radio sx={{ '&.Mui-checked': { color: '#F0AE2F' } }} />}
                             label='Påbegynnt' />
           <FormControlLabel value='Solved' control={<Radio sx={{ '&.Mui-checked': { color: '#2BB728' } }} />}

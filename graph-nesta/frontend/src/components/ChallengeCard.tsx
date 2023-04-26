@@ -30,10 +30,14 @@ function ChallengeCard(props: challengeCardProps){
             owner: props.owner,
             subs: props.subs,
             edit: props.edit,
+            approved: props.approved,
         });
     }
 
     useEffect(() => {
+
+        if (props.approved.toString() === "true") {
+
         switch (props.status) {
             case Status.newChallenge:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed");
@@ -46,6 +50,8 @@ function ChallengeCard(props: challengeCardProps){
             case Status.solved:
                 setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen");
                 break;
+        }} else {
+            setStatusColor("rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-white");
         }
 
     }, [props.status])
@@ -71,7 +77,7 @@ function ChallengeCard(props: challengeCardProps){
 
                 <div className="flex flex-row items-center">
                     <ODACircle style={statusColor} text={""}/>
-                    <p className="whitespace-nowrap">{props.status}</p>
+                    <p className="whitespace-nowrap">{props.approved.toString() === "true" ? props.status : "Ikke godkjent"}</p>
                 </div>
 
             </section>

@@ -54,10 +54,9 @@ function Search() {
   const [searchPhrase, setSearch] = useState("");
   const [orderBy, setOrderBy] = useState("Løst");
   const [categoryFilter, setCategoryFilter] = useState("");
-  const [searchHits, ] = useState(11);
 
   //  Infinite scroll
-  const [limit, ] = useState(40);
+  const [limit, ] = useState(60);
 
   //  List of filters available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
   const filters = [
@@ -109,7 +108,7 @@ function Search() {
 
   const [query, setQuery] = useState<IfetchType>(querySearch);
   const [page, setPage] = useState(0);
-  const { isLoading, isError, ODAproblems } = useFetch(query, page);
+  const { isLoading, isError, ODAproblems, ODAproblemsLength } = useFetch(query, page);
   //  const loader = useRef(null);
 
   //  Fetches ODAproblems
@@ -202,7 +201,7 @@ function Search() {
               <CategoryButton text={"Faktura"} focused={categoryFilter} onClick={handleCategoryButtonClick}/>
               <CategoryButton text={"Forvaltning"} focused={categoryFilter} onClick={handleCategoryButtonClick}/>
             </div>
-                <p className="">{ searchHits } treff</p>
+                <p className="">{ ODAproblemsLength } treff</p>
 
           </div>
 
@@ -210,7 +209,7 @@ function Search() {
             <div className="flex flex-wrap justify-center overflow gap-4 mt-5">
 
               {ODAproblems.map((data) => (
-                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={data.subCount} owner={data.owner} subs={data.subs} edit={false}/>
+                <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)} status={data.status} specificProblem={data.specificProblem} clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData} definedAction={data.definedAction} subCount={data.subCount} owner={data.owner} subs={data.subs} edit={false} approved={data.approved}/>
               ))}
 
               </div>

@@ -9,6 +9,7 @@ interface OdaProblem {
   definedAction: string;
   subCount: number;
   owner: User;
+  approved: boolean
 }
 
 interface User {

@@ -22,7 +22,7 @@ function InspectChallenge () {
   const [title, setTitle] = useState('')
   const [status, setStatus] = useState(Status.newChallenge)
   const [system, setSystem] = useState('')
-  const [subCount, setSubCount] = useState(0)
+  const [, setSubCount] = useState(0)
   const [affiliation, setAffiliation] = useState('')
   const [specificProblem, setSpecificProblem] = useState('')
   const [clearDataProduct, setClearDataProduct] = useState('')
@@ -74,6 +74,8 @@ function InspectChallenge () {
             }
           }).catch(() => {
             console.log('no user!')
+            document.body.scrollTop = 0 // For Safari
+            document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
             navigate('/LoggInn')
           })
 
@@ -86,10 +88,14 @@ function InspectChallenge () {
             isLoggedIn: false,
             isAdmin: false,
           })
+          document.body.scrollTop = 0 // For Safari
+          document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
           navigate('/LoggInn')
         }
       }).catch(() => {
         console.log('no user!')
+        document.body.scrollTop = 0 // For Safari
+        document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
         navigate('/LoggInn')
       })
     }
@@ -110,8 +116,6 @@ function InspectChallenge () {
       setChallengeIsLoaded(true)
     }
 
-    //  Adds all subs of a challenge to the subs Array.
-
     //  Changes the color theme of the status circle.
     switch (status) {
       case Status.newChallenge:
@@ -126,6 +130,8 @@ function InspectChallenge () {
         setStatusColor('rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusGreen')
         break
     }
+    
+    //  Adds all subs of a challenge to the subs Array.
     getSubscribers(challenge.id).then(r => {
       console.log(r.data)
       setSubs(r.data)
@@ -189,7 +195,7 @@ function InspectChallenge () {
               Søk
             </Link>
 
-            <Typography color='text.primary'>Inspiser problem</Typography>
+            <Typography color='text.primary'>{title}</Typography>
           </Breadcrumbs>
         </div>
 
@@ -208,7 +214,7 @@ function InspectChallenge () {
 
               <div className='flex flex-row'>
                 <PeopleIcon sx={{ fontSize: '1rem' }} />
-                <p className='ml-1.5 whitespace-nowrap'>{subCount}</p>
+                <p className='ml-1.5 whitespace-nowrap'>{subs.length}</p>
               </div>
 
               <div className='flex flex-row'>
@@ -274,10 +280,10 @@ function InspectChallenge () {
                   
                   ODAproblems.map((data) => { return data.id !== challenge.id ?
                     <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)}
-                                  status={data.status} specificProblem={data.specificProblem}
-                                  clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData}
-                                  definedAction={data.definedAction} subCount={data.subCount} owner={data.owner}
-                                  subs={data.subs} edit={false} /> 
+                    status={data.status} specificProblem={data.specificProblem}
+                    clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData}
+                    definedAction={data.definedAction} subCount={data.subCount} owner={data.owner}
+                    subs={data.subs} edit={false} approved={data.approved} /> 
                   : null})
                 
                 : <p>Ingen lignende problem funnet!</p>}

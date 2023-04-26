@@ -80,6 +80,7 @@ export default function ChallengeProvider({children} : ChallengeProviderProps){
         owner: initialUser,
         subs: initialSubs,
         edit: false,
+        approved: false,
 
     });
 

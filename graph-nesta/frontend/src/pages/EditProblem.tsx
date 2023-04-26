@@ -130,17 +130,6 @@ function EditProblem () {
     }).catch((r) => {
       console.log(r)
     })
-
-    /*
-    addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
-      console.log('ODAproblem posted succesfully')
-      document.body.scrollTop = 0 // For Safari
-      document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
-      navigate('/Hjem')
-    }).catch(() => {
-      console.log('Failure posting ODAproblem')
-    })
-    */
   }
 
   return (
@@ -237,7 +226,7 @@ function EditProblem () {
           }}
         >
           <FormControlLabel value='newChallenge' control={<Radio sx={{ '&.Mui-checked': { color: '#FF002F' } }} />}
-                            label='Ny utfordring' />
+                            label='Nytt problem' />
           <FormControlLabel value='inProcess' control={<Radio sx={{ '&.Mui-checked': { color: '#F0AE2F' } }} />}
                             label='Påbegynnt' />
           <FormControlLabel value='Solved' control={<Radio sx={{ '&.Mui-checked': { color: '#2BB728' } }} />}
