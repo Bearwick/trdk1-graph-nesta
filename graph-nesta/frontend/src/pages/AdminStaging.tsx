@@ -25,7 +25,7 @@ function AdminStaging () {
     approved: false,
   }
 
-  const [query] = useState<IfetchType>(querySearch)
+  const [query, setQuery] = useState<IfetchType>(querySearch)
   const [page] = useState(0)
   const {
     isLoading,
@@ -45,6 +45,10 @@ function AdminStaging () {
 
   }, [navigate, user.isAdmin])
 
+  useEffect(() => {
+    setQuery(querySearch)
+  }, [])
+
   return (
     <div className='text-center'>
       <Header />
@@ -59,17 +63,17 @@ function AdminStaging () {
         </Breadcrumbs>
       </div>
       <div className='flex flex-col items-center min-h-[82vh]'>
-        <h1 className='text-3xl text-text p-5'>Godkjenn problem for {user.affiliation}</h1>
+        <h1 className='text-3xl text-text p-5'>Godkjenn problem</h1>
 
         {isLoading ? <h1>Laster innhold...</h1> : isError ? <h1>En feil har oppstått...</h1> :
           <div className='flex flex-wrap justify-center overflow gap-4 mt-5'>
-
+            {ODAproblems.length > 0 ? null : <p>Ingen problem som påventer godkjenning</p>}
             {ODAproblems.map((data) => (
               <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)}
-                             status={data.status} specificProblem={data.specificProblem}
-                             clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData}
-                             definedAction={data.definedAction} subCount={data.subCount} owner={data.owner}
-                             subs={data.subs} edit={true} />
+              status={data.status} specificProblem={data.specificProblem}
+              clearDataProduct={data.clearDataProduct} accessibleData={data.accessibleData}
+              definedAction={data.definedAction} subCount={data.subCount} owner={data.owner}
+              subs={data.subs} edit={true} approved={data.approved} />
             ))}
 
           </div>

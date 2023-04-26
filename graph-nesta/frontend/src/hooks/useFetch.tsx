@@ -7,6 +7,7 @@ function useFetch(query:IfetchType, offset: number) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [ODAproblems, setODAproblems] = useState<challengeCardProps[]>([]);
+  const [ODAproblemsLength, setODAProblemsLength] = useState(0);
 
   const sendQuery = useCallback(async (query:IfetchType) => {
     setIsLoading(true);
@@ -18,6 +19,7 @@ function useFetch(query:IfetchType, offset: number) {
       getOdaProblems(offset, query.limit*multiplier, query.categoryFilter, query.searchPhrase, query.email, query.relation, query.approved, query.similarProblem)
         .then(res => {
           setODAproblems(res.data)
+          setODAProblemsLength(res.data.length)
         })
         .catch(() => {setIsError(true)})
         .finally(() => {setIsLoading(false)})
@@ -28,7 +30,7 @@ function useFetch(query:IfetchType, offset: number) {
         .catch(() => {setIsError(true)})
   }, [query, sendQuery, offset]);
 
-  return { isLoading, isError, ODAproblems };
+  return { isLoading, isError, ODAproblems, ODAproblemsLength };
 }
 
 export default useFetch;

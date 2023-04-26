@@ -18,9 +18,10 @@ export function setObject (r: AxiosResponse<any, any>) {
         owner,
         specificProblem: odaProblem.specificProblemDescription.value,
         status,
-        subCount: 5,
+        subCount: odaProblem.subCount ? odaProblem.subCount.value : 0,
         title: odaProblem.title.value,
         vendor: odaProblem.vendor.value,
+        approved: odaProblem.approved.value,
       }
       return problem
 
