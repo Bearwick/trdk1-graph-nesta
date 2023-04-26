@@ -27,12 +27,12 @@ function Header(){
                 <PopupState variant="popover" popupId="demo-popup-menu">
                     {(popupState) => (
                         <React.Fragment>
-                        <Button data-testid="hamburgerMenu" {...bindTrigger(popupState)}> 
+                        <Button data-cy = "hamburgerMenu" data-testid="hamburgerMenu" {...bindTrigger(popupState)}> 
                             {popupState.isOpen ? <CloseIcon onClick={onChange} sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}}/>: <MenuIcon onClick={onChange}  sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}} />}
                         </Button>
                         <Menu {...bindMenu(popupState)}>
-                        {user.isLoggedIn ? <Link to="/MinProfil"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
-                            <Link to="/MineProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Mine problem</div></Link>
+                        {user.isLoggedIn ? <Link to="/MinProfil"><div data-cy ="minProfil" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div data-cy ="loggin" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
+                            <Link to="/MineProblem"><div data-cy="mineProblemer" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Mine problem</div></Link>
                             <Link to="/NyttProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Nytt problem</div></Link>
                             <Link to="/Søk"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Søk</div></Link>
                             {user.isAdmin.toString() === "true" ? <div className="flex flex-col">
