@@ -143,6 +143,7 @@ function NewChallenge () {
         <h1 className='text-3xl text-text p-5'>Nytt problem!</h1>
 
         <TextField
+          data-cy = "tittel"
           required
           id='outlined-required'
           label='Tittel'
@@ -161,7 +162,7 @@ function NewChallenge () {
         />
 
         <TextField
-
+          data-cy = "system"
           select
           required
           label='System'
@@ -177,7 +178,7 @@ function NewChallenge () {
           }}
         >
           {systems.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem data-cy = {option.label} key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
@@ -227,6 +228,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
               text={'Spesifikt problem'} />
             <TextField
+              data-cy = "spesificProblem"
               required
               id='outlined-multiline-static'
               multiline
@@ -254,6 +256,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
               text={'Dataprodukt'} />
             <TextField
+              data-cy = "dataProduct"
               required
               id='outlined-multiline-static'
               multiline
@@ -281,6 +284,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
               text={'Tilgjengelig data'} />
             <TextField
+              data-cy = "accesibleData"
               required
               id='outlined-multiline-static'
               multiline
@@ -308,6 +312,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
               text={'Definert handling'} />
             <TextField
+              data-cy = "definedAction"
               required
               id='outlined-multiline-static'
               multiline
@@ -331,7 +336,7 @@ function NewChallenge () {
           </div>
         </div>
 
-        <Button variant='contained' type='submit' sx={{
+        <Button data-cy ="send" variant='contained' type='submit' sx={{
 
           color: 'white',
           backgroundColor: '#0D264A',

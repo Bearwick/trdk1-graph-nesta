@@ -68,6 +68,7 @@ function Login() {
           <section className="mt-10 flex flex-col">
           <section className="flex flex-col gap-4">
             <TextField
+              data-cy = "email"
               label="E-post"
               size="medium"
               value={email}
@@ -76,6 +77,7 @@ function Login() {
               maxWidth: "300px", }}
             />
               <TextField
+              data-cy = "password"
               label="Passord"
               type = "password"
               size="medium"
@@ -88,7 +90,7 @@ function Login() {
           </section>
           </section>
 
-            <Button variant="contained" onClick={handleLogin} sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
+            <Button data-cy ="logginButton" variant="contained" onClick={handleLogin} sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
             backgroundColor: '#3d3f6b',
       }}}   >Logg inn</Button>
 

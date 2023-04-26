@@ -286,7 +286,7 @@ function InspectChallenge () {
             </div>
             : null}
 
-          <div className='flex flex-col w-[65vw] text-left mb-5 gap-1'>
+          <div data-cy = "kontaktContainer" className='flex flex-col w-[65vw] text-left mb-5 gap-1'>
             <h2 className='text-text underline underline-offset2 text-2xl'>Kontaktinformasjon</h2>
 
             <div className='flex flex-row items-center gap-1 text-xs sm:text-base'><LocationCityIcon
@@ -301,14 +301,14 @@ function InspectChallenge () {
           <div className='flex flex-col w-[65vw] text-left mb-5 gap-1'>
 
             <div className='mt-5 flex flex-row flex-wrap justify-between gap-2 mb-2'>
-              <h1
+              <h1 data-cy ="subcount"
                 className='text-text underline underline-offset2 text-2xl flex flex-row items-center whitespace-nowrap'>
                 <PeopleIcon sx={{
                   fontSize: '2rem',
                   marginRight: '0.5rem',
                 }} />{subs.length} har samme problem</h1>
               {user.email === challenge.owner.email ? null :
-                <Button variant='contained' onClick={handleSubClick} sx={{
+                <Button data-cy ="subscribeBtn" variant='contained' onClick={handleSubClick} sx={{
                   color: 'white',
                   backgroundColor: '#0D264A',
                   width: '200px',
