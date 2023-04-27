@@ -209,7 +209,7 @@ function NewChallenge () {
           }}
         /> : <div></div>}
 
-        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status</FormLabel>
+        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status på problemet</FormLabel>
         <RadioGroup
           row
           aria-labelledby='demo-radio-buttons-group-label'

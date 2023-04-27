@@ -51,6 +51,7 @@ function UserProfile() {
 
 
     const handleLogout = () => {
+        localStorage.setItem("ShowLoggedOutMessage", "true")
         localStorage.setItem("Email", "")
         localStorage.setItem("Password", "")
 

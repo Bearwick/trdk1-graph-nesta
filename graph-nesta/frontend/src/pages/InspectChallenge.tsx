@@ -37,6 +37,7 @@ function InspectChallenge () {
   const { challenge } = useContext(ChallengeContext)
   const [challengeIsLoaded, setChallengeIsLoaded] = useState(false)
   const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
+  const [lastMyProblems] = useState(localStorage.getItem("lastMyProblems"))
 
   const {
     user,
@@ -191,9 +192,9 @@ function InspectChallenge () {
             <Link className={'hover:underline'} to='/Hjem'>
               Hjem
             </Link>
-            <Link className={'hover:underline'} to='/Søk'>
-              Søk
-            </Link>
+            <Link className={'hover:underline'} to={lastMyProblems === "true" ? "/MineProblem" : '/Søk'}>
+              {lastMyProblems === "true" ? "Mine problem" : "Søk"}
+            </Link> 
 
             <Typography color='text.primary'>{title}</Typography>
           </Breadcrumbs>

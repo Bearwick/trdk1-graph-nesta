@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { findUser, getUserInfo } from "../api/odaAPI";
 import { ChallengeContext } from "../globalState/ChallengeContext";
+import { Alert, Snackbar } from "@mui/material";
 
 function Login() {
   const {setUser} = useContext(ChallengeContext);
@@ -15,6 +16,7 @@ function Login() {
 
   const [email, setEmail] = useState( localStorage.getItem("Email") ?? "");
   const [password, setPassword] = useState(localStorage.getItem("Password") ?? "");
+  const [ShowLoggedOutMessage, setShowLoggedOutMessage] = useState(localStorage.getItem("ShowLoggedOutMessage"));
 
 
   const textFieldStyle = {
@@ -37,6 +39,11 @@ function Login() {
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
+  }
+
+  const handleClose = () => {
+    localStorage.setItem("ShowLoggedOutMessage", "false");
+    setShowLoggedOutMessage("false");
   }
 
   const handleLogin = () => {
@@ -95,6 +102,12 @@ function Login() {
       }}}   >Logg inn</Button>
 
         </main>
+
+          <Snackbar open={ShowLoggedOutMessage === "true"} autoHideDuration={2000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+              Logg ut vellykket 
+            </Alert>
+          </Snackbar>
         <Footer/>
       </div>
     )
