@@ -77,7 +77,7 @@ function ChallengeCard(props: challengeCardProps){
 
                 <div className="flex flex-row items-center">
                     <ODACircle style={statusColor} text={""}/>
-                    <p className="whitespace-nowrap">{props.approved.toString() === "true" ? props.status : "Ikke godkjent"}</p>
+                    <p className="whitespace-nowrap">{props.approved.toString() === "true" ? props.status : "Til vurdering"}</p>
                 </div>
 
             </section>

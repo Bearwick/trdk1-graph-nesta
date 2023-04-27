@@ -14,7 +14,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
-import { Breadcrumbs,  Typography } from '@mui/material'
+import { Alert, Breadcrumbs,  Snackbar,  Typography } from '@mui/material'
 import { approve, getCategories } from '../api/odaAPI'
 
 function EditProblem () {
@@ -58,6 +58,7 @@ function EditProblem () {
   const [definedAction, setDefinedAction] = useState(challenge.definedAction)
   const [categories, setCategories] = useState<Categories>()
   const [error, setError] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
     if (event.target.value === 'Annet system') {
@@ -123,10 +124,17 @@ function EditProblem () {
     })
   }, [])
 
+  const handleSuccessClose = () => {
+    document.body.scrollTop = 0 // For Safari
+    document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
+    setShowSuccessMessage(false);
+    navigate('/GodkjennProblem')
+  }
+
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
-      navigate('/GodkjennProblem')
+      setShowSuccessMessage(true)
     }).catch((r) => {
       console.log(r)
     })
@@ -422,8 +430,6 @@ function EditProblem () {
           </div>
         </div>
 
-
-        {error? <p>En feil har oppstått</p>: null}
         <Button variant='contained' type='submit' sx={{
 
           color: 'white',
@@ -437,6 +443,17 @@ function EditProblem () {
           },
         }}>Godkjenn problem</Button>
       </Box>
+
+      <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
+        <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
+          Godkjenning vellyket!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={error} autoHideDuration={6000} onClose={() => {setError(false)}}>
+        <Alert onClose={() => {setError(false)}} severity="error" sx={{ width: '100%' }}>
+          Det har skjedd en feil...
+        </Alert>
+      </Snackbar>
 
       <Footer />
     </div>
