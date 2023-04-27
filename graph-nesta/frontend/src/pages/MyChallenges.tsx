@@ -21,6 +21,7 @@ function MyChallenges () {
 
     //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
     useEffect(() => {
+      localStorage.setItem("lastMyProblems", "true");
       if (!user.isLoggedIn) {
         const email = localStorage.getItem("Email") ?? "";
         const password = localStorage.getItem("Password") ?? "";
@@ -56,7 +57,8 @@ function MyChallenges () {
   const [ searchPhrase ] = useState("");
   const [ orderBy ] = useState("Løst");
   const [ categoryFilter ] = useState("");
-  const [ limit ] = useState(20);
+  const [ limit ] = useState(60);
+
   // initial IfetchType object
   const querySearch: IfetchType = {
     limit,
@@ -71,7 +73,6 @@ function MyChallenges () {
   const [query, setQuery] = useState<IfetchType>(querySearch);
   const [ page ] = useState(0);
   const { isLoading, isError, ODAproblems } = useFetch(query, page);
-  //  const loader = useRef(null);
 
   //  Fetches ODAproblems
   const fetchODAproblems = (limit: number, categoryFilter: string, searchPhrase: string, orderBy: string, relation: number) => {
@@ -100,8 +101,10 @@ function MyChallenges () {
             <Link className={"hover:underline"}  to="/Hjem">
               Hjem
             </Link>
-           
-            <Typography color="text.primary">Mine utfordringer</Typography>
+            <Link className={"hover:underline"}  to="/MinProfil">
+              Min profil
+            </Link>
+            <Typography color="text.primary">Mine problem</Typography>
           </Breadcrumbs>
         </div>
       <div className='flex flex-col items-center min-h-[82vh]'>

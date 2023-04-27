@@ -19,6 +19,7 @@ function Search() {
 
     //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
     useEffect(() => {
+      localStorage.setItem("lastMyProblems", "false");
       if (!user.isLoggedIn) {
         const email = localStorage.getItem("Email") ?? "";
         const password = localStorage.getItem("Password") ?? "";

@@ -221,13 +221,13 @@ function EditProblem () {
           }}
         /> : null}
 
-        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status</FormLabel>
+        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status på problemet</FormLabel>
         <RadioGroup
           row
           aria-labelledby='demo-radio-buttons-group-label'
           className='mb-5'
           defaultValue='newChallenge'
-          name='status'
+          name='Status på problemet'
           value={status}
           onChange={e => {
             setStatus(e.target.value)
