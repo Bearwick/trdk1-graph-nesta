@@ -14,50 +14,53 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
-import { Alert, Breadcrumbs,  Snackbar,  Typography } from '@mui/material'
-import { approve, getCategories } from '../api/odaAPI'
+import { Alert, Breadcrumbs, Snackbar, Typography } from '@mui/material'
+import { approve, getCategories, updateOdaProblem } from '../api/odaAPI'
 
 function EditProblem () {
 
-  const { user, challenge} = useContext(ChallengeContext)
+  const {
+    user,
+    challenge,
+  } = useContext(ChallengeContext)
   const navigate = useNavigate()
 
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
   useEffect(() => {
-    if (!(user.isAdmin.toString() === "true")) {
-        navigate("/LoggInn");
-      }
+    if (!(user.isAdmin.toString() === 'true')) {
+      navigate('/LoggInn')
+    }
 
     switch (challenge.status) {
       case Status.newChallenge:
-        setStatus("newChallenge")
-        break;
+        setStatus('newChallenge')
+        break
 
       case Status.started:
-        setStatus("inProcess")
-        break;
+        setStatus('inProcess')
+        break
 
       case Status.solved:
-        setStatus("Solved")
-        break;
-  }
+        setStatus('Solved')
+        break
+    }
 
-  },[navigate, user.isAdmin]);
+  }, [navigate, user.isAdmin])
 
   const [title, setTitle] = useState(challenge.title)
   const [system, setSystem] = useState(challenge.vendor)
-  const [otherSystem, setOtherSystem] = useState("")
+  const [otherSystem, setOtherSystem] = useState('')
   const [otherSystemShow, setOtherSystemShow] = useState(false)
-  const [status, setStatus] = useState("newChallenge")
+  const [status, setStatus] = useState('newChallenge')
   const [specificProblem, setSpecificProblem] = useState(challenge.specificProblem)
-  const [specificProblemCategory, setSpecificProblemCategory] = useState("")
+  const [specificProblemCategory, setSpecificProblemCategory] = useState('')
   const [clearDataProduct, setClearDataProduct] = useState(challenge.clearDataProduct)
-  const [clearDataProductCategory, setClearDataProductCategory] = useState("")
+  const [clearDataProductCategory, setClearDataProductCategory] = useState('')
   const [accessibleData, setAccessibleData] = useState(challenge.accessibleData)
-  const [accessibleDataCategory, setAccessibleDataCategory] = useState("")
+  const [accessibleDataCategory, setAccessibleDataCategory] = useState('')
   const [definedAction, setDefinedAction] = useState(challenge.definedAction)
   const [categories, setCategories] = useState<Categories>()
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
@@ -76,7 +79,6 @@ function EditProblem () {
   const handleAccessibleDataCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAccessibleDataCategory(event.target.value)
   }
-
 
   //  Styling for mui components (sx).
   const textFieldStyle = {
@@ -115,7 +117,6 @@ function EditProblem () {
   ]
   //  List of accessible data categories
 
-
   useEffect(() => {
     getCategories().then((r) => {
       setCategories(r.data)
@@ -127,33 +128,38 @@ function EditProblem () {
   const handleSuccessClose = () => {
     document.body.scrollTop = 0 // For Safari
     document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
-    setShowSuccessMessage(false);
+    setShowSuccessMessage(false)
     navigate('/GodkjennProblem')
   }
 
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
-      setShowSuccessMessage(true)
-    }).catch((r) => {
-      console.log(r)
+    updateOdaProblem(challenge.id, system, status, title, specificProblem, clearDataProduct, accessibleData, definedAction).then(() => {
+      approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
+        setShowSuccessMessage(true)
+      }).catch((res) => {
+        console.log(res)
+      })
+    }).catch(() => {
+      console.log('Error')
     })
+
   }
 
   return (
     <div className='App'>
       <Header />
-      <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link className={"hover:underline"} to="/Hjem">
-              Hjem
-            </Link>
-            <Link color="inherit" className={"hover:underline"} to="/GodkjennProblem">
-              Godkjenn problem
-            </Link>
+      <div className='text-left ml-10 sm:ml-[5.25rem] mt-4'>
+        <Breadcrumbs aria-label='breadcrumb'>
+          <Link className={'hover:underline'} to='/Hjem'>
+            Hjem
+          </Link>
+          <Link color='inherit' className={'hover:underline'} to='/GodkjennProblem'>
+            Godkjenn problem
+          </Link>
 
-            <Typography color="text.primary">{challenge.title}</Typography>
-          </Breadcrumbs>
+          <Typography color='text.primary'>{challenge.title}</Typography>
+        </Breadcrumbs>
       </div>
 
       <Box component='form' onSubmit={(e) => {
@@ -269,32 +275,32 @@ function EditProblem () {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8">
-            <div className="rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48"></div>
+          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
+            <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
 
-          <TextField
+            <TextField
 
-          select
-          required
-          label='Kategoriser spesifikt problem'
-          name='Kategoriser spesifikt problem'
-          size='small'
-          value={specificProblemCategory}
-          onChange={handleSpecificProblemCategoryChange}
-          sx={{
-            ...textFieldStyle,
-            width: '40vw',
-            minWidth: '215px',
-            maxWidth: '375px',
-          }}
-        >
-          {categories?.specificProblem.map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </TextField>
-        </div>
+              select
+              required
+              label='Kategoriser spesifikt problem'
+              name='Kategoriser spesifikt problem'
+              size='small'
+              value={specificProblemCategory}
+              onChange={handleSpecificProblemCategoryChange}
+              sx={{
+                ...textFieldStyle,
+                width: '40vw',
+                minWidth: '215px',
+                maxWidth: '375px',
+              }}
+            >
+              {categories?.specificProblem.map((value) => (
+                <MenuItem key={value} value={value}>
+                  {value}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
@@ -322,32 +328,32 @@ function EditProblem () {
               }}
             />
           </div>
-          <div className="flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8">
-            <div className="rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48"></div>
+          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
+            <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
 
-          <TextField
+            <TextField
 
-          select
-          required
-          label='Kategoriser dataprodukt'
-          name='Kategoriser dataprodukt'
-          size='small'
-          value={clearDataProductCategory}
-          onChange={handleClearDataProductCategoryChange}
-          sx={{
-            ...textFieldStyle,
-            width: '40vw',
-            minWidth: '215px',
-            maxWidth: '375px',
-          }}
-        >
-          {categories?.dataProduct.map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </TextField>
-        </div>
+              select
+              required
+              label='Kategoriser dataprodukt'
+              name='Kategoriser dataprodukt'
+              size='small'
+              value={clearDataProductCategory}
+              onChange={handleClearDataProductCategoryChange}
+              sx={{
+                ...textFieldStyle,
+                width: '40vw',
+                minWidth: '215px',
+                maxWidth: '375px',
+              }}
+            >
+              {categories?.dataProduct.map((value) => (
+                <MenuItem key={value} value={value}>
+                  {value}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
@@ -375,32 +381,32 @@ function EditProblem () {
               }}
             />
           </div>
-          <div className="flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8">
-            <div className="rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48"></div>
+          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
+            <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
 
-          <TextField
+            <TextField
 
-          select
-          required
-          label='Kategoriser tilgjengelig data'
-          name='Kategoriser tilgjengelig data'
-          size='small'
-          value={accessibleDataCategory}
-          onChange={handleAccessibleDataCategoryChange}
-          sx={{
-            ...textFieldStyle,
-            width: '40vw',
-            minWidth: '215px',
-            maxWidth: '375px',
-          }}
-        >
-          {categories?.accessibleData.map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </TextField>
-        </div>
+              select
+              required
+              label='Kategoriser tilgjengelig data'
+              name='Kategoriser tilgjengelig data'
+              size='small'
+              value={accessibleDataCategory}
+              onChange={handleAccessibleDataCategoryChange}
+              sx={{
+                ...textFieldStyle,
+                width: '40vw',
+                minWidth: '215px',
+                maxWidth: '375px',
+              }}
+            >
+              {categories?.accessibleData.map((value) => (
+                <MenuItem key={value} value={value}>
+                  {value}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
             <ODACircle
@@ -445,12 +451,16 @@ function EditProblem () {
       </Box>
 
       <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
-        <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleSuccessClose} severity='success' sx={{ width: '100%' }}>
           Godkjenning vellyket!
         </Alert>
       </Snackbar>
-      <Snackbar open={error} autoHideDuration={6000} onClose={() => {setError(false)}}>
-        <Alert onClose={() => {setError(false)}} severity="error" sx={{ width: '100%' }}>
+      <Snackbar open={error} autoHideDuration={6000} onClose={() => {
+        setError(false)
+      }}>
+        <Alert onClose={() => {
+          setError(false)
+        }} severity='error' sx={{ width: '100%' }}>
           Det har skjedd en feil...
         </Alert>
       </Snackbar>

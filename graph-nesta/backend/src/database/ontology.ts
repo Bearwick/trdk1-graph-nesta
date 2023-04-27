@@ -28,7 +28,6 @@ const addCategories = async (specProblem: string, dataProduct: string, accessibl
   return await axios.all([q1, q2])
 }
 
-
 const addUser = async (phone: number, email: string, affiliation: string, password: string, setAdmin: boolean) => {
   console.log(queries.addUser(phone, email, affiliation, password, setAdmin))
   return await update(queries.addUser(phone, email, affiliation, password, setAdmin))
@@ -58,6 +57,11 @@ const isSubbed = async (email: string, ODAProblem: string) => {
 
 const getSubscribers = async (ODAProblem: string) => {
   return await get(queries.getSubscribers(ODAProblem))
+}
+
+const updateODAProblem = async (odaProblem: string, vendor: string, progress: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string) => {
+  return await update(queries.updateODAProblem(odaProblem, vendor, progress, title, specificProblem, clearDataProduct, accessibleData, definedAction,
+  ))
 }
 
 const getUser = async (email: string) => {
@@ -96,4 +100,5 @@ export {
   getAccessibleDataCategories,
   getDataProductCategories,
   getCategories,
+  updateODAProblem
 }
