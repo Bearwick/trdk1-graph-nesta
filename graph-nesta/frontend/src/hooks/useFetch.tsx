@@ -16,7 +16,7 @@ function useFetch(query:IfetchType, offset: number) {
         multiplier = 1;
     }
 
-      getOdaProblems(offset, query.limit*multiplier, query.categoryFilter, query.searchPhrase, query.email, query.relation, query.approved, query.similarProblem)
+      getOdaProblems(offset, query.limit*multiplier, query.categoryFilter, query.searchPhrase, query.email, query.relation, query.approved, query.similarProblem, query.filter)
         .then(res => {
           setODAproblems(res.data)
           setODAProblemsLength(res.data.length)

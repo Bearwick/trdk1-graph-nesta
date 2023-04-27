@@ -1,7 +1,7 @@
 import axios, { type AxiosResponse } from 'axios'
 import { type ContextUser, type challengeCardProps, type User, type Categories } from '../types/types'
 
-export const getOdaProblems = async (offset: number, limit: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string): Promise<AxiosResponse<challengeCardProps[]>> => {
+export const getOdaProblems = async (offset: number, limit: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string, filter?: number): Promise<AxiosResponse<challengeCardProps[]>> => {
   const q = await axios.get<challengeCardProps[]>('http://localhost:8080/ontology/ODAProblem', {
     params: {
       offset,
@@ -12,6 +12,7 @@ export const getOdaProblems = async (offset: number, limit: number, searchString
       relation,
       approved,
       similarProblem,
+      filter
     },
   })
   console.log(q)
@@ -92,7 +93,7 @@ export async function addOdaProblem (title: string, specificProblem: string, cle
 }
 
 export async function updateOdaProblem (odaProblem: string, vendor: string, progress: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string) {
-  return await axios.put("http://localhost:8080/ontology/UpdateOdaProblem'", {
+  return await axios.put("http://localhost:8080/ontology/UpdateOdaProblem", {
     odaProblem,
     vendor,
     progress,

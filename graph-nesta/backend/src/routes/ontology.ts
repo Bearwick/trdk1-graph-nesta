@@ -57,8 +57,9 @@ router.get('/ODAProblem', function(req: Request<unknown, unknown, unknown, OdaPr
     relation,
     approved,
     similarProblem,
+    filter
   } = req.query
-  getODAProblems(limit, offset, searchString, category, email, relation, approved, similarProblem).then(r => {
+  getODAProblems(limit, offset, searchString, category, email, relation, approved, similarProblem, parseInt(filter)).then(r => {
     res.send(setObject(r))
   }).catch(() => res.send([]))
 })
