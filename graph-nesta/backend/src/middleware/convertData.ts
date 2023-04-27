@@ -58,5 +58,9 @@ export function convertCategory (r: AxiosResponse<any, any>) {
   return r.data.results.bindings.map(r => {
     return r.category.value.substring(20)
   }).slice(2)
-
+}
+export function convertVendors(r: AxiosResponse<any, any>) {
+  return r.data.results.bindings.map(r => {
+    return r.vendor.value.substring(20)
+  })
 }

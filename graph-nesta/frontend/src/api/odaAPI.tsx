@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from 'axios'
-import { type ContextUser, type challengeCardProps, type User, type Categories } from '../types/types'
+import { type Categories, type challengeCardProps, type ContextUser, type User } from '../types/types'
 
 export const getOdaProblems = async (offset: number, limit: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string, filter?: number): Promise<AxiosResponse<challengeCardProps[]>> => {
   const q = await axios.get<challengeCardProps[]>('http://localhost:8080/ontology/ODAProblem', {
@@ -151,7 +151,7 @@ export async function getCategories () {
 }
 
 export async function approve (specProblem: string, accessibleData: string, dataProduct: string, nodeName: string) {
-  const test = await axios.get('http://localhost:8080/ontology/AddCategories', {
+  return await axios.get('http://localhost:8080/ontology/AddCategories', {
     params: {
       specProblem,
       dataProduct,
@@ -159,6 +159,8 @@ export async function approve (specProblem: string, accessibleData: string, data
       nodeName,
     },
   })
-  console.log(test)
-  return test
+}
+
+export async function getVendors() {
+  return await axios.get<string[]>('http://localhost:8080/ontology/GetVendors')
 }

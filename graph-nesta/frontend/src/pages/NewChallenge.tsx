@@ -10,48 +10,64 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Button from '@mui/material/Button'
 import ODACircle from '../components/ODACircle'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { useNavigate, Link } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
-import { addOdaProblem, findUser, getUserInfo } from '../api/odaAPI'
-import { Alert, Breadcrumbs, Snackbar, Tooltip, type TooltipProps, Typography, styled, tooltipClasses } from '@mui/material'
+import { addOdaProblem, findUser, getUserInfo, getVendors } from '../api/odaAPI'
+import {
+  Alert,
+  Breadcrumbs,
+  Snackbar,
+  Tooltip,
+  type TooltipProps,
+  Typography,
+  styled,
+  tooltipClasses,
+} from '@mui/material'
 
 function NewChallenge () {
 
-  const { user, setUser } = useContext(ChallengeContext)
+  const {
+    user,
+    setUser,
+  } = useContext(ChallengeContext)
   const navigate = useNavigate()
 
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
   useEffect(() => {
     if (!user.isLoggedIn) {
       const email = localStorage.getItem('Email') ?? ''
-        const password = localStorage.getItem('Password') ?? ''
+      const password = localStorage.getItem('Password') ?? ''
 
-        findUser(email, password).then(r => {
-          if (r.data) {
-            getUserInfo(email).then(userInfo => {
-              if (userInfo.data) {
-                setUser({...userInfo.data, isLoggedIn: true});
-              }
-            }).catch(() => {
-              console.log("no user!")
-              navigate("/LoggInn");})
+      findUser(email, password).then(r => {
+        if (r.data) {
+          getUserInfo(email).then(userInfo => {
+            if (userInfo.data) {
+              setUser({
+                ...userInfo.data,
+                isLoggedIn: true,
+              })
+            }
+          }).catch(() => {
+            console.log('no user!')
+            navigate('/LoggInn')
+          })
 
-          } else {
-            setUser({
-              email: "",
-              password: "",
-              affiliation: "",
-              telephone: "",
-              isLoggedIn: false,
-              isAdmin: false,
-            })
-            navigate("/LoggInn");
-          }
-        }).catch(() => {
-          console.log("no user!")
+        } else {
+          setUser({
+            email: '',
+            password: '',
+            affiliation: '',
+            telephone: '',
+            isLoggedIn: false,
+            isAdmin: false,
+          })
           navigate('/LoggInn')
+        }
+      }).catch(() => {
+        console.log('no user!')
+        navigate('/LoggInn')
       })
     }
   }, [navigate, setUser, user.isLoggedIn])
@@ -66,7 +82,7 @@ function NewChallenge () {
   const [accessibleData, setAccessibleData] = useState('Ved å bruke disse datasettene ')
   const [definedAction, setDefinedAction] = useState('For å løse dette vil vi ')
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-  const[showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
     if (event.target.value === 'Annet system') {
@@ -94,54 +110,47 @@ function NewChallenge () {
 
   const statusHelpText = `Nytt problem: problemet er nettopp oppdaget og/eller aldri arbeidet med.
                           Påbegynnt: problemet arbeides med.
-                          Løst: det er blitt laget en løsning for problemet. `;
+                          Løst: det er blitt laget en løsning for problemet. `
 
   const specificProblemHelpText = `Problemet vårt er at … [sett inn spesifikk problemstilling].
                                    F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes,
-                                  men som likevel koster penger for enhetene.`;
-  
+                                  men som likevel koster penger for enhetene.`
+
   const dataProductHelpText = `Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser].
-                               F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,`;
-  
+                               F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,`
+
   const accessibleDataHelpText = `Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke].
-                                 F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,`;
+                                 F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,`
 
   const definedActionHelpText = `For å løse dette vil vi … [liste over tiltak du ønsker å implementere].
                                  F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre,
-                                 og bevisstgjøre enhetsledere på kostnaden ved lisenser.`;
-                                                                         
-  const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+                                 og bevisstgjøre enhetsledere på kostnaden ved lisenser.`
+
+  const CustomWidthTooltip = styled(({
+    className,
+    ...props
+  }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))({
     [`& .${tooltipClasses.tooltip}`]: {
       maxWidth: 400,
     },
-  });
+  })
 
   //  List of systems available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
-  const systems = [
-    {
-      value: 'Visma',
-      label: 'Visma',
-    },
-    {
-      value: 'Bluegarden',
-      label: 'Bluegarden',
-    },
-    {
-      value: 'Teams',
-      label: 'Teams',
-    },
-    {
-      value: 'Annet system',
-      label: 'Annet system',
-    },
-  ]
+  const [systems, setSystems] = useState<string[]>()
+  useEffect(() => {
+    getVendors().then(r => {
+      setSystems(r.data)
+    }).catch(() => {
+      setSystems([])
+    })
+  }, [])
 
   const handleSuccessClose = () => {
     document.body.scrollTop = 0 // For Safari
     document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
-    setShowSuccessMessage(false);
+    setShowSuccessMessage(false)
     navigate('/Hjem')
   }
 
@@ -160,15 +169,15 @@ function NewChallenge () {
     <div className='App'>
       <Header />
 
-        <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link className={"hover:underline"} to="/Hjem">
-              Hjem
-            </Link>
-           
-            <Typography color="text.primary">Nytt problem</Typography>
-          </Breadcrumbs>
-        </div>
+      <div className='text-left ml-10 sm:ml-[5.25rem] mt-4'>
+        <Breadcrumbs aria-label='breadcrumb'>
+          <Link className={'hover:underline'} to='/Hjem'>
+            Hjem
+          </Link>
+
+          <Typography color='text.primary'>Nytt problem</Typography>
+        </Breadcrumbs>
+      </div>
 
       <Box component='form' onSubmit={(e) => {
         postChallenge(e)
@@ -176,7 +185,7 @@ function NewChallenge () {
         <h1 className='text-3xl text-text p-5'>Nytt problem!</h1>
 
         <TextField
-          data-cy = "tittel"
+          data-cy='tittel'
           required
           id='outlined-required'
           label='Tittel'
@@ -195,7 +204,7 @@ function NewChallenge () {
         />
 
         <TextField
-          data-cy = "system"
+          data-cy='system'
           select
           required
           label='System'
@@ -210,11 +219,12 @@ function NewChallenge () {
             marginTop: '10px',
           }}
         >
-          {systems.map((option) => (
-            <MenuItem data-cy = {option.label} key={option.value} value={option.value}>
-              {option.label}
+          {systems?.map((option) => (
+            <MenuItem data-cy={option} key={option} value={option}>
+              {option}
             </MenuItem>
           ))}
+          <MenuItem data-cy="Annet system" key="Annet system" value="Annet system">Annet System</MenuItem>
         </TextField>
         {otherSystemShow ? <TextField
           required
@@ -237,9 +247,14 @@ function NewChallenge () {
 
         <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status på problemet
           <CustomWidthTooltip title={statusHelpText}>
-            <HelpOutlineIcon sx={{ marginLeft: "0.25rem", marginTop: "-0.1rem", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            <HelpOutlineIcon sx={{
+              marginLeft: '0.25rem',
+              marginTop: '-0.1rem',
+              fontSize: 'medium',
+              '&:hover': { cursor: 'pointer' },
+            }} />
           </CustomWidthTooltip>
-         </FormLabel>
+        </FormLabel>
         <RadioGroup
           row
           aria-labelledby='demo-radio-buttons-group-label'
@@ -265,7 +280,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
               text={'Spesifikt problem'} />
             <TextField
-              data-cy = "spesificProblem"
+              data-cy='spesificProblem'
               required
               id='outlined-multiline-static'
               multiline
@@ -286,7 +301,18 @@ function NewChallenge () {
               }}
             />
             <CustomWidthTooltip title={specificProblemHelpText}>
-              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+              <HelpOutlineIcon sx={{
+                '@media screen and (max-width: 640px)': {
+                  marginLeft: '200px',
+                  marginTop: '-230px',
+                  marginBottom: '11rem',
+                },
+                marginLeft: '-50px',
+                marginTop: '-175px',
+                zIndex: '1',
+                fontSize: 'medium',
+                '&:hover': { cursor: 'pointer' },
+              }} />
             </CustomWidthTooltip>
           </div>
 
@@ -295,7 +321,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
               text={'Dataprodukt'} />
             <TextField
-              data-cy = "dataProduct"
+              data-cy='dataProduct'
               required
               id='outlined-multiline-static'
               multiline
@@ -316,7 +342,18 @@ function NewChallenge () {
               }}
             />
             <CustomWidthTooltip title={dataProductHelpText}>
-              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+              <HelpOutlineIcon sx={{
+                '@media screen and (max-width: 640px)': {
+                  marginLeft: '200px',
+                  marginTop: '-230px',
+                  marginBottom: '11rem',
+                },
+                marginLeft: '-50px',
+                marginTop: '-175px',
+                zIndex: '1',
+                fontSize: 'medium',
+                '&:hover': { cursor: 'pointer' },
+              }} />
             </CustomWidthTooltip>
           </div>
 
@@ -325,7 +362,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
               text={'Tilgjengelig data'} />
             <TextField
-              data-cy = "accesibleData"
+              data-cy='accesibleData'
               required
               id='outlined-multiline-static'
               multiline
@@ -346,7 +383,18 @@ function NewChallenge () {
               }}
             />
             <CustomWidthTooltip title={accessibleDataHelpText}>
-              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+              <HelpOutlineIcon sx={{
+                '@media screen and (max-width: 640px)': {
+                  marginLeft: '200px',
+                  marginTop: '-230px',
+                  marginBottom: '11rem',
+                },
+                marginLeft: '-50px',
+                marginTop: '-175px',
+                zIndex: '1',
+                fontSize: 'medium',
+                '&:hover': { cursor: 'pointer' },
+              }} />
             </CustomWidthTooltip>
           </div>
 
@@ -355,7 +403,7 @@ function NewChallenge () {
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
               text={'Definert handling'} />
             <TextField
-              data-cy = "definedAction"
+              data-cy='definedAction'
               required
               id='outlined-multiline-static'
               multiline
@@ -376,12 +424,23 @@ function NewChallenge () {
               }}
             />
             <CustomWidthTooltip title={definedActionHelpText}>
-              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+              <HelpOutlineIcon sx={{
+                '@media screen and (max-width: 640px)': {
+                  marginLeft: '200px',
+                  marginTop: '-230px',
+                  marginBottom: '11rem',
+                },
+                marginLeft: '-50px',
+                marginTop: '-175px',
+                zIndex: '1',
+                fontSize: 'medium',
+                '&:hover': { cursor: 'pointer' },
+              }} />
             </CustomWidthTooltip>
           </div>
         </div>
 
-        <Button data-cy ="send" variant='contained' type='submit' sx={{
+        <Button data-cy='send' variant='contained' type='submit' sx={{
 
           color: 'white',
           backgroundColor: '#0D264A',
@@ -396,12 +455,16 @@ function NewChallenge () {
       </Box>
 
       <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
-        <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleSuccessClose} severity='success' sx={{ width: '100%' }}>
           Nytt ODA-problem lagt til!
         </Alert>
       </Snackbar>
-      <Snackbar open={showErrorMessage} autoHideDuration={6000} onClose={() => {setShowErrorMessage(false)}}>
-        <Alert onClose={() => {setShowErrorMessage(false)}} severity="error" sx={{ width: '100%' }}>
+      <Snackbar open={showErrorMessage} autoHideDuration={6000} onClose={() => {
+        setShowErrorMessage(false)
+      }}>
+        <Alert onClose={() => {
+          setShowErrorMessage(false)
+        }} severity='error' sx={{ width: '100%' }}>
           Det har skjedd en feil...
         </Alert>
       </Snackbar>

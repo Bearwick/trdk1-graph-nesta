@@ -293,5 +293,11 @@ select * {
        ?category rdfs:subClassOf oda:AccesibleData.
 } 
   `,
+  getVendors: () => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  select *  {
+       ?vendor rdf:type oda:Vendor
+  } `
 
 }
