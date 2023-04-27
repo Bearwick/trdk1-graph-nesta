@@ -53,34 +53,30 @@ function Search() {
 
   //  const [limit, setLimit] = useState(30); //  offset for fetching the next ODA-problems in the infinite scroll
   const [searchPhrase, setSearch] = useState("");
-  const [orderBy, setOrderBy] = useState("Løst");
+  const [orderBy, ] = useState("Løst");
   const [categoryFilter, setCategoryFilter] = useState("");
-
+  const [filterBy, setFilterBy] = useState(0)
   //  Infinite scroll
   const [limit, ] = useState(60);
 
   //  List of filters available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
   const filters = [
     {
-      value: 'Løst',
+      value: 0,
+      label: "Alle"
+    },
+    {
+      value: 3,
       label: 'Løst',
     },
     {
-      value: 'Påbegynnt',
+      value: 2,
       label: 'påbegynnt',
     },
     {
-      value: 'Uløst',
+      value: 1,
       label: 'Uløst',
-    },
-    {
-      value: 'Nyest',
-      label: 'Nyest',
-    },
-    {
-      value: 'Eldst',
-      label: 'Eldst',
-    },
+    }
   ];
 
     //  Styling for mui components (sx).
@@ -104,7 +100,8 @@ function Search() {
     categoryFilter,
     searchPhrase,
     orderBy,
-    approved: true
+    approved: true,
+    filter: filterBy
   }
 
   const [query, setQuery] = useState<IfetchType>(querySearch);
@@ -113,29 +110,38 @@ function Search() {
   //  const loader = useRef(null);
 
   //  Fetches ODAproblems
-  const fetchODAproblems = (limit: number, categoryFilter: string, searchPhrase: string, orderBy: string) => {
-    const newQuery:IfetchType = {
-      limit,
-      categoryFilter,
-      searchPhrase,
-      orderBy,
-      approved: true
-    }
-    setQuery(newQuery);
-}
 
+
+useEffect(() => {
+  const newQuery:IfetchType = {
+    limit,
+    categoryFilter,
+    searchPhrase,
+    orderBy,
+    approved: true,
+    filter: filterBy
+  }
+  setQuery(newQuery);
+}, [limit, categoryFilter, searchPhrase, orderBy, filterBy])
 
   //  Handle events for changes in search inputs.
+  const [timer, setTimer] = useState<NodeJS.Timeout>()
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+
+    clearTimeout(timer)
+
+    const newTimer = setTimeout(() => {
+      setSearch(event.target.value);
+    }, 500)
+    setTimer(newTimer)
+
     setPage(0);
-    fetchODAproblems(limit, searchPhrase, categoryFilter, orderBy);
   }
 
   //  Handle event changes for filter.
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPage(0);
-    setOrderBy(event.target.value);
+    setFilterBy(parseInt(event.target.value))
   }
 
   //  Handle event for category changes.
@@ -181,7 +187,8 @@ function Search() {
               select
               label="Filter"
               size="small"
-              defaultValue={"Løst"}
+              value={filterBy}
+              defaultValue={"Alle"}
               onChange={handleFilterChange}
               sx={{...textFieldStyle, width: "20vw",
               maxWidth: "125px"}}

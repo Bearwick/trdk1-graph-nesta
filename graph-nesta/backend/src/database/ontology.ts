@@ -10,9 +10,12 @@ const update = async (query: string) => {
   ${encodeURIComponent(query)}`)
 }
 
-const getODAProblems = async (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string) => {
+const getODAProblems = async (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string, filter?: number) => {
   // console.log(encodeURIComponent(queries.getODAProblems(limit, offset, searchString, category, email, relation)))
-  return await get(queries.getODAProblems(limit, offset, searchString, category, email, relation, approved, similarProblem))
+  console.log(filter)
+  console.log(typeof filter)
+  console.log(filter === 2)
+  return await get(queries.getODAProblems(limit, offset, searchString, category, email, relation, approved, similarProblem, filter))
 }
 const addODAProblem = async (title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string, supplier: string, userMail: string, status: string) => {
   // Assumes title is unique, otherwise we could end up in a situation where a single ODA problem can have many accessible datas etc.

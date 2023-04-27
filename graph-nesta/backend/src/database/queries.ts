@@ -1,6 +1,6 @@
 export default {
   // OUTDATED
-  getODAProblems: (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string) => `
+  getODAProblems: (limit: number, offset: number, searchString: string, category: string, email?: string, relation?: number, approved?: boolean, similarProblem?: string, filter?: number) => `
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX oda: <urn:absolute:ODA2.0#>
@@ -40,6 +40,9 @@ export default {
             
     }
     }
+    ${filter === 1 ? 'Filter(regex(?progress, "newChallenge"))' :
+    filter === 2 ? 'Filter(regex(?progress, "inProcess"))' :
+      filter === 3 ? 'Filter(regex(?progress, "Solved"))' : ""}
     ${relation && email ? '?user2 oda:userMail "'.concat(email.toString(), '".') : ''}
     ${relation && +relation === 0 ? '?user2 oda:subscribedTo ?odaProblem.' : relation && +relation === 1 ? '?user2 oda:creatorOf ?odaProblem.' : ''}
     ${approved?.toString() === 'true' ? '?odaProblem oda:approved true.' : approved?.toString() === 'false' ? '?odaProblem oda:approved false.' : ''}

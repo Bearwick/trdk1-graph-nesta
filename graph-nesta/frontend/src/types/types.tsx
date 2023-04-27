@@ -46,6 +46,7 @@ export interface IfetchType {
   relation?: number
   approved?: boolean
   similarProblem?: string
+  filter?: number
 }
 
 export interface IfetchTypeMyProblems {

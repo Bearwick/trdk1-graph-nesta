@@ -7,6 +7,7 @@ interface OdaProblemParams {
   relation: number
   approved: boolean
   similarProblem: string
+  filter: string
 }
 
 interface AddOdaProblemParams {
