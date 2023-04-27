@@ -4,7 +4,7 @@ import {
   addCategories,
   addODAProblem,
   addUser, deleteODAProblem, findUser, getCategories,
-  getODAProblems, getSubscribers, getUser, isSubbed,
+  getODAProblems, getSubscribers, getUser, getVendors, isSubbed,
   setAdmin,
   subscribe,
   unsubscribe, updateODAProblem,
@@ -17,7 +17,7 @@ import {
   type SetAdminParams,
   type SubscribeParams,
 } from '../interfaces/interfaces'
-import { convertCategory, convertSubscribers, convertUser, setObject } from '../middleware/convertData'
+import { convertCategory, convertSubscribers, convertUser, convertVendors, setObject } from '../middleware/convertData'
 import axios from 'axios'
 
 const router = Router()
@@ -181,6 +181,12 @@ router.put('/UpdateOdaProblem', function(req: Request, res: Response) {
   const data = req.body
   updateODAProblem(data.odaProblem, data.vendor, data.progress, data.title, data.specificProblem, data.clearDataProduct, data.accessibleData, data.definedAction).then(r => res.send(r),
   ).catch(r => res.send(r))
+})
+
+router.get('/GetVendors', function(req: Request, res: Response){
+  getVendors().then(r => {
+    res.send(convertVendors(r))
+  }).catch(() => res.send([]))
 })
 
 router.put("/DeleteOdaProblem", function(req: Request, res: Response) {

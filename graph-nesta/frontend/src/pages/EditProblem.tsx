@@ -15,8 +15,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
-import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
-import { approve, deleteOdaProblem, getCategories, updateOdaProblem } from '../api/odaAPI'
+import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses } from '@mui/material'
+import { approve, getCategories, getVendors, updateOdaProblem } from '../api/odaAPI'
 
 function EditProblem () {
 
@@ -60,8 +60,6 @@ function EditProblem () {
   const [accessibleData, setAccessibleData] = useState(challenge.accessibleData)
   const [accessibleDataCategory, setAccessibleDataCategory] = useState('')
   const [definedAction, setDefinedAction] = useState(challenge.definedAction)
-  const [submitDelete, setSubmitDelete] = useState(false)
-  const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false)
   const [categories, setCategories] = useState<Categories>()
   const [error, setError] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
@@ -116,7 +114,7 @@ function EditProblem () {
   const definedActionHelpText = `For å løse dette vil vi … [liste over tiltak du ønsker å implementere].
           F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre,
           og bevisstgjøre enhetsledere på kostnaden ved lisenser.`;
-                                                  
+
   const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
   ))({
@@ -125,25 +123,15 @@ function EditProblem () {
   },
   });
 
-  //  List of systems available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
-  const systems = [
-    {
-      value: 'Visma',
-      label: 'Visma',
-    },
-    {
-      value: 'Bluegarden',
-      label: 'Bluegarden',
-    },
-    {
-      value: 'Teams',
-      label: 'Teams',
-    },
-    {
-      value: 'Annet system',
-      label: 'Annet system',
-    },
-  ]
+  //  List of systems available.
+  const [systems, setSystems] = useState<string[]>()
+  useEffect(() => {
+    getVendors().then(r => {
+      setSystems(r.data)
+    }).catch(() => {
+      setSystems([])
+    })
+  }, [])
   //  List of accessible data categories
 
   useEffect(() => {
@@ -161,34 +149,8 @@ function EditProblem () {
     navigate('/GodkjennProblem')
   }
 
-  const handleDeleteButton = () => {
-    setSubmitDelete(true)
-    setSpecificProblemCategory(specificProblemCategory || "0")
-    setClearDataProductCategory(clearDataProductCategory || "0")
-    setAccessibleDataCategory(accessibleDataCategory || "0")
-  }
-
-  const handleCancel = () => {
-    setShowConfirmDeleteDialog(false);
-  }
-
-  const handleDelete = () => {
-    setShowConfirmDeleteDialog(false);
-    deleteOdaProblem(challenge.id).then(() => {
-      setShowSuccessMessage(true)
-    }).catch((res) => {
-      setError(true)
-      console.log(res)
-    })
-
-
-  }
-
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (submitDelete) {
-      setShowConfirmDeleteDialog(true);
-    } else {
     updateOdaProblem(challenge.id, system, status, title, specificProblem, clearDataProduct, accessibleData, definedAction).then(() => {
       approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
         setShowSuccessMessage(true)
@@ -199,7 +161,8 @@ function EditProblem () {
     }).catch(() => {
       console.log('Error')
       setError(true)
-    })}
+    })
+
   }
 
   return (
@@ -258,11 +221,13 @@ function EditProblem () {
             marginTop: '10px',
           }}
         >
-          {systems.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {systems?.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
             </MenuItem>
+
           ))}
+          <MenuItem data-cy="Annet system" key="Annet system" value="Annet system">Annet system</MenuItem>
         </TextField>
         {otherSystemShow ? <TextField
           required
@@ -505,34 +470,23 @@ function EditProblem () {
           </div>
         </div>
 
-        <div className="flex flex-col-reverse sm:flex-row gap-4 mb-8">
-        <Button variant='contained' onClick={handleDeleteButton} type='submit' sx={{
-
-        color: 'white',
-        backgroundColor: '#0D264A',
-        width: '200px',
-        borderRadius: '45px',
-        '&:hover': {
-          backgroundColor: '#FF002F',
-        },
-        }}>Slett problem</Button>
-
-        <Button variant='contained' onClick={() => {setSubmitDelete(false)}} type='submit' sx={{
+        <Button variant='contained' type='submit' sx={{
 
           color: 'white',
           backgroundColor: '#0D264A',
           width: '200px',
           borderRadius: '45px',
+          marginBottom: '2rem',
+          marginTop: '1rem',
           '&:hover': {
             backgroundColor: '#2BB728',
           },
         }}>Godkjenn problem</Button>
-        </div>
       </Box>
 
       <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
         <Alert onClose={handleSuccessClose} severity='success' sx={{ width: '100%' }}>
-          {submitDelete ? "Problem slettet!" : "Godkjenning vellyket!"}
+          Godkjenning vellyket!
         </Alert>
       </Snackbar>
       <Snackbar open={error} autoHideDuration={6000} onClose={() => {
@@ -544,27 +498,6 @@ function EditProblem () {
           Det har skjedd en feil...
         </Alert>
       </Snackbar>
-
-
-      <Dialog
-        open={showConfirmDeleteDialog}
-        onClose={handleCancel}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Slett ODA-problem: {title}?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Sletting av ODA-problem er permanent. Det er ikke mulig å reversere denne handlingen!
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancel}>kanseller</Button>
-          <Button onClick={handleDelete} sx={{'&:hover': {backgroundColor: '#FF002F', color: "white"}}}>Slett</Button>
-        </DialogActions>
-      </Dialog>
 
       <Footer />
     </div>

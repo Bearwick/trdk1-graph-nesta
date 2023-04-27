@@ -90,6 +90,10 @@ const getCategories = async () => {
   const reqThree = get(queries.dataProdCategories())
   return await axios.all([reqOne, reqTwo, reqThree])
 }
+
+const getVendors = async () => {
+  return await get(queries.getVendors())
+}
 export {
   getODAProblems,
   addODAProblem,
@@ -107,5 +111,6 @@ export {
   getDataProductCategories,
   getCategories,
   updateODAProblem,
-  deleteODAProblem
+  deleteODAProblem,
+  getVendors
 }
