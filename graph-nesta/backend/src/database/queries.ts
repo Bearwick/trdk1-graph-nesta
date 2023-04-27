@@ -4,15 +4,15 @@ export default {
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX oda: <urn:absolute:ODA2.0#>
-  ${similarProblem ? "PREFIX similarProblem:<".concat(similarProblem, ">"): ""}
+  ${similarProblem ? 'PREFIX similarProblem:<'.concat(similarProblem, '>') : ''}
   select * where {
    
-   ${ similarProblem ?
+   ${similarProblem ?
     `    {
         select distinct ?odaProblem {
               ?odaProblem oda:relatedVendor_ODAProblem|oda:relatedDP_ODAProblem|oda:relatedSP_ODAProblem|oda:relatedAD_ODAProblem similarProblem:.
         }
-    }` : " ?odaProblem rdf:type oda:ODAProblem."
+    }` : ' ?odaProblem rdf:type oda:ODAProblem.'
   }
     ?odaProblem oda:hasSpecificProblem ?specificProblem.
     ?odaProblem oda:hasClearDataProduct ?dataProduct.
@@ -40,9 +40,9 @@ export default {
             
     }
     }
-    ${relation && email ? '?user2 oda:userMail "'.concat(email.toString(), '".'): ""}
-    ${relation && +relation === 0 ? '?user2 oda:subscribedTo ?odaProblem.': relation && +relation === 1 ? '?user2 oda:creatorOf ?odaProblem.': ""}
-    ${approved?.toString() === "true" ?  '?odaProblem oda:approved true.': approved?.toString() === "false" ? '?odaProblem oda:approved false.': ""}
+    ${relation && email ? '?user2 oda:userMail "'.concat(email.toString(), '".') : ''}
+    ${relation && +relation === 0 ? '?user2 oda:subscribedTo ?odaProblem.' : relation && +relation === 1 ? '?user2 oda:creatorOf ?odaProblem.' : ''}
+    ${approved?.toString() === 'true' ? '?odaProblem oda:approved true.' : approved?.toString() === 'false' ? '?odaProblem oda:approved false.' : ''}
     Filter (regex(?title, "${searchString}") || regex(?specificProblemDescription, "${searchString}")).
     Filter (regex(?title, "${category}") || regex(?specificProblemDescription, "${category}")).
     
@@ -107,13 +107,13 @@ export default {
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
   insert data {
-    oda:${email.replace("@", "")} rdf:type oda:User.
-    oda:${email.replace("@", "")} rdf:type owl:NamedIndividual.
-    oda:${email.replace("@", "")} oda:userPhoneNumber "${phone}"^^xsd:int.
-    oda:${email.replace("@", "")} oda:userMail "${email}".
-    oda:${email.replace("@", "")} oda:userAffiliation "${affiliation}".
-    oda:${email.replace("@", "")} oda:isAdmin ${(setAdmin).toString()}.
-    oda:${email.replace("@", "")} oda:userPassword "${password}".          
+    oda:${email.replace('@', '')} rdf:type oda:User.
+    oda:${email.replace('@', '')} rdf:type owl:NamedIndividual.
+    oda:${email.replace('@', '')} oda:userPhoneNumber "${phone}"^^xsd:int.
+    oda:${email.replace('@', '')} oda:userMail "${email}".
+    oda:${email.replace('@', '')} oda:userAffiliation "${affiliation}".
+    oda:${email.replace('@', '')} oda:isAdmin ${(setAdmin).toString()}.
+    oda:${email.replace('@', '')} oda:userPassword "${password}".          
 } `,
 
   findUser: (email: string, password: string) => `
@@ -175,6 +175,49 @@ export default {
   }
 
 `,
+  updateODAProblem: (odaProblem: string, vendor: string, progress: string, title: string, specificProblem: string, clearDataProduct: string, accessibleData: string, definedAction: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  PREFIX owl: <http://www.w3.org/2002/07/owl#>
+  PREFIX : <urn:absolute:ODA2.0#>
+  prefix problem: <${odaProblem}>
+
+  delete {
+    ?da oda:definedActionDescription ?daDescription.
+    ?sp oda:specificProblemDescription ?spDescription.
+    ?cdp oda:dataProductDescription ?cdpDescription.
+    ?ad oda:accesibleDataDescription ?adDescription.
+    ?odaProblem oda:ODATitle ?title.
+    ?odaProblem oda:hasVendor ?vendor.
+    ?odaProblem oda:ODAprogress ?progress.
+  }
+  insert {
+    ?da oda:definedActionDescription "${definedAction}".
+    ?sp oda:specificProblemDescription "${specificProblem}".
+    ?cdp oda:dataProductDescription "${clearDataProduct}".
+    ?ad oda:accesibleDataDescription "${accessibleData}".
+    ?odaProblem oda:ODATitle "${title}".
+    ?odaProblem oda:hasVendor oda:${vendor}.
+    ?odaProblem oda:ODAprogress "${progress}".
+  }
+  where {
+    problem: owl:sameAs ?odaProblem.
+    
+    ?odaProblem oda:hasDefinedAction ?da.
+    ?odaProblem oda:hasSpecificProblem ?sp.
+    ?odaProblem oda:hasClearDataProduct ?cdp.
+    ?odaProblem oda:hasAccesibleData ?ad.
+    
+    ?da oda:definedActionDescription ?daDescription.
+    ?sp oda:specificProblemDescription ?spDescription.
+    ?cdp oda:dataProductDescription ?cdpDescription.
+    ?ad oda:accesibleDataDescription ?adDescription.
+    
+    ?odaProblem oda:ODATitle ?title.
+    ?odaProblem oda:hasVendor ?vendor.
+    ?odaProblem oda:ODAprogress ?progress.
+    
+  }
+  `,
   subscribe: (userEmail: string, ODAProblem: string) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   insert {
@@ -241,8 +284,5 @@ select * {
        ?category rdfs:subClassOf oda:AccesibleData.
 } 
   `,
-
-
-
 
 }
