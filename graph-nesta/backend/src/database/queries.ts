@@ -221,6 +221,12 @@ export default {
     
   }
   `,
+  deleteODAProblem: (ODAProblem: string) => `
+  PREFIX oda: <urn:absolute:ODA2.0#>
+  delete where {
+  <${ODAProblem}> ?p ?o
+  }
+  `,
   subscribe: (userEmail: string, ODAProblem: string) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   insert {

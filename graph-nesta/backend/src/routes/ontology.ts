@@ -3,7 +3,7 @@ import * as fs from 'fs'
 import {
   addCategories,
   addODAProblem,
-  addUser, findUser, getCategories,
+  addUser, deleteODAProblem, findUser, getCategories,
   getODAProblems, getSubscribers, getUser, isSubbed,
   setAdmin,
   subscribe,
@@ -181,6 +181,12 @@ router.put('/UpdateOdaProblem', function(req: Request, res: Response) {
   const data = req.body
   updateODAProblem(data.odaProblem, data.vendor, data.progress, data.title, data.specificProblem, data.clearDataProduct, data.accessibleData, data.definedAction).then(r => res.send(r),
   ).catch(r => res.send(r))
+})
+
+router.put("/DeleteOdaProblem", function(req: Request, res: Response) {
+  const data = req.body
+  deleteODAProblem(data.odaProblem).then(r => res.send(r))
+    .catch(r => res.send(r))
 })
 
 export default router
