@@ -24,6 +24,9 @@ const addODAProblem = async (title: string, specificProblem: string, clearDataPr
   const nodeName: string = title.replace(/\s/g, '')
   return await update(queries.addODAProblem(nodeName, title, specificProblem, clearDataProduct, accessibleData, definedAction, supplier, userMail, status))
 }
+const deleteODAProblem = async (title: string) => {
+  return await update(queries.deleteODAProblem(title))
+}
 
 const addCategories = async (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string) => {
   const q1 = update(queries.addInference(specProblem, dataProduct, accessibleData, nodeName))
@@ -103,5 +106,6 @@ export {
   getAccessibleDataCategories,
   getDataProductCategories,
   getCategories,
-  updateODAProblem
+  updateODAProblem,
+  deleteODAProblem
 }

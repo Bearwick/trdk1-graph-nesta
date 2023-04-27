@@ -105,6 +105,12 @@ export async function updateOdaProblem (odaProblem: string, vendor: string, prog
   })
 }
 
+export async function deleteOdaProblem (odaProblem: string) {
+  return await axios.put("http://localhost:8080/ontology/DeleteOdaProblem", {
+    odaProblem
+  })
+}
+
 export async function subscribe (id: string, email: string, subscribe: boolean) {
   if (subscribe) {
     return await axios.get('http://localhost:8080/ontology/Subscribe', {
