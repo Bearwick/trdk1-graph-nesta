@@ -14,7 +14,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { addOdaProblem, findUser, getUserInfo } from '../api/odaAPI'
-import { Breadcrumbs, Typography } from '@mui/material'
+import { Alert, Breadcrumbs, Snackbar, Typography } from '@mui/material'
 //  import ChallengeCard from '../components/ChallengeCard';
 
 function NewChallenge () {
@@ -65,6 +65,8 @@ function NewChallenge () {
   const [clearDataProduct, setClearDataProduct] = useState('')
   const [accessibleData, setAccessibleData] = useState('')
   const [definedAction, setDefinedAction] = useState('')
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const[showErrorMessage, setShowErrorMessage] = useState(false);
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSystem(event.target.value)
     if (event.target.value === 'Annet system') {
@@ -109,14 +111,19 @@ function NewChallenge () {
       label: 'Annet system',
     },
   ]
+
+  const handleSuccessClose = () => {
+    document.body.scrollTop = 0 // For Safari
+    document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
+    setShowSuccessMessage(false);
+    navigate('/Hjem')
+  }
+
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
     addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
       console.log('ODAproblem posted succesfully')
-      document.body.scrollTop = 0 // For Safari
-      document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
-      navigate('/Hjem')
+      setShowSuccessMessage(true)
     }).catch(() => {
       console.log('Failure posting ODAproblem')
     })
@@ -139,7 +146,7 @@ function NewChallenge () {
 
       <Box component='form' onSubmit={(e) => {
         postChallenge(e)
-      }} className='bg-background   flex flex-col items-center'>
+      }} className='bg-background flex flex-col items-center'>
         <h1 className='text-3xl text-text p-5'>Nytt problem!</h1>
 
         <TextField
@@ -349,6 +356,17 @@ function NewChallenge () {
           },
         }}>Send</Button>
       </Box>
+
+      <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
+        <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
+          Nytt ODA-problem lagt til!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={showErrorMessage} autoHideDuration={6000} onClose={() => {setShowErrorMessage(false)}}>
+        <Alert onClose={() => {setShowErrorMessage(false)}} severity="error" sx={{ width: '100%' }}>
+          Det har skjedd en feil...
+        </Alert>
+      </Snackbar>
 
       <Footer />
     </div>

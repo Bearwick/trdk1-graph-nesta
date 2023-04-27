@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import { addUser, findUser } from "../api/odaAPI";
 import MenuItem from "@mui/material/MenuItem";
 import { ChallengeContext } from "../globalState/ChallengeContext";
-import { Breadcrumbs, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Alert, Box, Breadcrumbs, FormControlLabel, Radio, RadioGroup, Snackbar, Typography } from "@mui/material";
 
 function RegisterUser(){
 
@@ -15,13 +15,13 @@ function RegisterUser(){
     const[newUserIsAdmin, setNewUserIsAdmin] = useState(false)
     const[affiliation, setAffiliation] = useState("");
     const[email, setEmail] = useState("");
-    const[tlf, setTlf] = useState(0);
+    const[tlf, setTlf] = useState(NaN);
     const[password, setPassword] = useState("");
     const[passwordConfirm, setPasswordConfirm] = useState("");
     const[showRequiredMessage, setShowRequiredMessage] = useState(false);
-    const[showUserExistMessange, setShowUserExistMessage] = useState(false);
+    const[showUserExistMessage, setShowUserExistMessage] = useState(false);
     const[showErrorMessage, setShowErrorMessage] = useState(false);
-    const[showAddedUserText, setShowAddedUserText] = useState(false);
+    const[showSuccessMessage, setShowSuccessMessage] = useState(false)
 
     //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
     const { user } = useContext(ChallengeContext);
@@ -67,46 +67,50 @@ function RegisterUser(){
 
       const handleAffiliationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAffiliation(event.target.value);
-        setShowRequiredMessage(false);
       }
       const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
-        setShowRequiredMessage(false);
-        setShowUserExistMessage(false);
       }
       const handleTlfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTlf(event.target.valueAsNumber);
-        setShowRequiredMessage(false);
       }
       const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
-        setShowRequiredMessage(false);
-
       }
       const handlePasswordConfirmChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPasswordConfirm(event.target.value);
-        setShowRequiredMessage(false);
       }
 
-
-      const handlePost = () => {
-        if (affiliation.length === 0 || email.length === 0 || tlf.toString().length !== 8 || password.length === 0 || password !== passwordConfirm ) {
-          setShowRequiredMessage(true)
-        } else {
-       findUser(email, password).then(r => {
-        if (r.data) {
-          console.log("User allready exists")
-          setShowUserExistMessage(true)
-        } else {
-          addUser(tlf, email, affiliation, password, newUserIsAdmin).then(() => {
-            console.log("User added");
-            setShowAddedUserText(true);
-
-          }).catch(() => {setShowErrorMessage(true)})
-        }
-       }).catch(() => {setShowErrorMessage(true)})
+      const handleSuccessClose = () => {
+        document.body.scrollTop = 0 // For Safari
+        document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
+        setShowSuccessMessage(false)
+   
       }
-      }
+
+      const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
+       
+        event.preventDefault()
+       
+        findUser(email, password).then(r => {
+          if (r.data) {
+            console.log("User allready exists")
+            setShowUserExistMessage(true)
+     
+          } else {
+            if (affiliation.length === 0 || email.length === 0 || tlf.toString().length !== 8 || password.length === 0 || password !== passwordConfirm ) {
+              setShowRequiredMessage(true)
+            } else {
+            addUser(tlf, email, affiliation, password, newUserIsAdmin).then(() => {
+              console.log("User added");
+              setAffiliation("");
+              setEmail("");
+              setTlf(NaN);
+              setPassword("");
+              setPasswordConfirm("");
+              setShowSuccessMessage(true)
+            }).catch(() => {setShowErrorMessage(true)})}}}).catch(() => {setShowErrorMessage(true)})
+    }
 
     return(
         <div className="App">
@@ -125,6 +129,9 @@ function RegisterUser(){
                   <h1 className="text-center mt-10 text-2xl">Registrer ny bruker</h1>
                   <section className="mt-5 flex flex-col">
 
+                  <Box component="form" onSubmit={(e) => {
+                    postChallenge(e)
+                  }}>
                   <RadioGroup
                     row
                     aria-labelledby='demo-radio-buttons-group-label'
@@ -150,6 +157,7 @@ function RegisterUser(){
                     required
                     label="Tilhørighet"
                     size="medium"
+                    value={affiliation}
                     onChange={handleAffiliationChange}
                     sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                   >
@@ -164,6 +172,7 @@ function RegisterUser(){
                       required
                       label="E-post"
                       size="medium"
+                      value={email}
                       onChange={handleEmailChange}
                       sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
@@ -172,6 +181,7 @@ function RegisterUser(){
                       label="Tlf"
                       size="medium"
                       type="number"
+                      value={tlf}
                       onChange={handleTlfChange}
                       sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
@@ -181,6 +191,7 @@ function RegisterUser(){
                       label="Passord"
                       type = "password"
                       size="medium"
+                      value={password}
                       onChange={handlePasswordChange}
                       sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
@@ -190,22 +201,45 @@ function RegisterUser(){
                       label="Bekreft passord"
                       type = "password"
                       size="medium"
+                      value={passwordConfirm}
                       onChange={handlePasswordConfirmChange}
                       sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
 
-                    {showRequiredMessage ? <p className="mt-0 text-statusRed">Alle feltene må fylles ut!</p> : null}
-                    {showUserExistMessange ? <p className="mt-0 text-statusRed">Bruker finnes allerede!</p> : null}
-                    {showErrorMessage ? <p className="mt-0 text-statusRed">Det har skjedd en feil...</p> : null}
-                    {showAddedUserText ? <p className="mt-0 text-statusGreen">Bruker lagt til!</p>: null}
-
                   </section>
-                  </section>
-                  <Button variant="contained" onClick={handlePost} sx={{ color: "white", backgroundColor: "#0D264A", width: "180px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
+                  <Button data-cy="send" variant="contained" type="submit" sx={{ color: "white", backgroundColor: "#0D264A", width: "180px", borderRadius: "45px", marginBottom: "2rem", marginTop: "1rem", '&:hover': {
                     backgroundColor: '#3d3f6b',
-                    }}}   ><p className="whitespace-nowrap">Registrer bruker</p></Button>
+                    }}}   ><p className="whitespace-nowrap">Registrer bruker</p>
+                  </Button>
+                  
+                  </Box>
+                  </section>
 
                 </main>
+                
+                <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
+                  <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
+                    Ny bruker lagt til
+                  </Alert>
+                </Snackbar>
+                <Snackbar open={showUserExistMessage} autoHideDuration={4000} onClose={() => {setShowUserExistMessage(false)}}>
+                  <Alert onClose={() => {setShowUserExistMessage(false)}} severity="warning" sx={{ width: '100%' }}>
+                    Bruker finnes fra før!
+                  </Alert>
+                </Snackbar>
+                <Snackbar open={showRequiredMessage} autoHideDuration={4000} onClose={() => {setShowRequiredMessage(false)}}>
+                  <Alert onClose={() => {setShowRequiredMessage(false)}} severity="info" sx={{ width: '100%' }}>
+                    Fyll inn alle felter korrekt!
+                  </Alert>
+                </Snackbar>
+                <Snackbar open={showErrorMessage} autoHideDuration={6000} onClose={() => {setShowErrorMessage(false)}}>
+                  <Alert onClose={() => {setShowErrorMessage(false)}} severity="error" sx={{ width: '100%' }}>
+                    Det har skjedd en feil...
+                  </Alert>
+                </Snackbar>
+              
+
+
             <Footer/>
         </div>
     )

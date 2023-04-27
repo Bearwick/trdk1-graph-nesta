@@ -66,7 +66,7 @@ function AdminStaging () {
         <h1 className='text-3xl text-text p-5'>Godkjenn problem</h1>
 
         {isLoading ? <h1>Laster innhold...</h1> : isError ? <h1>En feil har oppstått...</h1> :
-          <div className='flex flex-wrap justify-center overflow gap-4 mt-5'>
+          <div className='flex flex-wrap justify-center overflow gap-4 my-5'>
             {ODAproblems.length > 0 ? null : <p>Ingen problem som påventer godkjenning</p>}
             {ODAproblems.map((data) => (
               <ChallengeCard key={data.id} id={data.id} title={data.title} vendor={data.vendor.substring(20)}
