@@ -118,7 +118,7 @@ function InspectChallenge () {
     }
 
     //  Changes the color theme of the status circle.
-    switch (status) {
+    switch (challenge.status) {
       case Status.newChallenge:
         setStatusColor('rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed')
         break

@@ -16,7 +16,7 @@ import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
 import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses } from '@mui/material'
-import { approve, getCategories } from '../api/odaAPI'
+import { approve, getCategories, updateOdaProblem } from '../api/odaAPI'
 
 function EditProblem () {
 
@@ -165,10 +165,12 @@ function EditProblem () {
       approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
         setShowSuccessMessage(true)
       }).catch((res) => {
+        setError(true)
         console.log(res)
       })
     }).catch(() => {
       console.log('Error')
+      setError(true)
     })
 
   }
