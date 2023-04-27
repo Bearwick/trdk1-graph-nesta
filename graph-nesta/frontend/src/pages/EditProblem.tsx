@@ -15,13 +15,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
-<<<<<<< graph-nesta/frontend/src/pages/EditProblem.tsx
 import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
-import { approve, deleteOdaProblem, getCategories, getVendors updateOdaProblem } from '../api/odaAPI'
-=======
-import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses } from '@mui/material'
-import { approve, getCategories, getVendors, updateOdaProblem } from '../api/odaAPI'
->>>>>>> graph-nesta/frontend/src/pages/EditProblem.tsx
+import { approve, deleteOdaProblem, getCategories, getVendors, updateOdaProblem } from '../api/odaAPI'
 
 function EditProblem () {
 
