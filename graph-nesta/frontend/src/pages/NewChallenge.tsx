@@ -10,12 +10,12 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Button from '@mui/material/Button'
 import ODACircle from '../components/ODACircle'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate, Link } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { addOdaProblem, findUser, getUserInfo } from '../api/odaAPI'
-import { Alert, Breadcrumbs, Snackbar, Typography } from '@mui/material'
-//  import ChallengeCard from '../components/ChallengeCard';
+import { Alert, Breadcrumbs, Snackbar, Tooltip, type TooltipProps, Typography, styled, tooltipClasses } from '@mui/material'
 
 function NewChallenge () {
 
@@ -61,10 +61,10 @@ function NewChallenge () {
   const [otherSystem, setOtherSystem] = useState('')
   const [otherSystemShow, setOtherSystemShow] = useState(false)
   const [status, setStatus] = useState('newChallenge')
-  const [specificProblem, setSpecificProblem] = useState('')
-  const [clearDataProduct, setClearDataProduct] = useState('')
-  const [accessibleData, setAccessibleData] = useState('')
-  const [definedAction, setDefinedAction] = useState('')
+  const [specificProblem, setSpecificProblem] = useState('Problemet vårt er at ')
+  const [clearDataProduct, setClearDataProduct] = useState('Hvis vi kunne sett/hvis vi visste ')
+  const [accessibleData, setAccessibleData] = useState('Ved å bruke disse datasettene ')
+  const [definedAction, setDefinedAction] = useState('For å løse dette vil vi ')
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const[showErrorMessage, setShowErrorMessage] = useState(false);
   const checkSystem = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +91,32 @@ function NewChallenge () {
       },
     },
   }
+
+  const statusHelpText = `Nytt problem: problemet er nettopp oppdaget og/eller aldri arbeidet med.
+                          Påbegynnt: problemet arbeides med.
+                          Løst: det er blitt laget en løsning for problemet. `;
+
+  const specificProblemHelpText = `Problemet vårt er at … [sett inn spesifikk problemstilling].
+                                   F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes,
+                                  men som likevel koster penger for enhetene.`;
+  
+  const dataProductHelpText = `Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser].
+                               F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,`;
+  
+  const accessibleDataHelpText = `Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke].
+                                 F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,`;
+
+  const definedActionHelpText = `For å løse dette vil vi … [liste over tiltak du ønsker å implementere].
+                                 F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre,
+                                 og bevisstgjøre enhetsledere på kostnaden ved lisenser.`;
+                                                                         
+  const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 400,
+    },
+  });
 
   //  List of systems available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
   const systems = [
@@ -209,7 +235,11 @@ function NewChallenge () {
           }}
         /> : <div></div>}
 
-        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status på problemet</FormLabel>
+        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status på problemet
+          <CustomWidthTooltip title={statusHelpText}>
+            <HelpOutlineIcon sx={{ marginLeft: "0.25rem", marginTop: "-0.1rem", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+          </CustomWidthTooltip>
+         </FormLabel>
         <RadioGroup
           row
           aria-labelledby='demo-radio-buttons-group-label'
@@ -246,7 +276,6 @@ function NewChallenge () {
               name='specificProblem'
               rows={8}
               label='Spesifikt problem'
-              placeholder='Problemet vårt er at … [sett inn spesifikk problemstilling]. F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes, men som likevel koster penger for enhetene.'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -256,6 +285,9 @@ function NewChallenge () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={specificProblemHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
@@ -274,7 +306,6 @@ function NewChallenge () {
                 setClearDataProduct(e.target.value)
               }}
               label='Tydelig dataprodukt'
-              placeholder='Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser]. F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -284,6 +315,9 @@ function NewChallenge () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={dataProductHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
@@ -302,7 +336,6 @@ function NewChallenge () {
               }}
               name='accessibleData'
               label='Tilgjengelige data'
-              placeholder='Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke]. F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -312,6 +345,9 @@ function NewChallenge () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={accessibleDataHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
@@ -330,7 +366,6 @@ function NewChallenge () {
               onChange={e => {
                 setDefinedAction(e.target.value)
               }}
-              placeholder='For å løse dette vil vi … [liste over tiltak du ønsker å implementere]. F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre, og bevisstgjøre enhetsledere på kostnaden ved lisenser.'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -340,6 +375,9 @@ function NewChallenge () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={definedActionHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
         </div>
 

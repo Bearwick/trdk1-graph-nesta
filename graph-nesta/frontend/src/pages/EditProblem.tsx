@@ -10,12 +10,13 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Button from '@mui/material/Button'
 import ODACircle from '../components/ODACircle'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Link, useNavigate } from 'react-router-dom'
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
-import { Alert, Breadcrumbs, Snackbar, Typography } from '@mui/material'
-import { approve, getCategories, updateOdaProblem } from '../api/odaAPI'
+import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses } from '@mui/material'
+import { approve, getCategories } from '../api/odaAPI'
 
 function EditProblem () {
 
@@ -95,6 +96,32 @@ function EditProblem () {
       },
     },
   }
+
+  const statusHelpText = `Nytt problem: problemet er nettopp oppdaget og/eller aldri arbeidet med.
+  Påbegynnt: problemet arbeides med.
+  Løst: det er blitt laget en løsning for problemet. `;
+
+  const specificProblemHelpText = `Problemet vårt er at … [sett inn spesifikk problemstilling].
+            F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes,
+            men som likevel koster penger for enhetene.`;
+
+  const dataProductHelpText = `Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser].
+        F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,`;
+
+  const accessibleDataHelpText = `Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke].
+          F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,`;
+
+  const definedActionHelpText = `For å løse dette vil vi … [liste over tiltak du ønsker å implementere].
+          F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre,
+          og bevisstgjøre enhetsledere på kostnaden ved lisenser.`;
+                                                  
+  const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+  [`& .${tooltipClasses.tooltip}`]: {
+  maxWidth: 400,
+  },
+  });
 
   //  List of systems available. Future work: list on db, and fetch the list. Such that admin´s can add systems.
   const systems = [
@@ -227,7 +254,12 @@ function EditProblem () {
           }}
         /> : null}
 
-        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status på problemet</FormLabel>
+
+        <FormLabel id='demo-radio-buttons-group-label' className='mt-5'>Status på problemet
+          <CustomWidthTooltip title={statusHelpText}>
+            <HelpOutlineIcon sx={{ marginLeft: "0.25rem", marginTop: "-0.1rem", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+          </CustomWidthTooltip>
+        </FormLabel>
         <RadioGroup
           row
           aria-labelledby='demo-radio-buttons-group-label'
@@ -263,7 +295,6 @@ function EditProblem () {
               name='specificProblem'
               rows={8}
               label='Spesifikt problem'
-              placeholder='Problemet vårt er at … [sett inn spesifikk problemstilling]. F.eks. Problemet vårt problem er at det er mange lisenser som ikke brukes, men som likevel koster penger for enhetene.'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -273,6 +304,9 @@ function EditProblem () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={specificProblemHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
 
           <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
@@ -317,7 +351,6 @@ function EditProblem () {
                 setClearDataProduct(e.target.value)
               }}
               label='Tydelig dataprodukt'
-              placeholder='Hvis vi kunne sett/Hvis vi visste… [sett inn hva dataproduktet viser]. F.eks. Hvis vi kunne sett hvilke lisenser som ikke er i bruk og synliggjøre kostnadene som tabell,'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -327,6 +360,9 @@ function EditProblem () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={dataProductHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
           <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
             <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
@@ -370,7 +406,6 @@ function EditProblem () {
               }}
               name='accessibleData'
               label='Tilgjengelige data'
-              placeholder='Ved å bruke disse datasettene… [sett inn hva datasettene du planlegger å bruke]. F.eks. Ved å bruke rapporter på kostnader, liste med lisenser og liste over reell bruk av programmet,'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -380,6 +415,9 @@ function EditProblem () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={accessibleDataHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
           <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
             <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
@@ -423,7 +461,6 @@ function EditProblem () {
               onChange={e => {
                 setDefinedAction(e.target.value)
               }}
-              placeholder='For å løse dette vil vi … [liste over tiltak du ønsker å implementere]. F.eks. For å løse dette vil vi frigjøre lisenser vi allerede har betalt for og som kan gjenbrukes av andre, og bevisstgjøre enhetsledere på kostnaden ved lisenser.'
               size='small'
               sx={{
                 ...textFieldStyle,
@@ -433,6 +470,9 @@ function EditProblem () {
                 height: '100%',
               }}
             />
+            <CustomWidthTooltip title={definedActionHelpText}>
+              <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
+            </CustomWidthTooltip>
           </div>
         </div>
 
