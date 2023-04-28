@@ -10,6 +10,7 @@ import SubInfoComponent from '../components/SubInfoComponent'
 import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import LocationCityIcon from '@mui/icons-material/LocationCity'
+import EditIcon from '@mui/icons-material/Edit';
 import { ChallengeContext } from '../globalState/ChallengeContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { getSubscribers, isSubscribed, subscribe, findUser, getUserInfo } from '../api/odaAPI'
@@ -205,7 +206,10 @@ function InspectChallenge () {
 
           <div className='text-text px-5 py-3 w-full items-center justify-center flex flex-col mb-5'>
 
-            <h1 className='text-4xl mb-2.5'>{title}</h1>
+            <div className="flex flex-row gap-4 items-center mb-2.5">
+              <h1 className='text-4xl'>{title}</h1>
+              { user.isAdmin.toString() === 'true' || challenge.owner.email === user.email ? <Link to={"/RedigerProblem"}><EditIcon  sx={{ fontSize: '2rem', '&:hover': { backgroundColor: '#3d3f6b', color: "white", borderRadius: "5px" }}}/></Link> : null}
+            </div>
 
             <section className=' items-end flex flex-row justify-between text-xs mb-1.5 gap-2'>
               <div className='flex flex-row'>

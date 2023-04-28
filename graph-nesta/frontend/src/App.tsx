@@ -13,6 +13,7 @@ import AdminStaging from './pages/AdminStaging'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ChallengeProvider from './globalState/ChallengeContext';
 import React from 'react'
+import ApproveProblem from './pages/ApproveProblem'
 import EditProblem from './pages/EditProblem'
 
 export default function App() {
@@ -32,10 +33,10 @@ export default function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<Home />} />
         <Route path="BrukerProfil" element={<UserProfile />} />
-        <Route path="GodkjennProblem" element={<AdminStaging />} />
+        <Route path="GodkjennOversikt" element={<AdminStaging />} />
         <Route path="InspiserProblem" element={<InspectChallenge />} />
+        <Route path="GodkjennProblem" element={<ApproveProblem />} />
         <Route path="RedigerProblem" element={<EditProblem />} />
- 
     </Routes>
   </BrowserRouter>
   </ChallengeProvider>
