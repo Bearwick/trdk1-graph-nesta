@@ -199,7 +199,7 @@ function NewChallenge () {
           sx={{
             ...textFieldStyle,
             width: '60vw',
-            maxWidth: '375px',
+            maxWidth: '350px',
           }}
         />
 
@@ -215,7 +215,7 @@ function NewChallenge () {
           sx={{
             ...textFieldStyle,
             width: '60vw',
-            maxWidth: '375px',
+            maxWidth: '350px',
             marginTop: '10px',
           }}
         >
@@ -240,7 +240,7 @@ function NewChallenge () {
           sx={{
             backgroundColor: 'white',
             width: '60vw',
-            maxWidth: '375px',
+            maxWidth: '350px',
             marginTop: '10px',
           }}
         /> : <div></div>}
@@ -274,8 +274,8 @@ function NewChallenge () {
                             label='Løst' />
         </RadioGroup>
 
-        <div className='flex flex-col'>
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+        <div className='flex flex-col items-center'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
               text={'Spesifikt problem'} />
@@ -316,7 +316,7 @@ function NewChallenge () {
             </CustomWidthTooltip>
           </div>
 
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
               text={'Dataprodukt'} />
@@ -357,7 +357,7 @@ function NewChallenge () {
             </CustomWidthTooltip>
           </div>
 
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
               text={'Tilgjengelig data'} />
@@ -398,7 +398,7 @@ function NewChallenge () {
             </CustomWidthTooltip>
           </div>
 
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
               text={'Definert handling'} />
