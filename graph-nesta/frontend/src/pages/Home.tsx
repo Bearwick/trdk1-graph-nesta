@@ -47,8 +47,6 @@ function Home() {
 
         <Header />
   
-        <div className="bg-background flex flex-col items-center">
-  
           <div className="text-white bg-footer px-5 py-3 w-full items-center justify-center flex flex-col">
             <div>
             <h1 className="text-4xl mb-5">Velkommen!</h1>
@@ -56,55 +54,50 @@ function Home() {
             <p className="max-w-2xl text-sm sm:text-base mb-5">Alle norske kommuner har samme lovpålagte ansvarsområder. Det betyr at en annen kommune kanskje har eller har hatt samme utfordring! Søk etter din utfordring, kanskje er den allerede løst eller noen arbeider med en løsning. Hvis ikke, opprett en ny utfordring! </p>
             </div>
             
-          <div className="flex flex-row gap-4 md:gap-2 mb-2">
-          <div className="flex flex-col md:flex-row gap-4 md:gap-2">
-            <Link to="/Søk"><Button data-cy = "søk" variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-                Søk</Button></Link>
-          <Link to="/NyttProblem"><Button data-cy= "nyProblem" variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-          Nytt problem</Button></Link>
+            <div className="flex flex-row gap-4 md:gap-2 mb-2">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-2">
+                <Link to="/Søk"><Button data-cy = "søk" variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "150px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+                    Søk</Button></Link>
+                <Link to="/NyttProblem"><Button data-cy= "nyProblem" variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+                Nytt problem</Button></Link>
+              </div>
+            
+              {user.isAdmin.toString() === "true" ? 
+                <div className="flex flex-col md:flex-row gap-4 md:gap-2">
+                  <Link to="/GodkjennProblem"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+                    Godkjenn problem</Button></Link>
+                  <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+                    Ny bruker</Button></Link>
+                </div> : null}
+            </div>
           </div>
-          
-          {user.isAdmin.toString() === "true" ? 
-            <div className="flex flex-col md:flex-row gap-4 md:gap-2">
-              <Link to="/GodkjennProblem"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-                Godkjenn problem</Button></Link>
-              <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
-                Ny bruker</Button></Link>
-            </div> : null}
+        <div>
         
-          </div>
-          
-          </div>
-
-          <div>
-           
+        <div className=" border-2 flex flex-col items-center">
+          <div className="flex flex-row h-12 w-[80vw] sm:w-[65vw] items-center justify-center mt-5">
+            <div className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48">
+            </div>
             
-          <div className="flex flex-row h-12 w-[80vw] sm:w-[65vw] items-center mt-5">
-          <div className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48">
-          </div>
-            
-            <div className="flex flex-col mt-5 pl-4 sm:pl-8 gap-1">
-              <h1 className="text-3xl sm:text-4xl text-text  underline underline-offset2 whitespace-nowrap">Om ODA-metoden</h1>
+            <div className="flex flex-col mt-5 pl-4 sm:pl-8 w-[62vw] sm:w-[45vw] gap-1">
+              <div className="text-3xl sm:text-4xl text-text whitespace-nowrap text-left">Om ODA-metoden</div>
               <PDFdownload />
             </div>
           </div>
 
+          <div className="flex flex-row h-12 w-[80vw] sm:w-[65vw] items-center justify-center mt-5">
+            <div className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48">
+            </div>
 
-
-          <div className="flex flex-row h-12 w-[80vw] sm:w-[65vw] items-center mt-5">
-          <div className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48">
-          </div>
-
-          <div className="flex flex-row items-center gap-2 pl-4 sm:pl-8">
-          <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA1"} text={""}/>
-          <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA2"} text={""}/>
-          <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA3"} text={""}/>
-          <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA4"} text={""}/>
-          </div>
+            <div className="flex flex-row items-center gap-2 pl-4 sm:pl-8 w-[62vw] sm:w-[45vw]">
+            <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA1"} text={""}/>
+            <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA2"} text={""}/>
+            <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA3"} text={""}/>
+            <ODACircle style={"rounded-full flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 bg-ODA4"} text={""}/>
+            </div>
           </div>
 
           <div className="text-xs md:text-base">
-          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center">
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
             <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 bg-ODA1 text-xs sm:text-base"} text={"Et spesifikt problem"}/>
             <div className="flex flex-col gap-2 w-[62vw] sm:w-[45vw] h-100% text-text text-left pl-4 sm:pl-8">
               <p className="font-bold">Hovedpoeng: Det er ytterst viktig å bevege seg fra større, makronivå problemer til noe spesifikt og gjennomførbart.</p>
@@ -113,7 +106,7 @@ function Home() {
             </div>
           </div>
 
-          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
             <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 bg-ODA2 text-xs sm:text-base"} text={"Et tydelig dataprodukt"}/>
             <div className="flex flex-col gap-2 w-[62vw] sm:w-[45vw] h-100% text-text text-left pl-4 sm:pl-8">
               <p className="font-bold">Hovedspørsmål: Hvilken informasjon må en person ha tilgang til på skjermen for å kunne utføre handlingene som ble bestemt i det forrige steget?</p>
@@ -122,7 +115,7 @@ function Home() {
             </div>
           </div>
 
-          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
             <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 bg-ODA3 text-xs sm:text-base"} text={"Tilgjengelig data"}/>
             <div className="flex flex-col gap-2 w-[62vw] sm:w-[45vw] h-100% text-text text-left pl-4 sm:pl-8">
               <p className="font-bold">hovedspørsmål: Hvilke data trenger du for å lage dataproduktet, eksisterer de, har du tilgang til dem, og kan de brukes?</p>
@@ -135,7 +128,7 @@ function Home() {
             </div>
           </div>
 
-          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center ">
+          <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
             <ODACircle style={"rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 bg-ODA4 text-xs sm:text-base"} text={"En definert handling"}/>
             <div className="w-[62vw] sm:w-[45vw] h-100% text-text text-left pl-4 sm:pl-8">
               <p className="font-bold">Hovedspørsmål: Hva ville du gjort annerledes om du hadde all informasjonen du trengte om ditt spesifikke problem?</p>
@@ -144,9 +137,7 @@ function Home() {
             </div>
           </div>
           </div>
-
           </div>
-
         </div>
 
         <Footer />

@@ -231,7 +231,7 @@ function InspectChallenge () {
           </div>
 
           <div>
-            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center'>
+            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center'>
               <ODACircle
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
                 text={'Spesifikt problem'} />
@@ -239,7 +239,7 @@ function InspectChallenge () {
                 className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{specificProblem}</p>
             </div>
 
-            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center '>
+            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center'>
               <ODACircle
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
                 text={'Dataprodukt'} />
@@ -247,7 +247,7 @@ function InspectChallenge () {
                 className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{clearDataProduct}</p>
             </div>
 
-            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center '>
+            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center'>
               <ODACircle
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
                 text={'Data'} />
@@ -255,7 +255,7 @@ function InspectChallenge () {
                 className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{accessibleData}</p>
             </div>
 
-            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center '>
+            <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center'>
               <ODACircle
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
                 text={'Definert handling'} />
@@ -270,12 +270,12 @@ function InspectChallenge () {
                   width: '250px',
                   borderRadius: '45px',
                   '&:hover': { backgroundColor: '#3d3f6b' },
-                }}> {showSimilarChallenges ? 'Fjern lignende problem' : 'Vis lignende problem'} 
+                }}> {showSimilarChallenges ? 'Lukk lignende problem' : 'Vis lignende problem'} 
           </Button>
 
           {showSimilarChallenges ?
-            <div className='my-8 w-[65vw]'>
-              <div className={ODAproblems.length > 1 ?'bg-white flex flex-row px-3 py-2 flex-nowrap overflow-auto gap-4': "text-center"}>
+            <div className='my-8 w-[60vw]'>
+              <div className={ODAproblems.length > 1 ?'bg-white flex flex-row px-3 py-2 flex-nowrap overflow-auto gap-4 items-center justify-center': "text-center"}>
                 
                 {ODAproblems.length > 1 ? 
                   
@@ -293,7 +293,8 @@ function InspectChallenge () {
             </div>
             : null}
 
-          <div data-cy = "kontaktContainer" className='flex flex-col w-[65vw] text-left mb-5 gap-1'>
+          <div data-cy = "kontaktContainer" className='flex flex-row w-[65vw] mb-5 items-center justify-center'>
+            <div className="flex flex-col text-left gap-1 ">
             <h2 className='text-text underline underline-offset2 text-2xl'>Kontaktinformasjon</h2>
 
             <div className='flex flex-row items-center gap-1 text-xs sm:text-base'><LocationCityIcon
@@ -302,12 +303,14 @@ function InspectChallenge () {
               sx={{ fontSize: '1rem' }} />{email}</div>
             <div className='flex flex-row items-center gap-1 text-xs sm:text-base'><PhoneIcon
               sx={{ fontSize: '1rem' }} />+47 {telephone}</div>
+            </div>
+            <div className="w-[62vw] sm:w-[45vw] pl-4 sm:pl-8"></div>
           </div>
 
 
-          <div className='flex flex-col w-[65vw] text-left mb-5 gap-1'>
+          <div className='flex flex-col w-[65vw] xl:w-[62vw] 2xl:w-[58vw] text-left mb-5 gap-1'>
 
-            <div className='mt-5 flex flex-row flex-wrap justify-between gap-2 mb-2'>
+            <div className='mt-5 flex flex-row flex-wrap gap-2 mb-2 items-center justify-between'>
               <h1 data-cy ="subcount"
                 className='text-text underline underline-offset2 text-2xl flex flex-row items-center whitespace-nowrap'>
                 <PeopleIcon sx={{

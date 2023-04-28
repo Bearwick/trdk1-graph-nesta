@@ -228,7 +228,7 @@ function EditProblem () {
           sx={{
             ...textFieldStyle,
             width: '60vw',
-            maxWidth: '375px',
+            maxWidth: '350px',
           }}
         />
 
@@ -244,7 +244,7 @@ function EditProblem () {
           sx={{
             ...textFieldStyle,
             width: '60vw',
-            maxWidth: '375px',
+            maxWidth: '350px',
             marginTop: '10px',
           }}
         >
@@ -270,7 +270,7 @@ function EditProblem () {
           sx={{
             backgroundColor: 'white',
             width: '60vw',
-            maxWidth: '375px',
+            maxWidth: '350px',
             marginTop: '10px',
           }}
         /> : null}
@@ -301,7 +301,7 @@ function EditProblem () {
         </RadioGroup>
 
         <div className='flex flex-col'>
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
               text={'Spesifikt problem'} />
@@ -330,9 +330,11 @@ function EditProblem () {
             </CustomWidthTooltip>
           </div>
 
-          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
-            <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
-
+          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center justify-center gap-8 mb-8'>
+            <div className="w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48 ">
+            </div>
+            
+            <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
             <TextField
 
               select
@@ -346,7 +348,7 @@ function EditProblem () {
                 ...textFieldStyle,
                 width: '40vw',
                 minWidth: '215px',
-                maxWidth: '375px',
+                maxWidth: '350px',
               }}
             >
               {categories?.specificProblem.map((value) => (
@@ -355,9 +357,10 @@ function EditProblem () {
                 </MenuItem>
               ))}
             </TextField>
+            </div>
           </div>
 
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
               text={'Dataprodukt'} />
@@ -385,9 +388,11 @@ function EditProblem () {
               <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
             </CustomWidthTooltip>
           </div>
-          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
-            <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
-
+          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center justify-center gap-8 mb-8'>
+            <div className="w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48 ">
+            </div>
+            
+            <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
             <TextField
 
               select
@@ -401,7 +406,7 @@ function EditProblem () {
                 ...textFieldStyle,
                 width: '40vw',
                 minWidth: '215px',
-                maxWidth: '375px',
+                maxWidth: '350px',
               }}
             >
               {categories?.dataProduct.map((value) => (
@@ -411,8 +416,9 @@ function EditProblem () {
               ))}
             </TextField>
           </div>
+          </div>
 
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
               text={'Tilgjengelig data'} />
@@ -440,9 +446,11 @@ function EditProblem () {
               <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
             </CustomWidthTooltip>
           </div>
-          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center sm:gap-8 mb-8'>
-            <div className='rounded-full flex justify-center w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48'></div>
-
+          <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center justify-center gap-8 mb-8'>
+            <div className="w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48 ">
+            </div>
+            
+            <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
             <TextField
 
               select
@@ -456,7 +464,7 @@ function EditProblem () {
                 ...textFieldStyle,
                 width: '40vw',
                 minWidth: '215px',
-                maxWidth: '375px',
+                maxWidth: '350px',
               }}
             >
               {categories?.accessibleData.map((value) => (
@@ -466,8 +474,9 @@ function EditProblem () {
               ))}
             </TextField>
           </div>
+          </div>
 
-          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center gap-8'>
+          <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
               style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
               text={'Definert handling'} />
