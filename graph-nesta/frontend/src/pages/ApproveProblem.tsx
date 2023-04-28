@@ -16,9 +16,9 @@ import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
 import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
-import { addOdaProblem, approve, deleteOdaProblem, getCategories, getVendors, updateOdaProblem } from '../api/odaAPI'
+import { approve, deleteOdaProblem, getCategories, getVendors, updateOdaProblem } from '../api/odaAPI'
 
-function EditProblem () {
+function ApproveProblem () {
 
   const {
     user,
@@ -28,7 +28,7 @@ function EditProblem () {
 
   //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
   useEffect(() => {
-    if (!(user.isAdmin.toString() === 'true' || challenge.owner.email === user.email )) {
+    if (!(user.isAdmin.toString() === 'true')) {
       navigate('/LoggInn')
     }
 
@@ -62,7 +62,6 @@ function EditProblem () {
   const [definedAction, setDefinedAction] = useState(challenge.definedAction)
   const [submitDelete, setSubmitDelete] = useState(false)
   const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false)
-  const [showConfirmEditMessage, setShowConfirmEditMessage] = useState(false)
   const [categories, setCategories] = useState<Categories>()
   const [error, setError] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
@@ -149,10 +148,17 @@ function EditProblem () {
     document.body.scrollTop = 0 // For Safari
     document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
     setShowSuccessMessage(false)
-    navigate('/Søk')
+    navigate('/GodkjennOversikt')
   }
 
-  const handleCancelDelete = () => {
+  const handleDeleteButton = () => {
+    setSubmitDelete(true)
+    setSpecificProblemCategory(specificProblemCategory || "0")
+    setClearDataProductCategory(clearDataProductCategory || "0")
+    setAccessibleDataCategory(accessibleDataCategory || "0")
+  }
+
+  const handleCancel = () => {
     setShowConfirmDeleteDialog(false);
   }
 
@@ -164,74 +170,26 @@ function EditProblem () {
       setError(true)
       console.log(res)
     })
+
+
   }
-
-  const handleCancelChanges = () => {
-    setShowConfirmEditMessage(false);
-  }
-
-  const handleSaveButton = () => {
-    if (user.isAdmin.toString() === "true") {
-      if (specificProblemCategory === "0" || clearDataProductCategory === "0" || accessibleDataCategory === "0") {
-        setSpecificProblemCategory("")
-        setClearDataProductCategory("")
-        setAccessibleDataCategory("")
-      } else {
-        setSubmitDelete(false)
-      }
-    } else {
-      fillCategories()
-      setSubmitDelete(false)
-    }
-  }
-
-  const handleSaveChanges = () => {
-    if (user.isAdmin.toString() === 'true') {
-
-      updateOdaProblem(challenge.id, system, status, title, specificProblem, clearDataProduct, accessibleData, definedAction).then(() => {
-        approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
-          setShowConfirmEditMessage(false);
-          setShowSuccessMessage(true)
-        }).catch((res) => {
-          setError(true)
-          console.log(res)
-        })
-      }).catch((res) => {
-        setError(true)
-        console.log(res)
-      })
-    } else {
-
-      deleteOdaProblem(challenge.id).then(() => {
-        addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
-          setShowConfirmEditMessage(false);
-          setShowSuccessMessage(true)
-        }).catch((res) => {
-          setError(true)
-          console.log(res)
-        })
-      }).catch((res) => {
-        setError(true)
-        console.log(res)
-      })
-    }
-  }
-  //   Fills the categories if empty. Used when deleting or user is editing problem. Then categories are not neccessary.
-  const fillCategories = () => {
-    setSpecificProblemCategory(specificProblemCategory || "0")
-    setClearDataProductCategory(clearDataProductCategory || "0")
-    setAccessibleDataCategory(accessibleDataCategory || "0")
-  }
-
 
   const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
-
     event.preventDefault()
     if (submitDelete) {
       setShowConfirmDeleteDialog(true);
     } else {
-      setShowConfirmEditMessage(true);
-    }
+    updateOdaProblem(challenge.id, system, status, title, specificProblem, clearDataProduct, accessibleData, definedAction).then(() => {
+      approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
+        setShowSuccessMessage(true)
+      }).catch((res) => {
+        setError(true)
+        console.log(res)
+      })
+    }).catch(() => {
+      console.log('Error')
+      setError(true)
+    })}
   }
 
   return (
@@ -242,8 +200,8 @@ function EditProblem () {
           <Link className={'hover:underline'} to='/Hjem'>
             Hjem
           </Link>
-          <Link color='inherit' className={'hover:underline'} to='/Søk'>
-            Søk
+          <Link color='inherit' className={'hover:underline'} to='/GodkjennOversikt'>
+            Godkjenn problem
           </Link>
 
           <Typography color='text.primary'>{challenge.title}</Typography>
@@ -253,8 +211,8 @@ function EditProblem () {
       <Box component='form' onSubmit={(e) => {
         postChallenge(e)
       }} className='bg-background flex flex-col items-center'>
-        <h1 className='text-3xl text-text mt-5'>Rediger problem</h1>
-        <h1 className='text-2xl text-text mb-5'>Problemet tilhører: {challenge.owner.email}</h1>
+        <h1 className='text-3xl text-text mt-5'>Godkjenn problem for</h1>
+        <h1 className='text-2xl text-text mb-5'>{challenge.owner.email}</h1>
 
         <TextField
           required
@@ -372,7 +330,6 @@ function EditProblem () {
             </CustomWidthTooltip>
           </div>
 
-          {user.isAdmin.toString() === 'true' ? 
           <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center justify-center gap-8 mb-8'>
             <div className="w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48 ">
             </div>
@@ -402,7 +359,6 @@ function EditProblem () {
             </TextField>
             </div>
           </div>
-          : null}
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
@@ -432,8 +388,6 @@ function EditProblem () {
               <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
             </CustomWidthTooltip>
           </div>
-
-          {user.isAdmin.toString() === 'true' ? 
           <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center justify-center gap-8 mb-8'>
             <div className="w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48 ">
             </div>
@@ -463,7 +417,6 @@ function EditProblem () {
             </TextField>
           </div>
           </div>
-          : null }
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
@@ -493,8 +446,6 @@ function EditProblem () {
               <HelpOutlineIcon sx={{ '@media screen and (max-width: 640px)': {marginLeft: "200px", marginTop: "-230px", marginBottom: "11rem"}, marginLeft: "-50px", marginTop: "-175px", zIndex: "1", fontSize: "medium", '&:hover': {cursor: 'pointer'}}}/>
             </CustomWidthTooltip>
           </div>
-
-          {user.isAdmin.toString() === 'true' ? 
           <div className='flex flex-col sm:flex-row w-[80vw] sm:w-[65vw] items-center justify-center gap-8 mb-8'>
             <div className="w-20 sm:w-36 md:w-40 lg:w-44 xl:w-48 ">
             </div>
@@ -524,7 +475,6 @@ function EditProblem () {
             </TextField>
           </div>
           </div>
-          : null }
 
           <div className='flex flex-col sm:flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center gap-8'>
             <ODACircle
@@ -557,7 +507,7 @@ function EditProblem () {
         </div>
 
         <div className="flex flex-col-reverse sm:flex-row gap-4 mb-8">
-        <Button variant='contained' onClick={() => {fillCategories(); setSubmitDelete(true)}} type='submit' sx={{
+        <Button variant='contained' onClick={handleDeleteButton} type='submit' sx={{
 
         color: 'white',
         backgroundColor: '#0D264A',
@@ -568,7 +518,7 @@ function EditProblem () {
         },
         }}>Slett problem</Button>
 
-        <Button variant='contained' onClick={handleSaveButton} type='submit' sx={{
+        <Button variant='contained' onClick={() => {setSubmitDelete(false)}} type='submit' sx={{
 
           color: 'white',
           backgroundColor: '#0D264A',
@@ -577,13 +527,13 @@ function EditProblem () {
           '&:hover': {
             backgroundColor: '#2BB728',
           },
-        }}>Lagre endringer</Button>
+        }}>Godkjenn problem</Button>
         </div>
       </Box>
 
       <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
         <Alert onClose={handleSuccessClose} severity='success' sx={{ width: '100%' }}>
-          {submitDelete ? "Problem slettet!" : "Problem lagret!"}
+          {submitDelete ? "Problem slettet!" : "Godkjenning vellyket!"}
         </Alert>
       </Snackbar>
       <Snackbar open={error} autoHideDuration={6000} onClose={() => {
@@ -594,17 +544,17 @@ function EditProblem () {
         }} severity='error' sx={{ width: '100%' }}>
           Det har skjedd en feil...
         </Alert>
-      </Snackbar> 
+      </Snackbar>
 
 
       <Dialog
         open={showConfirmDeleteDialog}
-        onClose={handleCancelDelete}
+        onClose={handleCancel}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Slett {title}?
+          Slett ODA-problem: {title}?
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -612,28 +562,8 @@ function EditProblem () {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelDelete}>kanseller</Button>
+          <Button onClick={handleCancel}>kanseller</Button>
           <Button onClick={handleDelete} sx={{'&:hover': {backgroundColor: '#FF002F', color: "white"}}}>Slett</Button>
-        </DialogActions>
-      </Dialog>
-
-      <Dialog
-        open={showConfirmEditMessage}
-        onClose={handleCancelChanges}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Lagre {title}?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {user.isAdmin.toString() === "true" ? "Lagring av ODA-problem er permanent. Det er ikke mulig å reversere handlingen.":"Ved endring av ODA-problem må problemet bli godkjent av administrator på nytt. Dette vil også medføre at eventuelle abbonenter fjernes fra problemet." }
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancelChanges}>kanseller</Button>
-          <Button onClick={handleSaveChanges} sx={{'&:hover': {backgroundColor: '#2BB728', color: "white"}}}>Lagre endringer</Button>
         </DialogActions>
       </Dialog>
 
@@ -642,4 +572,4 @@ function EditProblem () {
   )
 }
 
-export default EditProblem
+export default ApproveProblem

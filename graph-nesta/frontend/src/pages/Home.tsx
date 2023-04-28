@@ -64,7 +64,7 @@ function Home() {
             
               {user.isAdmin.toString() === "true" ? 
                 <div className="flex flex-col md:flex-row gap-4 md:gap-2">
-                  <Link to="/GodkjennProblem"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
+                  <Link to="/GodkjennOversikt"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
                     Godkjenn problem</Button></Link>
                   <Link to="/RegistrerBruker"><Button variant="contained" sx={{ color: "white", backgroundColor: "#0D264A", width: "200px", borderRadius: "45px", border: "1px solid white", '&:hover': {backgroundColor: '#3d3f6b',}}}>
                     Ny bruker</Button></Link>
