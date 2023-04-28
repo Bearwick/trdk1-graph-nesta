@@ -297,7 +297,7 @@ function InspectChallenge () {
             </div>
             : null}
 
-          <div data-cy = "kontaktContainer" className='flex flex-row w-[65vw] mb-5 items-center justify-center'>
+          <div data-cy = "kontaktContainer" className='flex flex-row w-[60vw] 3xl:w-[57vw] 4xl:w-[54vw] mt-10 mb-5 items-center justify-center'>
             <div className="flex flex-col text-left gap-1 ">
             <h2 className='text-text underline underline-offset2 text-2xl'>Kontaktinformasjon</h2>
 
@@ -308,11 +308,11 @@ function InspectChallenge () {
             <div className='flex flex-row items-center gap-1 text-xs sm:text-base'><PhoneIcon
               sx={{ fontSize: '1rem' }} />+47 {telephone}</div>
             </div>
-            <div className="w-[62vw] sm:w-[45vw] pl-4 sm:pl-8"></div>
+            <div className="w-[60vw] pl-4 sm:pl-8"></div>
           </div>
 
 
-          <div className='flex flex-col w-[65vw] xl:w-[62vw] 2xl:w-[58vw] text-left mb-5 gap-1'>
+          <div className='flex flex-col w-[60vw] 3xl:w-[57vw] 4xl:w-[54vw] text-left mb-5 gap-1'>
 
             <div className='mt-5 flex flex-row flex-wrap gap-2 mb-2 items-center justify-between'>
               <h1 data-cy ="subcount"

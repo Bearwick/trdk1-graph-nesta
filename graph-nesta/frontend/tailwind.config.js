@@ -23,12 +23,17 @@ module.exports = {
       'ODA4':'#8600b4',
       'menuHover': '#F5F5F5'
     },
+    
     extend: {
       fontFamily: {
         Inter: ["Inter", "sans-serif"],
       },
       dropShadow: {
         '3xl': '0 15px 15px rgba(0,82, 122, 0.50)',
+      },
+      screens: {
+        '3xl': '1700px',
+        '4xl': '2000px'
       }
     },
   },
