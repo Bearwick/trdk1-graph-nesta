@@ -1,43 +1,50 @@
 import express from 'express'
-import config from './config'
-import initialRoutes from './routes/ontology'
-import swaggerUi from "swagger-ui-express";
-import swaggerJSDoc from "swagger-jsdoc";
-import cors from "cors";
+import swaggerUi from 'swagger-ui-express'
+import swaggerJSDoc from 'swagger-jsdoc'
+import cors from 'cors'
 import bodyParser from 'body-parser'
+import { router as odaProblemRoutes } from './routes/odaProblem'
+import { router as ontologyRoutes } from './routes/ontology'
+import { router as userRoutes } from './routes/user'
+import { router as nestaRoutes } from './routes/nesta'
 
 const options = {
   definition: {
-    openapi: "3.0.1",
+    openapi: '3.0.1',
     info: {
-      title: "REST API for Swagger Documentation",
-      version: "1.0.0",
+      title: 'REST API for Swagger Documentation',
+      version: '1.0.0',
     },
-    schemes: ["http", "https"],
-    servers: [{ url: "http://localhost:8080/" }],
+    schemes: ['http', 'https'],
+    servers: [{ url: 'http://localhost:8080/' }],
   },
-  apis: [
-    "./src/routes/ontology.ts",
-  ],
-};
+  apis: ['./src/routes/ontology.ts'],
+}
 
 // Add a list of allowed origins.
 // If you have more origins you would like to add, you can add them to the array below.
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['http://localhost:3000']
 
 const corsOptions: cors.CorsOptions = {
-  origin: allowedOrigins
-};
+  origin: allowedOrigins,
+}
 
 // Then pass these options to cors:
-const swaggerSpec = swaggerJSDoc(options);
+const swaggerSpec = swaggerJSDoc(options)
 const app = express()
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(cors(corsOptions));
-app.use('/ontology', initialRoutes)
 
-app.listen(config.PORT, () => {
-  console.log(`app listening on port ${config.PORT}`)
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+
+app.use(cors(corsOptions))
+
+app.use('/ontology', ontologyRoutes)
+app.use('/odaProblem', odaProblemRoutes)
+app.use('/user', userRoutes)
+app.use('/nesta', nestaRoutes)
+
+app.listen(8080, () => {
+  console.log(`app listening on port ${8080}`)
 })
