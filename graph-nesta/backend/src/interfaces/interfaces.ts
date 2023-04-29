@@ -39,7 +39,7 @@ interface AddCategoriesParams {
   dataProduct: string
   accessibleData: string
   nodeName: string
-
+  approved: string
 }
 
 interface SetAdminParams {
@@ -66,5 +66,5 @@ export {
   type SetAdminParams,
   type SubscribeParams,
   type FindUserParams,
-  type CategoryParams
+  type CategoryParams,
 }

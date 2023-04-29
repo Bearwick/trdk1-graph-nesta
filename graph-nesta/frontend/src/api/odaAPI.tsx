@@ -150,13 +150,14 @@ export async function getCategories () {
   return await axios.get<Categories>('http://localhost:8080/ontology/GetCategories')
 }
 
-export async function approve (specProblem: string, accessibleData: string, dataProduct: string, nodeName: string) {
+export async function approve (specProblem: string, accessibleData: string, dataProduct: string, nodeName: string, approved: boolean) {
   return await axios.get('http://localhost:8080/ontology/AddCategories', {
     params: {
       specProblem,
       dataProduct,
       accessibleData,
       nodeName,
+      approved,
     },
   })
 }

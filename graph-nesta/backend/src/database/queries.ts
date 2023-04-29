@@ -51,18 +51,21 @@ export default {
     
 } limit ${limit} offset ${offset}`,
   // This one is badly designed. a better solution than using nodeName is found in getSubscribers. Simply prefix the whole id as seen in that method, so you wont have to substring the id in frontend.
-  addCategories: (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string) => `
+  addCategories: (specProblem: string, dataProduct: string, accessibleData: string, nodeName: string, approved: boolean) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   prefix oda: <urn:absolute:ODA2.0#>
   delete {
-    oda:${nodeName} oda:approved false.
+    oda:${nodeName} oda:approved ${!approved}.
+    ?sp oda:hasSpecificProblem ?specProblem.
+    ?ad oda:hasAccesibleData ?acData.
+    ?dp oda:hasClearDataProduct ?dataProduct.
   }
   insert {
     ?dataProduct rdf:type oda:${dataProduct}.
     ?specProblem rdf:type oda:${specProblem}.
     ?acData rdf:type oda:${accessibleData}.
-    oda:${nodeName} oda:approved true.
+    oda:${nodeName} oda:approved ${approved}.
   }
   where {
     oda:${nodeName} oda:hasSpecificProblem ?sp.
