@@ -85,19 +85,18 @@ export const odaProblem = {
 } limit ${limit} offset ${offset}
 `,
 
-  // This one is badly designed. a better solution than using nodeName is found in getSubscribers. Simply prefix the whole id as seen in that method, so you wont have to substring the id in frontend.
   addCategories: (
     specProblem: string,
     dataProduct: string,
     accessibleData: string,
-    nodeName: string,
+    id: string,
     approved: boolean
   ) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   prefix oda: <urn:absolute:ODA2.0#>
   delete {
-    oda:${nodeName} oda:approved ${(!approved).toString()}.
+    <${id}> oda:approved ${(!approved).toString()}.
     ?sp oda:hasSpecificProblem ?specProblem.
     ?ad oda:hasAccesibleData ?acData.
     ?dp oda:hasClearDataProduct ?dataProduct.
@@ -106,12 +105,12 @@ export const odaProblem = {
     ?dataProduct rdf:type oda:${dataProduct}.
     ?specProblem rdf:type oda:${specProblem}.
     ?acData rdf:type oda:${accessibleData}.
-    oda:${nodeName} oda:approved ${approved.toString()}.
+    <${id}> oda:approved ${approved.toString()}.
   }
   where {
-    oda:${nodeName} oda:hasSpecificProblem ?sp.
-    oda:${nodeName} oda:hasAccesibleData ?ad.
-    oda:${nodeName} oda:hasClearDataProduct ?dp.
+    <${id}> oda:hasSpecificProblem ?sp.
+    <${id}> oda:hasAccesibleData ?ad.
+    <${id}> oda:hasClearDataProduct ?dp.
     bind(?sp as ?specProblem).
     bind(?ad as ?acData).
     bind(?dp as ?dataProduct).
@@ -122,7 +121,7 @@ export const odaProblem = {
     specProblem: string,
     dataProduct: string,
     accessibleData: string,
-    nodeName: string
+    id: string
   ) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -135,7 +134,7 @@ export const odaProblem = {
     ?specProblemCategory oda:sameCategoryAs ?specProblem.
     ?dataProductCategory oda:sameCategoryAs ?dataProduct.
     ?acDataCategory oda:sameCategoryAs ?acData.
-    oda:${nodeName} oda:approved true.
+    <${id}> oda:approved true.
   }
   where {
     
@@ -145,9 +144,9 @@ export const odaProblem = {
     Bind(?specificProblem as ?specProblemCategory).
     Bind(?clearDataProduct as ?dataProductCategory).
     Bind(?accessibleData as ?acDataCategory).
-    oda:${nodeName} oda:hasSpecificProblem ?sp.
-    oda:${nodeName} oda:hasAccesibleData ?ad.
-    oda:${nodeName} oda:hasClearDataProduct ?dp.
+    <${id}> oda:hasSpecificProblem ?sp.
+    <${id}> oda:hasAccesibleData ?ad.
+    <${id}> oda:hasClearDataProduct ?dp.
     bind(?sp as ?specProblem).
     bind(?ad as ?acData).
     bind(?dp as ?dataProduct).
@@ -169,37 +168,42 @@ export const odaProblem = {
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX oda: <urn:absolute:ODA2.0#>  
   insert {
-    oda:${nodeName} rdf:type oda:ODAProblem.
-    oda:${nodeName} rdf:type owl:NamedIndividual.
+    ?node rdf:type oda:ODAProblem.
+    ?node rdf:type owl:NamedIndividual.
     
-    oda:${nodeName}SpecificProblem rdf:type oda:SpecificProblem.
-    oda:${nodeName}ClearDataProduct rdf:type oda:ClearDataProduct.
-    oda:${nodeName}AccessibleData rdf:type oda:AccesibleData.
-    oda:${nodeName}DefinedAction rdf:type oda:hasDefinedAction.
+    ?specificProblemNode rdf:type oda:SpecificProblem.
+    ?dataProductNode rdf:type oda:ClearDataProduct.
+    ?accessibleDataNode rdf:type oda:AccesibleData.
+    ?definedActionNode rdf:type oda:hasDefinedAction.
    
-    oda:${nodeName}SpecificProblem rdf:type owl:NamedIndividual.
-    oda:${nodeName}ClearDataProduct rdf:type owl:NamedIndividual.
-    oda:${nodeName}AccessibleData rdf:type owl:NamedIndividual.
-    oda:${nodeName}DefinedAction rdf:type oda:NamedIndividual.
+    ?specificProblemNode rdf:type owl:NamedIndividual.
+    ?dataProductNode rdf:type owl:NamedIndividual.
+    ?accessibleDataNode rdf:type owl:NamedIndividual.
+    ?definedActionNode rdf:type oda:NamedIndividual.
     
-    oda:${nodeName} oda:hasSpecificProblem oda:${nodeName}SpecificProblem.
-    oda:${nodeName} oda:hasClearDataProduct oda:${nodeName}ClearDataProduct.
-    oda:${nodeName} oda:hasAccesibleData oda:${nodeName}AccessibleData.
-    oda:${nodeName} oda:hasDefinedAction oda:${nodeName}DefinedAction.
-    oda:${nodeName} oda:hasVendor oda:${supplier}.
-    oda:${nodeName} oda:approved false.
-    oda:${nodeName} oda:ODATitle "${title}".
-    oda:${nodeName} oda:ODAprogress "${status.toString()}".
-    oda:${nodeName}SpecificProblem oda:specificProblemDescription "${specificProblem}".
-    oda:${nodeName}ClearDataProduct oda:dataProductDescription "${clearDataProduct}".
-    oda:${nodeName}AccessibleData oda:accesibleDataDescription "${accessibleData}".
-    oda:${nodeName}DefinedAction oda:definedActionDescription "${definedAction}".
-    oda:${nodeName} oda:createdBy ?user.
+    ?node oda:hasSpecificProblem oda:${nodeName}SpecificProblem.
+    ?node oda:hasClearDataProduct oda:${nodeName}ClearDataProduct.
+    ?node oda:hasAccesibleData oda:${nodeName}AccessibleData.
+    ?node oda:hasDefinedAction oda:${nodeName}DefinedAction.
+    ?node oda:hasVendor oda:${supplier}.
+    ?node oda:approved false.
+    ?node oda:ODATitle "${title}".
+    ?node oda:ODAprogress "${status.toString()}".
+    ?specificProblemNode oda:specificProblemDescription "${specificProblem}".
+    ?dataProductNode oda:dataProductDescription "${clearDataProduct}".
+    ?accessibleDataNode oda:accesibleDataDescription "${accessibleData}".
+    ?definedActionNode oda:definedActionDescription "${definedAction}".
+    ?node oda:createdBy ?user.
     
   }
   where {
     ?u oda:userMail "${userMail}".
     Bind(?u as ?user).
+    Bind(uuid() as ?node).
+    Bind(uuid() as ?specificProblemNode).
+    Bind(uuid() as ?dataProductNode).
+    Bind(uuid() as ?accessibleDataNode).
+    Bind(uuid() as ?definedActionNode).
   }
 
 `,

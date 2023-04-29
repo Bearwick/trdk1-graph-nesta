@@ -10,15 +10,18 @@ export const user = {
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
-  insert data {
-    oda:${email.replace('@', '')} rdf:type oda:User.
-    oda:${email.replace('@', '')} rdf:type owl:NamedIndividual.
-    oda:${email.replace('@', '')} oda:userPhoneNumber "${phone}"^^xsd:int.
-    oda:${email.replace('@', '')} oda:userMail "${email}".
-    oda:${email.replace('@', '')} oda:userAffiliation "${affiliation}".
-    oda:${email.replace('@', '')} oda:isAdmin ${setAdmin.toString()}.
-    oda:${email.replace('@', '')} oda:userPassword "${password}".          
-} `,
+  insert {
+    ?user rdf:type oda:User.
+    ?user rdf:type owl:NamedIndividual.
+    ?user oda:userPhoneNumber "${phone}"^^xsd:int.
+    ?user oda:userMail "${email}".
+    ?user oda:userAffiliation "${affiliation}".
+    ?user oda:isAdmin ${setAdmin.toString()}.
+    ?user oda:userPassword "${password}".          
+  } where {
+    Bind(uuid() as ?user)
+  }
+`,
 
   findUser: (email: string, password: string) => `
   PREFIX oda: <urn:absolute:ODA2.0#>

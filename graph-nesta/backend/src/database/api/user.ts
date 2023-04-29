@@ -34,5 +34,5 @@ export const isSubbed = async (email: string, ODAProblem: string) => {
 }
 
 export const getUser = async (email: string) => {
-  return await get(getUser(email))
+  return await get(user.getUser(email))
 }
