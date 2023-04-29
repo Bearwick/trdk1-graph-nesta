@@ -1,7 +1,7 @@
 import { type OdaProblem, Status, type User, type UserInfo } from '../types/types'
 import { type AxiosResponse } from 'axios'
 
-export function setObject (r: AxiosResponse<any, any>) {
+export function convertOdaProblem (r: AxiosResponse<any, any>) {
   const odaProblems: OdaProblem[] =
     r.data.results.bindings.map(odaProblem => {
       const owner: User = {
