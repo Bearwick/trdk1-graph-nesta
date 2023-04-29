@@ -16,7 +16,7 @@ import { ChallengeContext } from '../globalState/ChallengeContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
 import { Alert, Breadcrumbs,  Snackbar,  Tooltip, type TooltipProps,  Typography, styled, tooltipClasses, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
-import { addOdaProblem, approve, deleteOdaProblem, getCategories, getVendors, updateOdaProblem } from '../api/odaAPI'
+import { approve, deleteOdaProblem, getCategories, getVendors, updateOdaProblem } from '../api/odaAPI'
 
 function EditProblem () {
 
@@ -189,7 +189,7 @@ function EditProblem () {
     if (user.isAdmin.toString() === 'true') {
 
       updateOdaProblem(challenge.id, system, status, title, specificProblem, clearDataProduct, accessibleData, definedAction).then(() => {
-        approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
+        approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20), true).then(() => {
           setShowConfirmEditMessage(false);
           setShowSuccessMessage(true)
         }).catch((res) => {
@@ -202,8 +202,8 @@ function EditProblem () {
       })
     } else {
 
-      deleteOdaProblem(challenge.id).then(() => {
-        addOdaProblem(title, specificProblem, clearDataProduct, accessibleData, definedAction, system, user.email, status).then(() => {
+      updateOdaProblem(challenge.id, system, status, title, specificProblem, clearDataProduct, accessibleData, definedAction).then(() => {
+        approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20), false).then(() => {
           setShowConfirmEditMessage(false);
           setShowSuccessMessage(true)
         }).catch((res) => {

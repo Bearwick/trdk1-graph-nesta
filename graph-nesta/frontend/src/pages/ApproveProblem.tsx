@@ -180,7 +180,7 @@ function ApproveProblem () {
       setShowConfirmDeleteDialog(true);
     } else {
     updateOdaProblem(challenge.id, system, status, title, specificProblem, clearDataProduct, accessibleData, definedAction).then(() => {
-      approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20)).then(() => {
+      approve(specificProblemCategory, accessibleDataCategory, clearDataProductCategory, challenge.id.substring(20), true).then(() => {
         setShowSuccessMessage(true)
       }).catch((res) => {
         setError(true)
