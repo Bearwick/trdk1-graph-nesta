@@ -38,7 +38,7 @@ interface AddCategoriesParams {
   specProblem: string
   dataProduct: string
   accessibleData: string
-  nodeName: string
+  id: string
   approved: string
 }
 

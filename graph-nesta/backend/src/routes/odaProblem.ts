@@ -120,9 +120,8 @@ router.get(
     req: Request<unknown, unknown, unknown, AddCategoriesParams>,
     res: Response
   ) {
-    const { specProblem, dataProduct, accessibleData, nodeName, approved } =
-      req.query
-    addCategories(specProblem, dataProduct, accessibleData, nodeName, approved)
+    const { specProblem, dataProduct, accessibleData, id, approved } = req.query
+    addCategories(specProblem, dataProduct, accessibleData, id, approved)
       .then((r) => {
         res.send(r)
       })

@@ -26,8 +26,6 @@ router.get(
     res: Response
   ) {
     const query = req.query
-    console.log(query)
-    console.log('ontology.ts: adding user')
     addUser(
       query.phone,
       query.email,
@@ -48,9 +46,9 @@ router.get(
     req: Request<unknown, unknown, unknown, FindUserParams>,
     res: Response
   ) {
-    const query = req.query
-
-    findUser(query.email, query.password)
+    const { email, password } = req.query
+    console.log('yeah')
+    findUser(email, password)
       .then((r) => {
         if (r.data.results.bindings.toString().length > 0) {
           res.send(true)
