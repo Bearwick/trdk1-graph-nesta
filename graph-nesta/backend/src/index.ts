@@ -34,7 +34,7 @@ const swaggerSpec = swaggerJSDoc(options)
 const app = express()
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 

@@ -86,9 +86,9 @@ router.post('/AddProblem', function (req: Request, res: Response) {
     data.status
   )
     .then((r) => {
-      res.send(r.request)
+      res.send(r)
     })
-    .catch((r) => res.send(r.request))
+    .catch((r) => res.send(r))
 })
 
 router.put('/DeleteOdaProblem', function (req: Request, res: Response) {
