@@ -181,10 +181,10 @@ export const odaProblem = {
     ?accessibleDataNode rdf:type owl:NamedIndividual.
     ?definedActionNode rdf:type oda:NamedIndividual.
     
-    ?node oda:hasSpecificProblem oda:${nodeName}SpecificProblem.
-    ?node oda:hasClearDataProduct oda:${nodeName}ClearDataProduct.
-    ?node oda:hasAccesibleData oda:${nodeName}AccessibleData.
-    ?node oda:hasDefinedAction oda:${nodeName}DefinedAction.
+    ?node oda:hasSpecificProblem ?specificProblemNode.
+    ?node oda:hasClearDataProduct ?dataProductNode.
+    ?node oda:hasAccesibleData ?accessibleDataNode.
+    ?node oda:hasDefinedAction ?definedActionNode.
     ?node oda:hasVendor oda:${supplier}.
     ?node oda:approved false.
     ?node oda:ODATitle "${title}".
