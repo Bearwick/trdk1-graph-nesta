@@ -1,16 +1,22 @@
 import Button from '@mui/material/Button';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from '../components/Header';
 import ODACircle from '../components/ODACircle';
 import PDFdownload from '../components/PDFdownload';
 import { ChallengeContext } from '../globalState/ChallengeContext';
-import { findUser, getUserInfo } from '../api/odaAPI';
+import { findUser, getODAProblemsAdminInfo, getUserInfo } from '../api/odaAPI';
+import AdminInfoComponent from '../components/AdminInfoComponent';
 
-function Home() {
+function Home() { 
     const {user, setUser } = useContext(ChallengeContext);
     const navigate = useNavigate();
+    const [totalProblems, setTotalProblems] = useState(NaN)
+    const [notApprovedProblems, setNotApprovedProblems] = useState(NaN)
+    const [solvedProblems, setSolvedProblems] = useState(NaN)
+    const [inProgressProblems, setInProgressProblems] = useState(NaN)
+    const [newProblems, setNewProblems] = useState(NaN)
 
     //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
     useEffect(() => {  
@@ -41,6 +47,18 @@ function Home() {
       }      
     },[navigate, setUser, user.isLoggedIn]);
 
+    useEffect(() => {
+      if(user.isAdmin.toString() === "true") {
+        getODAProblemsAdminInfo().then(r =>{
+          setTotalProblems(r.data[0])
+          setNotApprovedProblems(r.data[1])
+          setSolvedProblems(r.data[2])
+          setInProgressProblems(r.data[3])
+          setNewProblems(r.data[4])
+          }
+        ).catch(() => {console.log("Fetching admin panel failed!")})
+      }
+    }, [user.isAdmin])
 
     return (
       <div className="text-center flex flex-col min-h-screen">
@@ -49,9 +67,19 @@ function Home() {
   
           <div className="text-white bg-footer px-5 py-3 w-full items-center justify-center flex flex-col">
             <div>
-            <h1 className="text-4xl mb-5">Velkommen!</h1>
-            <p className="max-w-2xl text-xl sm:text-2xl mb-1">Har du en utfordring i din arbeidsoppgave?</p>
-            <p className="max-w-2xl text-sm sm:text-base mb-5">Alle norske kommuner har samme lovpålagte ansvarsområder. Det betyr at en annen kommune kanskje har eller har hatt samme utfordring! Søk etter din utfordring, kanskje er den allerede løst eller noen arbeider med en løsning. Hvis ikke, opprett en ny utfordring! </p>
+            <h1 className="text-4xl mb-4">Velkommen!</h1>
+            {user.isAdmin.toString() === "true" ? ( 
+            <div>
+              <p className="max-w-3xl text-xl sm:text-2xl mb-2">Innlogget som administrator: {user.email}</p>
+              <p className="max-w-2xl text-sm sm:text-base mb-4">Som administrator kan du godkjenne, redigere og slette dataproblem. Du kan også legge til nye brukere. Under ligger en oversikt over alle dataproblem og antallet som tilhører de forskjellige statusene.</p>
+            </div>
+            ): (
+            <div>
+               <p className="max-w-2xl text-xl sm:text-2xl mb-2">Har du en utfordring i din arbeidsoppgave?</p>
+               <p className="max-w-2xl text-sm sm:text-base mb-4">Alle norske kommuner har samme lovpålagte ansvarsområder. Det betyr at en annen kommune kanskje har eller har hatt samme utfordring! Søk etter din utfordring, kanskje er den allerede løst eller noen arbeider med en løsning. Hvis ikke, opprett en ny utfordring! </p>
+            </div>
+           )}
+            
             </div>
             
             <div className="flex flex-row gap-4 md:gap-2 mb-2">
@@ -72,8 +100,24 @@ function Home() {
             </div>
           </div>
         <div>
-        
+
         <div className=" border-2 flex flex-col items-center">
+
+          {user.isAdmin.toString() === "true" ? 
+          <div className="my-5">
+            <h1 className="text-3xl sm:text-4xl text-text whitespace-nowrap mb-5">Adminpanel</h1>
+            <div className="flex flex-wrap justify-center gap-4 w-[80vw] lg:w-[50vw]">
+              <AdminInfoComponent title={"Totalt"} count={totalProblems}/>
+              <AdminInfoComponent title={"Til godkjenning"} count={notApprovedProblems}/>  
+              <AdminInfoComponent title={"Løst"} count={solvedProblems}/>
+              <AdminInfoComponent title={"Påbegynnt"} count={inProgressProblems}/>
+              <AdminInfoComponent title={"Nytt problem"} count={newProblems}/>
+
+            </div>
+          </div>
+          : null}
+
+
           <div className="flex flex-row h-12 w-[80vw] sm:w-[65vw] items-center justify-center mt-5">
             <div className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48">
             </div>

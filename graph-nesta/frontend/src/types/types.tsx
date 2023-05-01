@@ -1,5 +1,5 @@
 export enum Status {
-  newChallenge = 'Ny utfordring',
+  newChallenge = 'Nytt problem',
   started = 'Påbegynnt',
   solved = 'Løst',
 }
@@ -64,5 +64,7 @@ export interface Categories {
   dataProduct: string[]
 }
 
-
-
+export interface AdminInfo { 
+  title: string,
+  count: number,
+}

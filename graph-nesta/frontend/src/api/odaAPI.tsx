@@ -34,6 +34,11 @@ export const getOdaProblems = async (
   return q
 }
 
+export const getODAProblemsAdminInfo = async (): Promise<AxiosResponse<number[]>> => { 
+  console.log("odaAPI")
+  return await axios.get<number[]>('http://localhost:8080/odaProblem/GetODAProblemsAdminInfo')
+}
+
 export const getUserOdaProblems = async (
   offset: number,
   limit: number,

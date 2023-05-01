@@ -25,17 +25,20 @@ interface UserInfo {
   isAdmin: boolean
 }
 
-
-enum Status {
-  newChallenge = "Ny utfordring",
+enum Status { 
+  newChallenge = "Nytt problem",
   started = "Påbegynnt",
   solved = "Løst",
+}
+
+interface AdminPanelInfoType {
+  count: number,
 }
 
 export {
   type OdaProblem,
   type User,
   type UserInfo,
-  Status
-
+  Status,
+  type AdminPanelInfoType
 }

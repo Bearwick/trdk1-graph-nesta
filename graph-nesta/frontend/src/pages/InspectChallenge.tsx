@@ -18,7 +18,7 @@ import { Breadcrumbs, Typography } from '@mui/material'
 import useFetch from '../hooks/useFetch'
 import ChallengeCard from '../components/ChallengeCard'
 
-function InspectChallenge () {
+function InspectChallenge () { 
 
   const [title, setTitle] = useState('')
   const [status, setStatus] = useState(Status.newChallenge)
@@ -203,7 +203,6 @@ function InspectChallenge () {
 
         <div className='items-center justify-center flex flex-col'>
 
-
           <div className='text-text px-5 py-3 w-full items-center justify-center flex flex-col mb-5'>
 
             <div className="flex flex-row gap-4 items-center mb-2.5">
@@ -279,7 +278,7 @@ function InspectChallenge () {
 
           {showSimilarChallenges ?
             <div className='my-8 w-[60vw]'>
-              <div className={ODAproblems.length > 1 ?'bg-white flex flex-row px-3 py-2 flex-nowrap overflow-auto gap-4 items-center justify-center': "text-center"}>
+              <div className={ODAproblems.length > 1 ?'bg-white flex px-4 py-2 flex-nowrap overflow-auto gap-4': "text-center"}>
                 
                 {ODAproblems.length > 1 ? 
                   
@@ -310,7 +309,6 @@ function InspectChallenge () {
             </div>
             <div className="w-[60vw] pl-4 sm:pl-8"></div>
           </div>
-
 
           <div className='flex flex-col w-[60vw] 3xl:w-[57vw] 4xl:w-[54vw] text-left mb-5 gap-1'>
 

@@ -5,12 +5,13 @@ import {
   type SubscribeParams,
 } from '../interfaces/interfaces'
 
-import { convertSubscribers, convertOdaProblem } from '../utils/convertData'
+import { convertSubscribers, convertOdaProblem, convertAdminPanelInfo } from '../utils/convertData'
 import {
   addCategories,
   addODAProblem,
   deleteODAProblem,
   getODAProblems,
+  getODAProblemsAdminInfo,
   getSubscribers,
   updateODAProblem,
 } from '../database/api/odaProblem'
@@ -72,6 +73,14 @@ router.get(
       .catch(() => res.send([]))
   }
 )
+
+router.get('/GetODAProblemsAdminInfo', function (req: Request, res: Response) { 
+  console.log("routes odaProblem")
+  getODAProblemsAdminInfo()
+    .then((r) => {res.send(convertAdminPanelInfo(r))
+    console.log(convertAdminPanelInfo(r))})
+    .catch((r) => res.send(r))
+})
 
 router.post('/AddProblem', function (req: Request, res: Response) {
   const data = req.body
