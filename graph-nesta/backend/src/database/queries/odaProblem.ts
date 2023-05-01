@@ -85,6 +85,43 @@ export const odaProblem = {
 } limit ${limit} offset ${offset}
 `,
 
+   getODAProblemsAdminInfo: () => `
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX oda: <urn:absolute:ODA2.0#>
+
+select * {
+    { SELECT (COUNT (?odaProblem) AS ?Total) {
+   ?odaProblem rdf:type oda:ODAProblem.
+   ?odaProblem oda:ODAprogress ?progress.
+} 
+    }
+    { SELECT (COUNT (?odaProblem) AS ?NotApproved) {
+   ?odaProblem rdf:type oda:ODAProblem.
+   ?odaProblem oda:approved false.
+}  
+    }
+    { SELECT (COUNT (?odaProblem) AS ?Solved) {
+   ?odaProblem rdf:type oda:ODAProblem.
+   ?odaProblem oda:ODAprogress "Solved".
+   ?odaProblem oda:approved true.
+}  
+    }
+    { SELECT (COUNT (?odaProblem) AS ?InProgress) {
+   ?odaProblem rdf:type oda:ODAProblem.
+   ?odaProblem oda:ODAprogress "inProcess".
+   ?odaProblem oda:approved true.
+}  
+    }
+     { SELECT (COUNT (?odaProblem) AS ?NewProblem) {
+   ?odaProblem rdf:type oda:ODAProblem.
+   ?odaProblem oda:ODAprogress "newChallenge".
+   ?odaProblem oda:approved true.
+}  
+    }
+}
+  `,
+
   addCategories: (
     specProblem: string,
     dataProduct: string,

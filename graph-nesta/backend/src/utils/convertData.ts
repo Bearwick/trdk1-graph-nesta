@@ -1,4 +1,4 @@
-import { type OdaProblem, Status, type User, type UserInfo } from '../types/types'
+import { type OdaProblem, Status, type User, type UserInfo, type AdminPanelInfoType } from '../types/types'
 import { type AxiosResponse } from 'axios'
 
 export function convertOdaProblem (r: AxiosResponse<any, any>) {
@@ -27,6 +27,21 @@ export function convertOdaProblem (r: AxiosResponse<any, any>) {
 
     })
   return odaProblems
+}
+
+export function convertAdminPanelInfo (r: AxiosResponse<any, any>) {
+
+  const counts: number[] = [];
+  
+  r.data.results.bindings.forEach(element => { 
+      for (const key in element) {
+        if (element.hasOwnProperty(key)) {
+          counts.push(element[key].value);
+        }
+      }
+    });
+
+  return counts
 }
 
 export function convertSubscribers (r: AxiosResponse<any, any>) {
