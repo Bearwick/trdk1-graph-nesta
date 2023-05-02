@@ -31,13 +31,13 @@ function Header(){
                             {popupState.isOpen ? <CloseIcon onClick={onChange} sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}}/>: <MenuIcon onClick={onChange}  sx={{ fontSize: "2.5rem", cursor: "pointer", color: "#0D264A"}} />}
                         </Button>
                         <Menu {...bindMenu(popupState)}>
-                        {user.isLoggedIn ? <Link to="/MinProfil"><div data-cy ="minProfil" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div data-cy ="loggin" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
+                        {user.isLoggedIn ? <Link to="/minProfil"><div data-cy ="minProfil" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-centere">Min profil</div></Link>:<Link to="/LoggInn"><div data-cy ="loggin" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Logg inn</div></Link>}
                             <Link to="/MineProblem"><div data-cy="mineProblemer" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Mine problem</div></Link>
                             <Link to="/NyttProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Nytt problem</div></Link>
                             <Link to="/Søk"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Søk</div></Link>
                             {user.isAdmin.toString() === "true" ? <div className="flex flex-col">
-                                <Link to="/GodkjennOversikt"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Godkjenn problem</div></Link>  
-                                <Link to="/RegistrerBruker"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Ny bruker</div></Link></div> 
+                                <Link to="/GodkjennProblem"><div className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Godkjenn problem</div></Link>  
+                                <Link to="/RegistrerBruker"><div data-cy ="registrerBruker" className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center">Ny bruker</div></Link></div> 
                                 : null}
                         </Menu>
                         </React.Fragment>

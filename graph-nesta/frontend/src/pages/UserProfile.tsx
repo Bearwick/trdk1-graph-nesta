@@ -94,7 +94,7 @@ function UserProfile() {
                   {user.isAdmin.toString() === "true" ? <img src={adminIcon} alt={'image of adminProfileIcon'}/> : <img src={userIcon} alt={'image of userProfileIcon'}/>}
                </div>
               
-               <div className="flex flex-col text-left my-5 gap-1">
+               <div data-cy ="profileInfo" className="flex flex-col text-left my-5 gap-1">
                   <h2 className="text-text underline underline-offset2 text-2xl">Kontaktinformasjon</h2>
 
                   <div className="flex flex-row items-center gap-1 text-xs sm:text-base"><LocationCityIcon sx={{fontSize: "1rem"}}/>{ user.affiliation }</div>

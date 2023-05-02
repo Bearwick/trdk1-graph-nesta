@@ -474,6 +474,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
+                  data-cy = "kategoriserSpesProblem"
                   select
                   required
                   label="Kategoriser spesifikt problem"
@@ -549,6 +550,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
+                  data-cy = "kategoriserDataprodukt"
                   select
                   required
                   label="Kategoriser dataprodukt"
@@ -624,6 +626,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
+                  data-cy = "kategoriserTilgjengeligData"
                   select
                   required
                   label="Kategoriser tilgjengelig data"

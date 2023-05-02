@@ -153,6 +153,7 @@ function RegisterUser(){
                   <section className="flex flex-col gap-4">
 
                   <TextField
+                    data-cy ="tilhørighet"
                     select
                     required
                     label="Tilhørighet"
@@ -162,13 +163,14 @@ function RegisterUser(){
                     sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                   >
                     {affiliations.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
+                      <MenuItem data-cy={option.value} key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
                     ))}
                   </TextField>
 
                     <TextField
+                      data-cy = "epost"
                       required
                       label="E-post"
                       size="medium"
@@ -177,6 +179,7 @@ function RegisterUser(){
                       sx={ { ...textFieldStyle, width: "50vw", maxWidth: "300px"}}
                     />
                     <TextField
+                      data-cy = "tlf"
                       required
                       label="Tlf"
                       size="medium"
@@ -187,6 +190,7 @@ function RegisterUser(){
                     />
 
                     <TextField
+                      data-cy = "passord"
                       required
                       label="Passord"
                       type = "password"
@@ -197,6 +201,7 @@ function RegisterUser(){
                     />
 
                     <TextField
+                      data-cy = "bekreftPassord"
                       required
                       label="Bekreft passord"
                       type = "password"
@@ -217,7 +222,7 @@ function RegisterUser(){
 
                 </main>
                 
-                <Snackbar open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
+                <Snackbar data-cy="sucess" open={showSuccessMessage} autoHideDuration={2000} onClose={handleSuccessClose}>
                   <Alert onClose={handleSuccessClose} severity="success" sx={{ width: '100%' }}>
                     Ny bruker lagt til
                   </Alert>
