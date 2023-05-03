@@ -12,11 +12,11 @@ import AdminInfoComponent from '../components/AdminInfoComponent';
 function Home() { 
     const {user, setUser } = useContext(ChallengeContext);
     const navigate = useNavigate();
-    const [totalProblems, setTotalProblems] = useState(NaN)
-    const [notApprovedProblems, setNotApprovedProblems] = useState(NaN)
-    const [solvedProblems, setSolvedProblems] = useState(NaN)
-    const [inProgressProblems, setInProgressProblems] = useState(NaN)
-    const [newProblems, setNewProblems] = useState(NaN)
+    const [totalProblems, setTotalProblems] = useState<number>(0)
+    const [notApprovedProblems, setNotApprovedProblems] = useState<number>(0)
+    const [solvedProblems, setSolvedProblems] = useState<number>(0)
+    const [inProgressProblems, setInProgressProblems] = useState<number>(0)
+    const [newProblems, setNewProblems] = useState<number>(0)
 
     //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not. 
     useEffect(() => {  
@@ -106,7 +106,7 @@ function Home() {
           {user.isAdmin.toString() === "true" ? 
           <div className="my-5">
             <h1 className="text-3xl sm:text-4xl text-text whitespace-nowrap mb-5">Adminpanel</h1>
-            <div className="flex flex-wrap justify-center gap-4 w-[80vw] lg:w-[50vw]">
+            <div className="flex flex-wrap justify-center gap-4 w-[80vw] lg:w-[65vw] xl:w-[55vw]">
               <AdminInfoComponent title={"Totalt"} count={totalProblems}/>
               <AdminInfoComponent title={"Til godkjenning"} count={notApprovedProblems}/>  
               <AdminInfoComponent title={"Løst"} count={solvedProblems}/>

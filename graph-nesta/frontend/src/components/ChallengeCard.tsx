@@ -32,6 +32,8 @@ function ChallengeCard(props: challengeCardProps){
             edit: props.edit,
             approved: props.approved,
         });
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // for safari, chrome, edge, etc.
     }
 
     useEffect(() => {
