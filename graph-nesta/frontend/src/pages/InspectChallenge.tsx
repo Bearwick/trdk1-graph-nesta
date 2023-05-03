@@ -20,29 +20,18 @@ import ChallengeCard from '../components/ChallengeCard'
 
 function InspectChallenge () { 
 
-  const [title, setTitle] = useState('')
-  const [status, setStatus] = useState(Status.newChallenge)
-  const [system, setSystem] = useState('')
-  const [, setSubCount] = useState(0)
-  const [affiliation, setAffiliation] = useState('')
-  const [specificProblem, setSpecificProblem] = useState('')
-  const [clearDataProduct, setClearDataProduct] = useState('')
-  const [accessibleData, setAccessibility] = useState('')
-  const [definedAction, setDefinedAction] = useState('')
-  const [email, setEmail] = useState('')
-  const [telephone, setTelephone] = useState('')
   const [subs, setSubs] = useState<User[]>([])
 
   const [isSubbed, setIsSubbed] = useState(false)
   const [statusColor, setStatusColor] = useState('rounded-full flex items-center justify-center h-4 w-4 mr-2 bg-statusRed')
-  const { challenge } = useContext(ChallengeContext)
-  const [challengeIsLoaded, setChallengeIsLoaded] = useState(false)
+  const [, setChallengeIsLoaded] = useState(false)
   const [showSimilarChallenges, setShowSimilarChallenges] = useState(false)
   const [lastMyProblems] = useState(localStorage.getItem("lastMyProblems"))
 
   const {
     user,
-    setUser,
+    setUser, 
+    challenge
   } = useContext(ChallengeContext)
   const navigate = useNavigate()
 
@@ -102,21 +91,9 @@ function InspectChallenge () {
       })
     }
 
-    if (!challengeIsLoaded) {
-      setTitle(challenge.title)
-      setStatus(challenge.status)
-      setSystem(challenge.vendor)
-      setSubCount(challenge.subCount)
-      setAffiliation(challenge.owner.affiliation)
-      setSpecificProblem(challenge.specificProblem)
-      setEmail(challenge.owner.email)
-      setTelephone(challenge.owner.telephone)
-      setClearDataProduct(challenge.clearDataProduct)
-      setAccessibility(challenge.accessibleData)
-      setDefinedAction(challenge.definedAction)
       setSubs([])
       setChallengeIsLoaded(true)
-    }
+    
 
     //  Changes the color theme of the status circle.
     switch (challenge.status) {
@@ -149,10 +126,8 @@ function InspectChallenge () {
 
     })
 
-  }, [])
-  useEffect(() => {
-    console.log(subs)
-  }, [subs])
+  }, [challenge])
+
 
   //  Handles similarChallenges show
   const handleSimilarChallengesShow = () => {
@@ -197,7 +172,7 @@ function InspectChallenge () {
               {lastMyProblems === "true" ? "Mine problem" : "Søk"}
             </Link> 
 
-            <Typography color='text.primary'>{title}</Typography>
+            <Typography color='text.primary'>{challenge.title}</Typography>
           </Breadcrumbs>
         </div>
 
@@ -206,14 +181,14 @@ function InspectChallenge () {
           <div className='text-text px-5 py-3 w-full items-center justify-center flex flex-col mb-5'>
 
             <div className="flex flex-row gap-4 items-center mb-2.5">
-              <h1 className='text-4xl'>{title}</h1>
+              <h1 className='text-4xl'>{challenge.title}</h1>
               { user.isAdmin.toString() === 'true' || challenge.owner.email === user.email ? <Link to={"/RedigerProblem"}><EditIcon  sx={{ fontSize: '2rem', '&:hover': { backgroundColor: '#3d3f6b', color: "white", borderRadius: "5px" }}}/></Link> : null}
             </div>
 
             <section className=' items-end flex flex-row justify-between text-xs mb-1.5 gap-2'>
               <div className='flex flex-row'>
                 <PersonalVideoIcon sx={{ fontSize: '1rem' }} />
-                <p className='ml-1.5 whitespace-nowrap'>{system}</p>
+                <p className='ml-1.5 whitespace-nowrap'>{challenge.vendor}</p>
               </div>
 
               <div className='flex flex-row'>
@@ -223,13 +198,13 @@ function InspectChallenge () {
 
               <div className='flex flex-row'>
                 <LocationCityIcon sx={{ fontSize: '1rem' }} />
-                <p className='ml-1.5 whitespace-nowrap'>{affiliation}</p>
+                <p className='ml-1.5 whitespace-nowrap'>{challenge.owner.affiliation}</p>
               </div>
             </section>
 
             <div className='flex flex-row items-center'>
               <ODACircle style={statusColor} text={''} />
-              <p className='whitespace-nowrap'>{status}</p>
+              <p className='whitespace-nowrap'>{challenge.status}</p>
             </div>
           </div>
 
@@ -239,7 +214,7 @@ function InspectChallenge () {
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'}
                 text={'Spesifikt problem'} />
               <p
-                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{specificProblem}</p>
+                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{challenge.specificProblem}</p>
             </div>
 
             <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center'>
@@ -247,7 +222,7 @@ function InspectChallenge () {
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'}
                 text={'Dataprodukt'} />
               <p
-                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{clearDataProduct}</p>
+                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{challenge.clearDataProduct}</p>
             </div>
 
             <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center'>
@@ -255,7 +230,7 @@ function InspectChallenge () {
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'}
                 text={'Data'} />
               <p
-                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{accessibleData}</p>
+                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{challenge.accessibleData}</p>
             </div>
 
             <div className='flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center'>
@@ -263,7 +238,7 @@ function InspectChallenge () {
                 style={'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'}
                 text={'Definert handling'} />
               <p
-                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{definedAction}</p>
+                className='w-[62vw] sm:w-[45vw] h-100% text-text text-xs sm:text-base text-left pl-4 sm:pl-8'>{challenge.definedAction}</p>
             </div>
           </div>
 
@@ -301,11 +276,11 @@ function InspectChallenge () {
             <h2 className='text-text underline underline-offset2 text-2xl'>Kontaktinformasjon</h2>
 
             <div className='flex flex-row items-center gap-1 text-xs sm:text-base'><LocationCityIcon
-              sx={{ fontSize: '1rem' }} />{affiliation}</div>
+              sx={{ fontSize: '1rem' }} />{challenge.owner.affiliation}</div>
             <div className='flex flex-row items-center gap-1 text-xs sm:text-base'><EmailIcon
-              sx={{ fontSize: '1rem' }} />{email}</div>
+              sx={{ fontSize: '1rem' }} />{challenge.owner.email}</div>
             <div className='flex flex-row items-center gap-1 text-xs sm:text-base'><PhoneIcon
-              sx={{ fontSize: '1rem' }} />+47 {telephone}</div>
+              sx={{ fontSize: '1rem' }} />+47 {challenge.owner.telephone}</div>
             </div>
             <div className="w-[60vw] pl-4 sm:pl-8"></div>
           </div>
