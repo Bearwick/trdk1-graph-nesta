@@ -75,10 +75,8 @@ router.get(
 )
 
 router.get('/GetODAProblemsAdminInfo', function (req: Request, res: Response) { 
-  console.log("routes odaProblem")
   getODAProblemsAdminInfo()
-    .then((r) => {res.send(convertAdminPanelInfo(r))
-    console.log(convertAdminPanelInfo(r))})
+    .then((r) => {res.send(convertAdminPanelInfo(r))})
     .catch((r) => res.send(r))
 })
 

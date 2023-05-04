@@ -29,7 +29,6 @@ export const getODAProblems = async (
 }
 
 export const getODAProblemsAdminInfo = async () => { 
-  console.log("api odaProblem")
   return await get(
     odaProblem.getODAProblemsAdminInfo()
   )

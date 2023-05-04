@@ -1,10 +1,5 @@
 import axios, { type AxiosResponse } from 'axios'
-import {
-  type Categories,
-  type challengeCardProps,
-  type ContextUser,
-  type User,
-} from '../types/types'
+import { type Categories, type ProblemCardProps, type ContextUser, type User } from '../types/types'
 
 export const getOdaProblems = async (
   offset: number,
@@ -16,8 +11,8 @@ export const getOdaProblems = async (
   approved?: boolean,
   similarProblem?: string,
   filter?: number
-): Promise<AxiosResponse<challengeCardProps[]>> => {
-  const q = await axios.get<challengeCardProps[]>('http://localhost:8080/odaProblem', {
+): Promise<AxiosResponse<ProblemCardProps[]>> => {
+  const q = await axios.get<ProblemCardProps[]>('http://localhost:8080/odaProblem', {
     params: {
       offset,
       limit,
@@ -34,8 +29,7 @@ export const getOdaProblems = async (
   return q
 }
 
-export const getODAProblemsAdminInfo = async (): Promise<AxiosResponse<number[]>> => { 
-  console.log("odaAPI")
+export const getODAProblemsAdminInfo = async (): Promise<AxiosResponse<number[]>> => {
   return await axios.get<number[]>('http://localhost:8080/odaProblem/GetODAProblemsAdminInfo')
 }
 
@@ -46,8 +40,8 @@ export const getUserOdaProblems = async (
   category: string,
   email: string,
   relation: number
-): Promise<AxiosResponse<challengeCardProps[]>> => {
-  return await axios.get<challengeCardProps[]>('http://localhost:8080/odaProblem', {
+): Promise<AxiosResponse<ProblemCardProps[]>> => {
+  return await axios.get<ProblemCardProps[]>('http://localhost:8080/odaProblem', {
     params: {
       offset,
       limit,
@@ -78,7 +72,6 @@ export async function addUser(
   password: string,
   admin: boolean
 ) {
-  console.log('odaAPI addUser')
   await axios.get(`http://localhost:8080/user/AddUser?`, {
     params: {
       phone,
@@ -91,7 +84,6 @@ export async function addUser(
 }
 
 export async function findUser(email: string, password: string) {
-  console.log('odaAPI findUser')
   return await axios.get<boolean>(`http://localhost:8080/user/FindUser?`, {
     params: {
       email,
@@ -101,8 +93,6 @@ export async function findUser(email: string, password: string) {
 }
 
 export async function getUserInfo(email: string) {
-  console.log('odaAPI fetching user info')
-
   return await axios.get<ContextUser>(`http://localhost:8080/user/UserInfo?`, {
     params: {
       email,

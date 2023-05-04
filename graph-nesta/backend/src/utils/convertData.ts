@@ -9,7 +9,7 @@ export function convertOdaProblem (r: AxiosResponse<any, any>) {
         affiliation: odaProblem.affiliation.value,
         telephone: odaProblem.phoneNumber.value,
       }
-      const status: Status = (odaProblem.progress.value === 'newChallenge') ? Status.newChallenge : (odaProblem.progress.value === 'inProcess') ? Status.started : Status.solved
+      const status: Status = (odaProblem.progress.value === 'newChallenge') ? Status.newProblem : (odaProblem.progress.value === 'inProcess') ? Status.started : Status.solved
       const problem: OdaProblem = {
         accessibleData: odaProblem.accessibleDataDescription.value,
         clearDataProduct: odaProblem.dataProductDescription.value,
