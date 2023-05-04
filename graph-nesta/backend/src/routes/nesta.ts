@@ -10,7 +10,6 @@ router.get('', function (_, res: Response) {
     fs.createReadStream(path).pipe(res)
   } else {
     res.status(500)
-    console.log('File not found')
     res.send('File not found')
   }
 })

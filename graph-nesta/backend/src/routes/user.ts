@@ -47,7 +47,6 @@ router.get(
     res: Response
   ) {
     const { email, password } = req.query
-    console.log('yeah')
     findUser(email, password)
       .then((r) => {
         if (r.data.results.bindings.toString().length > 0) {
@@ -84,7 +83,6 @@ router.get(
     const { email, ODAProblem } = req.query
     isSubbed(email, ODAProblem)
       .then((r) => {
-        console.log(r.data.results.bindings)
         if (r.data.results.bindings.toString().length > 0) {
           res.send(true)
         } else {

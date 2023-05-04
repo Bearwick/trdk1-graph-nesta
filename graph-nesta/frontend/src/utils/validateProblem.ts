@@ -1,7 +1,7 @@
-import type { challengeCardProps } from "../types/types";
+import type { ProblemCardProps } from "../types/types";
 import validateUser from "./validateUser";
 
-function validateChallenge(challenge: challengeCardProps): void {
+function validateProblem(challenge: ProblemCardProps): void {
 
     if (challenge.title === "") {
         throw new Error("Tittel-feltet er tomt")
@@ -22,4 +22,4 @@ function validateChallenge(challenge: challengeCardProps): void {
     validateUser(challenge.owner);
 }
 
-export default validateChallenge;
+export default validateProblem;

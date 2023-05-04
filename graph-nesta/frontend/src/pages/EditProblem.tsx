@@ -1,8 +1,6 @@
-import '../App.css'
 import React, { useContext, useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+
 import MenuItem from '@mui/material/MenuItem'
 import Radio from '@mui/material/Radio'
 import FormLabel from '@mui/material/FormLabel'
@@ -12,7 +10,7 @@ import Button from '@mui/material/Button'
 import ODACircle from '../components/ODACircle'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Link, useNavigate } from 'react-router-dom'
-import { ChallengeContext } from '../globalState/ChallengeContext'
+import { ProblemContext } from '../globalState/ProblemContext'
 import Box from '@mui/material/Box'
 import { type Categories, Status } from '../types/types'
 import {
@@ -39,18 +37,18 @@ import {
 } from '../api/odaAPI'
 
 function EditProblem() {
-  const { user, challenge } = useContext(ChallengeContext)
+  const { user, problem } = useContext(ProblemContext)
   const navigate = useNavigate()
 
-  //  Cheks if email and password is in localStorage. Saves it in global state. Sends to login if not.
   useEffect(() => {
-    if (!(user.isAdmin.toString() === 'true' || challenge.owner.email === user.email)) {
+    //  Checks if user is admin or the owner of the problem that is being edited.
+    if (!(user.isAdmin.toString() === 'true' || problem.owner.email === user.email)) {
       navigate('/LoggInn')
     }
 
-    switch (challenge.status) {
-      case Status.newChallenge:
-        setStatus('newChallenge')
+    switch (problem.status) {
+      case Status.newProblem:
+        setStatus('newProblem')
         break
 
       case Status.started:
@@ -62,19 +60,19 @@ function EditProblem() {
         break
     }
   }, [navigate, user.isAdmin])
-
-  const [title, setTitle] = useState(challenge.title)
-  const [system, setSystem] = useState(challenge.vendor)
+  //  consts for all fields. Some take in globalstate problem. Also states for success/error-messages.
+  const [title, setTitle] = useState(problem.title)
+  const [system, setSystem] = useState(problem.vendor)
   const [otherSystem, setOtherSystem] = useState('')
   const [otherSystemShow, setOtherSystemShow] = useState(false)
-  const [status, setStatus] = useState('newChallenge')
-  const [specificProblem, setSpecificProblem] = useState(challenge.specificProblem)
+  const [status, setStatus] = useState('newProblem')
+  const [specificProblem, setSpecificProblem] = useState(problem.specificProblem)
   const [specificProblemCategory, setSpecificProblemCategory] = useState('')
-  const [clearDataProduct, setClearDataProduct] = useState(challenge.clearDataProduct)
+  const [clearDataProduct, setClearDataProduct] = useState(problem.clearDataProduct)
   const [clearDataProductCategory, setClearDataProductCategory] = useState('')
-  const [accessibleData, setAccessibleData] = useState(challenge.accessibleData)
+  const [accessibleData, setAccessibleData] = useState(problem.accessibleData)
   const [accessibleDataCategory, setAccessibleDataCategory] = useState('')
-  const [definedAction, setDefinedAction] = useState(challenge.definedAction)
+  const [definedAction, setDefinedAction] = useState(problem.definedAction)
   const [submitDelete, setSubmitDelete] = useState(false)
   const [showConfirmDeleteDialog, setShowConfirmDeleteDialog] = useState(false)
   const [showConfirmEditMessage, setShowConfirmEditMessage] = useState(false)
@@ -89,6 +87,7 @@ function EditProblem() {
       setOtherSystemShow(false)
     }
   }
+  //  Handlers for changes in categories.
   const handleSpecificProblemCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSpecificProblemCategory(event.target.value)
   }
@@ -115,6 +114,19 @@ function EditProblem() {
     },
   }
 
+  const tooltipStyle = {
+    '@media screen and (max-width: 640px)': {
+      marginLeft: '220px',
+      marginTop: '-230px',
+      marginBottom: '11rem',
+    },
+    marginLeft: '-50px',
+    marginTop: '-175px',
+    zIndex: '1',
+    fontSize: 'medium',
+    '&:hover': { cursor: 'pointer' },
+  }
+  //  Helper text for the tooltip component.
   const statusHelpText = `Nytt problem: problemet er nettopp oppdaget og/eller aldri arbeidet med.
   Påbegynnt: problemet arbeides med.
   Løst: det er blitt laget en løsning for problemet. `
@@ -152,8 +164,8 @@ function EditProblem() {
         setSystems([])
       })
   }, [])
-  //  List of accessible data categories
 
+  //  List of accessible data categories
   useEffect(() => {
     getCategories()
       .then((r) => {
@@ -164,9 +176,10 @@ function EditProblem() {
       })
   }, [])
 
+  // Handlers for error/success-messages.
   const handleSuccessClose = () => {
     document.body.scrollTop = 0 // For Safari
-    document.documentElement.scrollTop = 0 // for safari, chrome, edge, etc.
+    document.documentElement.scrollTop = 0 // For safari, chrome, edge, etc.
     setShowSuccessMessage(false)
     navigate('/Søk')
   }
@@ -177,7 +190,7 @@ function EditProblem() {
 
   const handleDelete = () => {
     setShowConfirmDeleteDialog(false)
-    deleteOdaProblem(challenge.id)
+    deleteOdaProblem(problem.id)
       .then(() => {
         setShowSuccessMessage(true)
       })
@@ -213,7 +226,7 @@ function EditProblem() {
   const handleSaveChanges = () => {
     if (user.isAdmin.toString() === 'true') {
       updateOdaProblem(
-        challenge.id,
+        problem.id,
         system,
         status,
         title,
@@ -227,7 +240,7 @@ function EditProblem() {
             specificProblemCategory,
             accessibleDataCategory,
             clearDataProductCategory,
-            challenge.id,
+            problem.id,
             true
           )
             .then(() => {
@@ -245,7 +258,7 @@ function EditProblem() {
         })
     } else {
       updateOdaProblem(
-        challenge.id,
+        problem.id,
         system,
         status,
         title,
@@ -259,7 +272,7 @@ function EditProblem() {
             specificProblemCategory,
             accessibleDataCategory,
             clearDataProductCategory,
-            challenge.id,
+            problem.id,
             false
           )
             .then(() => {
@@ -277,14 +290,14 @@ function EditProblem() {
         })
     }
   }
-  //   Fills the categories if empty. Used when deleting or user is editing problem. Then categories are not neccessary.
+  //   Fills the categories if empty. Used when deleting or user is editing problem. Then categories are not relevant.
   const fillCategories = () => {
     setSpecificProblemCategory(specificProblemCategory || '0')
     setClearDataProductCategory(clearDataProductCategory || '0')
     setAccessibleDataCategory(accessibleDataCategory || '0')
   }
 
-  const postChallenge = (event: React.FormEvent<HTMLFormElement>) => {
+  const postProblem = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (submitDelete) {
       setShowConfirmDeleteDialog(true)
@@ -295,7 +308,6 @@ function EditProblem() {
 
   return (
     <div className="App">
-      <Header />
       <div className="text-left ml-10 sm:ml-[5.25rem] mt-4">
         <Breadcrumbs aria-label="breadcrumb">
           <Link className={'hover:underline'} to="/Hjem">
@@ -305,19 +317,19 @@ function EditProblem() {
             Søk
           </Link>
 
-          <Typography color="text.primary">{challenge.title}</Typography>
+          <Typography color="text.primary">{problem.title}</Typography>
         </Breadcrumbs>
       </div>
 
       <Box
         component="form"
         onSubmit={(e) => {
-          postChallenge(e)
+          postProblem(e)
         }}
         className="bg-background flex flex-col items-center"
       >
         <h1 className="text-3xl text-text mt-5">Rediger problem</h1>
-        <h1 className="text-2xl text-text mb-5">Problemet tilhører: {challenge.owner.email}</h1>
+        <h1 className="text-2xl text-text mb-5">Problemet tilhører: {problem.owner.email}</h1>
 
         <TextField
           required
@@ -398,7 +410,7 @@ function EditProblem() {
           row
           aria-labelledby="demo-radio-buttons-group-label"
           className="mb-5"
-          defaultValue="newChallenge"
+          defaultValue="newProblem"
           name="Status på problemet"
           value={status}
           onChange={(e) => {
@@ -406,7 +418,7 @@ function EditProblem() {
           }}
         >
           <FormControlLabel
-            value="newChallenge"
+            value="newProblem"
             control={<Radio sx={{ '&.Mui-checked': { color: '#FF002F' } }} />}
             label="Nytt problem"
           />
@@ -453,16 +465,7 @@ function EditProblem() {
             <CustomWidthTooltip title={specificProblemHelpText}>
               <HelpOutlineIcon
                 sx={{
-                  '@media screen and (max-width: 640px)': {
-                    marginLeft: '200px',
-                    marginTop: '-230px',
-                    marginBottom: '11rem',
-                  },
-                  marginLeft: '-50px',
-                  marginTop: '-175px',
-                  zIndex: '1',
-                  fontSize: 'medium',
-                  '&:hover': { cursor: 'pointer' },
+                  ...tooltipStyle,
                 }}
               />
             </CustomWidthTooltip>
@@ -474,7 +477,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
-                  data-cy = "kategoriserSpesProblem"
+                  data-cy="kategoriserSpesProblem"
                   select
                   required
                   label="Kategoriser spesifikt problem"
@@ -529,16 +532,7 @@ function EditProblem() {
             <CustomWidthTooltip title={dataProductHelpText}>
               <HelpOutlineIcon
                 sx={{
-                  '@media screen and (max-width: 640px)': {
-                    marginLeft: '200px',
-                    marginTop: '-230px',
-                    marginBottom: '11rem',
-                  },
-                  marginLeft: '-50px',
-                  marginTop: '-175px',
-                  zIndex: '1',
-                  fontSize: 'medium',
-                  '&:hover': { cursor: 'pointer' },
+                  ...tooltipStyle,
                 }}
               />
             </CustomWidthTooltip>
@@ -550,7 +544,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
-                  data-cy = "kategoriserDataprodukt"
+                  data-cy="kategoriserDataprodukt"
                   select
                   required
                   label="Kategoriser dataprodukt"
@@ -605,16 +599,7 @@ function EditProblem() {
             <CustomWidthTooltip title={accessibleDataHelpText}>
               <HelpOutlineIcon
                 sx={{
-                  '@media screen and (max-width: 640px)': {
-                    marginLeft: '200px',
-                    marginTop: '-230px',
-                    marginBottom: '11rem',
-                  },
-                  marginLeft: '-50px',
-                  marginTop: '-175px',
-                  zIndex: '1',
-                  fontSize: 'medium',
-                  '&:hover': { cursor: 'pointer' },
+                  ...tooltipStyle,
                 }}
               />
             </CustomWidthTooltip>
@@ -626,7 +611,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
-                  data-cy = "kategoriserTilgjengeligData"
+                  data-cy="kategoriserTilgjengeligData"
                   select
                   required
                   label="Kategoriser tilgjengelig data"
@@ -681,16 +666,7 @@ function EditProblem() {
             <CustomWidthTooltip title={definedActionHelpText}>
               <HelpOutlineIcon
                 sx={{
-                  '@media screen and (max-width: 640px)': {
-                    marginLeft: '200px',
-                    marginTop: '-230px',
-                    marginBottom: '11rem',
-                  },
-                  marginLeft: '-50px',
-                  marginTop: '-175px',
-                  zIndex: '1',
-                  fontSize: 'medium',
-                  '&:hover': { cursor: 'pointer' },
+                  ...tooltipStyle,
                 }}
               />
             </CustomWidthTooltip>
@@ -807,8 +783,6 @@ function EditProblem() {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Footer />
     </div>
   )
 }

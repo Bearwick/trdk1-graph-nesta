@@ -26,7 +26,7 @@ interface UserInfo {
 }
 
 enum Status { 
-  newChallenge = "Nytt problem",
+  newProblem = "Nytt problem",
   started = "Påbegynnt",
   solved = "Løst",
 }
