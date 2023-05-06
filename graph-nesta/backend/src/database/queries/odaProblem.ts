@@ -171,7 +171,6 @@ select * {
     ?specProblemCategory oda:sameCategoryAs ?specProblem.
     ?dataProductCategory oda:sameCategoryAs ?dataProduct.
     ?acDataCategory oda:sameCategoryAs ?acData.
-    <${id}> oda:approved true.
   }
   where {
     
