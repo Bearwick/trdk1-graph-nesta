@@ -84,7 +84,7 @@ function MyProblems() {
             Mine problem
           </div>
           <div
-            data-cy="abonnerteProblemer"
+            data-cy="subscribedProblems"
             onClick={() => {
               handleProblemShow(false)
             }}

@@ -410,6 +410,7 @@ function ApproveProblem() {
 
             <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
               <TextField
+                data-cy = "categorizeSpesProblem"
                 select
                 required
                 label="Kategoriser spesifikt problem"
@@ -469,6 +470,7 @@ function ApproveProblem() {
 
             <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
               <TextField
+                data-cy = "categorizeDataproduct"
                 select
                 required
                 label="Kategoriser dataprodukt"
@@ -532,6 +534,7 @@ function ApproveProblem() {
 
             <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
               <TextField
+                data-cy = "categorizeAccesibleData"
                 select
                 required
                 label="Kategoriser tilgjengelig data"
@@ -594,6 +597,7 @@ function ApproveProblem() {
 
         <div className="flex flex-col-reverse sm:flex-row gap-4 mb-8">
           <Button
+            data-cy ="deleteProblem"
             variant="contained"
             onClick={handleDeleteButton}
             type="submit"
@@ -611,6 +615,7 @@ function ApproveProblem() {
           </Button>
 
           <Button
+            data-cy = "approveProblem"
             variant="contained"
             onClick={() => {
               setSubmitDelete(false)
@@ -669,6 +674,7 @@ function ApproveProblem() {
         <DialogActions>
           <Button onClick={handleCancel}>kanseller</Button>
           <Button
+            data-cy ="confirmDelete"
             onClick={handleDelete}
             sx={{ '&:hover': { backgroundColor: '#FF002F', color: 'white' } }}
           >

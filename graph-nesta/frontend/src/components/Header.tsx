@@ -41,7 +41,7 @@ function Header() {
                 {user.isLoggedIn ? (
                   <Link to="/minProfil" onClick={popupState.close}>
                     <div
-                      data-cy="minProfil"
+                      data-cy="myProfile"
                       className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-centere"
                     >
                       Min profil
@@ -59,7 +59,7 @@ function Header() {
                 )}
                 <Link to="/MineProblem" onClick={popupState.close}>
                   <div
-                    data-cy="mineProblemer"
+                    data-cy="myProblems"
                     className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center"
                   >
                     Mine problem
@@ -90,7 +90,7 @@ function Header() {
                     </Link>
                     <Link to="/RegistrerBruker" onClick={popupState.close}>
                       <div
-                        data-cy="registrerBruker"
+                        data-cy="newUser"
                         className="text-left pl-4 pr-4 h-10 hover:bg-menuHover flex items-center"
                       >
                         Ny bruker

@@ -137,6 +137,7 @@ function InspectProblem() {
               {user.isAdmin.toString() === 'true' || problem.owner.email === user.email ? (
                 <Link to={'/RedigerProblem'}>
                   <EditIcon
+                    data-cy ="editIcon"
                     sx={{
                       fontSize: '2rem',
                       '&:hover': {
@@ -174,7 +175,7 @@ function InspectProblem() {
           </div>
 
           <div>
-            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
+            <div data-cy = "spesificProblem" className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
               <ODACircle
                 style={
                   'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA1'
@@ -186,7 +187,7 @@ function InspectProblem() {
               </p>
             </div>
 
-            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
+            <div data-cy ="dataProduct" className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
               <ODACircle
                 style={
                   'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA2'
@@ -198,7 +199,7 @@ function InspectProblem() {
               </p>
             </div>
 
-            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
+            <div data-cy = "accesibleData" className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
               <ODACircle
                 style={
                   'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA3'
@@ -210,7 +211,7 @@ function InspectProblem() {
               </p>
             </div>
 
-            <div className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
+            <div data-cy ="definedAction" className="flex flex-row h-50 w-[80vw] sm:w-[65vw] mb-8 items-center justify-center">
               <ODACircle
                 style={
                   'rounded-full flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 text-xs sm:text-base bg-ODA4'
@@ -276,7 +277,7 @@ function InspectProblem() {
           ) : null}
 
           <div
-            data-cy="kontaktContainer"
+            data-cy="contactContainer"
             className="flex flex-row w-[60vw] 3xl:w-[57vw] 4xl:w-[54vw] mt-10 mb-5 items-center justify-center"
           >
             <div className="flex flex-col text-left gap-1 ">
