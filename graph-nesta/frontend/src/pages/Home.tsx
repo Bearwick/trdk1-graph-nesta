@@ -156,6 +156,9 @@ function Home() {
                   variant="contained"
                   sx={{
                     ...buttonStyle,
+                    '@media screen and (max-width: 767px)': {
+                      width: '200px',
+                    },
                   }}
                 >
                   Ny bruker
@@ -170,7 +173,7 @@ function Home() {
           {user.isAdmin.toString() === 'true' ? (
             <div className="my-5">
               <h1 className="text-3xl sm:text-4xl text-text whitespace-nowrap mb-5">Adminpanel</h1>
-              <div className="flex flex-wrap justify-center gap-4 w-[80vw] lg:w-[65vw] xl:w-[55vw] 2xl:w-[50vw]">
+              <div className="flex flex-wrap justify-center gap-4 max-w-[35rem] sm:max-w-[46rem]">
                 <AdminInfoComponent title={'Totalt'} count={totalProblems} link={'/Søk'} />
                 <AdminInfoComponent
                   title={'Til godkjenning'}
