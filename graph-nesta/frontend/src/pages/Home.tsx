@@ -116,7 +116,7 @@ function Home() {
               }}
             >
               <Button
-                data-cy="søk"
+                data-cy="search"
                 variant="contained"
                 sx={{
                   ...buttonStyle,
@@ -127,7 +127,7 @@ function Home() {
             </Link>
             <Link to="/NyttProblem">
               <Button
-                data-cy="nyProblem"
+                data-cy="newProblem"
                 variant="contained"
                 sx={{
                   ...buttonStyle,
@@ -142,6 +142,7 @@ function Home() {
             <div className="flex flex-col md:flex-row gap-4 md:gap-2">
               <Link to="/GodkjennOversikt">
                 <Button
+                  data-cy = "evaluateProblem"
                   variant="contained"
                   sx={{
                     ...buttonStyle,
@@ -153,6 +154,7 @@ function Home() {
               </Link>
               <Link to="/RegistrerBruker">
                 <Button
+                  data-cy = "registerUser"
                   variant="contained"
                   sx={{
                     ...buttonStyle,

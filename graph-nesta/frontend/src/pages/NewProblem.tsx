@@ -153,7 +153,7 @@ function NewProblem() {
         <h1 className="text-3xl text-text p-5">Nytt problem!</h1>
 
         <TextField
-          data-cy="tittel"
+          data-cy="title"
           required
           id="outlined-required"
           label="Tittel"
@@ -191,7 +191,7 @@ function NewProblem() {
               {option}
             </MenuItem>
           ))}
-          <MenuItem data-cy="Annet system" key="Annet system" value="Annet system">
+          <MenuItem data-cy="otherSystem" key="Annet system" value="Annet system">
             Annet System
           </MenuItem>
         </TextField>

@@ -297,13 +297,17 @@ function EditProblem() {
     setAccessibleDataCategory(accessibleDataCategory || '0')
   }
 
-  const postProblem = (event: React.FormEvent<HTMLFormElement>) => {
+  const postProblem = (event: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault()
-    if (submitDelete) {
-      setShowConfirmDeleteDialog(true)
-    } else {
-      setShowConfirmEditMessage(true)
+    if (event.nativeEvent.submitter) {
+      if (event.nativeEvent.submitter.id === 'deleteProblem') {
+        setShowConfirmDeleteDialog(true)
+      } else {
+        setShowConfirmEditMessage(true)
+      }
     }
+
+
   }
 
   return (
@@ -323,7 +327,7 @@ function EditProblem() {
 
       <Box
         component="form"
-        onSubmit={(e) => {
+        onSubmit={(e: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
           postProblem(e)
         }}
         className="bg-background flex flex-col items-center"
@@ -349,6 +353,7 @@ function EditProblem() {
         />
 
         <TextField
+          data-cy = "system"
           select
           required
           label="System"
@@ -364,7 +369,7 @@ function EditProblem() {
           }}
         >
           {systems?.map((option) => (
-            <MenuItem key={option} value={option}>
+            <MenuItem data-cy = {option} key={option} value={option}>
               {option}
             </MenuItem>
           ))}
@@ -477,7 +482,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
-                  data-cy="kategoriserSpesProblem"
+                  data-cy="categorizeSpesProblem"
                   select
                   required
                   label="Kategoriser spesifikt problem"
@@ -510,6 +515,7 @@ function EditProblem() {
               text={'Dataprodukt'}
             />
             <TextField
+              data-cy = "dataProductField"
               required
               id="outlined-multiline-static"
               multiline
@@ -544,7 +550,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
-                  data-cy="kategoriserDataprodukt"
+                  data-cy="categorizeDataproduct"
                   select
                   required
                   label="Kategoriser dataprodukt"
@@ -577,6 +583,7 @@ function EditProblem() {
               text={'Tilgjengelig data'}
             />
             <TextField
+              data-cy = "accesibleDataField"
               required
               id="outlined-multiline-static"
               multiline
@@ -611,7 +618,7 @@ function EditProblem() {
 
               <div className="flex flex-row items-center justify-center sm:justify-start w-[62vw] sm:w-[40vw] max-w-[600px]">
                 <TextField
-                  data-cy="kategoriserTilgjengeligData"
+                  data-cy="categorizeAccesibleData"
                   select
                   required
                   label="Kategoriser tilgjengelig data"
@@ -675,7 +682,9 @@ function EditProblem() {
 
         <div className="flex flex-col-reverse sm:flex-row gap-4 mb-8">
           <Button
+            data-cy = "deleteProblem"
             variant="contained"
+            id="deleteProblem"
             onClick={() => {
               fillCategories()
               setSubmitDelete(true)
@@ -695,7 +704,9 @@ function EditProblem() {
           </Button>
 
           <Button
+            data-cy = "saveChanges"
             variant="contained"
+            id="updateProblem"
             onClick={handleSaveButton}
             type="submit"
             sx={{
@@ -750,7 +761,8 @@ function EditProblem() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete}>kanseller</Button>
-          <Button
+          <Button 
+            data-cy ="confirmDelete"
             onClick={handleDelete}
             sx={{ '&:hover': { backgroundColor: '#FF002F', color: 'white' } }}
           >
@@ -776,6 +788,7 @@ function EditProblem() {
         <DialogActions>
           <Button onClick={handleCancelChanges}>kanseller</Button>
           <Button
+            data-cy = "confirmChanges"
             onClick={handleSaveChanges}
             sx={{ '&:hover': { backgroundColor: '#2BB728', color: 'white' } }}
           >

@@ -10,13 +10,13 @@ describe('Test the different interaction between users and problems', () => {
   })
   after( () => {
     cy.visit('http://localhost:3000/Hjem')
-    cy.get('[data-cy="søk"]').click()
+    cy.get('[data-cy="search"]').click()
     cy.contains("barnehage").click()
     cy.get('[data-cy = "subscribeBtn"]').click()
   })
 
   it('Checks that it is possible to subscribe to a problem', () => {
-    cy.get('[data-cy="søk"]').click()
+    cy.get('[data-cy="search"]').click()
     cy.contains("barnehage").click()
     cy.get('[data-cy = "subscribeBtn"]').click()
     cy.get('[data-cy = "subcount"]').contains("1")
@@ -28,8 +28,8 @@ describe('Test the different interaction between users and problems', () => {
 
   it("Cheks that problems appear in 'my problems' page", () => {
     cy.get('[data-cy="hamburgerMenu"]').click()
-    cy.get('[data-cy="mineProblemer"]').click()
-    cy.get('[data-cy="abonnerteProblemer"]').click()
+    cy.get('[data-cy="myProblems"]').click()
+    cy.get('[data-cy="subscribedProblems"]').click()
     cy.contains("barnehage")
   })
   it("Checks that the profile information is right", () => {

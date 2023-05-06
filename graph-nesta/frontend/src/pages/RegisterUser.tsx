@@ -171,7 +171,7 @@ function RegisterUser() {
 
             <section className="flex flex-col gap-4">
               <TextField
-                data-cy="tilhørighet"
+                data-cy="affiliation"
                 select
                 required
                 label="Tilhørighet"
@@ -188,7 +188,7 @@ function RegisterUser() {
               </TextField>
 
               <TextField
-                data-cy="epost"
+                data-cy="email"
                 required
                 label="E-post"
                 size="medium"
@@ -208,7 +208,7 @@ function RegisterUser() {
               />
 
               <TextField
-                data-cy="passord"
+                data-cy="password"
                 required
                 label="Passord"
                 type="password"
@@ -219,7 +219,7 @@ function RegisterUser() {
               />
 
               <TextField
-                data-cy="bekreftPassord"
+                data-cy="confirmPassword"
                 required
                 label="Bekreft passord"
                 type="password"
