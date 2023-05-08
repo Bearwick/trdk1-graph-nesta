@@ -48,7 +48,7 @@ function EditProblem() {
 
     switch (problem.status) {
       case Status.newProblem:
-        setStatus('newProblem')
+        setStatus('newChallenge')
         break
 
       case Status.started:
@@ -65,7 +65,7 @@ function EditProblem() {
   const [system, setSystem] = useState(problem.vendor)
   const [otherSystem, setOtherSystem] = useState('')
   const [otherSystemShow, setOtherSystemShow] = useState(false)
-  const [status, setStatus] = useState('newProblem')
+  const [status, setStatus] = useState('newChallenge')
   const [specificProblem, setSpecificProblem] = useState(problem.specificProblem)
   const [specificProblemCategory, setSpecificProblemCategory] = useState('')
   const [clearDataProduct, setClearDataProduct] = useState(problem.clearDataProduct)
@@ -415,7 +415,7 @@ function EditProblem() {
           row
           aria-labelledby="demo-radio-buttons-group-label"
           className="mb-5"
-          defaultValue="newProblem"
+          defaultValue="newChallenge"
           name="Status på problemet"
           value={status}
           onChange={(e) => {
@@ -423,7 +423,7 @@ function EditProblem() {
           }}
         >
           <FormControlLabel
-            value="newProblem"
+            value="newChallenge"
             control={<Radio sx={{ '&.Mui-checked': { color: '#FF002F' } }} />}
             label="Nytt problem"
           />
@@ -761,7 +761,7 @@ function EditProblem() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete}>kanseller</Button>
-          <Button 
+          <Button
             data-cy ="confirmDelete"
             onClick={handleDelete}
             sx={{ '&:hover': { backgroundColor: '#FF002F', color: 'white' } }}
