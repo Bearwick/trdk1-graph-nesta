@@ -635,7 +635,7 @@ function EditProblem() {
                 >
                   {categories?.accessibleData.map((value) => (
                     <MenuItem key={value} value={value}>
-                      {value}
+                      {value === "Business/ThirdSectorData" ? `${value} (not working)`: value}
                     </MenuItem>
                   ))}
                 </TextField>

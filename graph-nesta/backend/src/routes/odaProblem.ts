@@ -41,9 +41,9 @@ export const router = Router()
  */
 router.get(
   '',
-  function (
+  function(
     req: Request<unknown, unknown, unknown, OdaProblemParams>,
-    res: Response
+    res: Response,
   ) {
     const {
       limit,
@@ -65,22 +65,16 @@ router.get(
       relation,
       approved,
       similarProblem,
-      parseInt(filter)
+      parseInt(filter),
     )
       .then((r) => {
         res.send(convertOdaProblem(r))
       })
       .catch(() => res.send([]))
-  }
+  },
 )
 
-router.get('/GetODAProblemsAdminInfo', function (req: Request, res: Response) { 
-  getODAProblemsAdminInfo()
-    .then((r) => {res.send(convertAdminPanelInfo(r))})
-    .catch((r) => res.send(r))
-})
-
-router.post('/AddProblem', function (req: Request, res: Response) {
+router.post('/AddProblem', function(req: Request, res: Response) {
   const data = req.body
   addODAProblem(
     data.title,
@@ -90,7 +84,7 @@ router.post('/AddProblem', function (req: Request, res: Response) {
     data.definedAction,
     data.supplier,
     data.userMail,
-    data.status
+    data.status,
   )
     .then((r) => {
       res.send(r)
@@ -98,14 +92,7 @@ router.post('/AddProblem', function (req: Request, res: Response) {
     .catch((r) => res.send(r))
 })
 
-router.put('/DeleteOdaProblem', function (req: Request, res: Response) {
-  const data = req.body
-  deleteODAProblem(data.odaProblem)
-    .then((r) => res.send(r))
-    .catch((r) => res.send(r))
-})
-
-router.put('/UpdateOdaProblem', function (req: Request, res: Response) {
+router.put('', function(req: Request, res: Response) {
   const data = req.body
   updateODAProblem(
     data.odaProblem,
@@ -115,32 +102,53 @@ router.put('/UpdateOdaProblem', function (req: Request, res: Response) {
     data.specificProblem,
     data.clearDataProduct,
     data.accessibleData,
-    data.definedAction
+    data.definedAction,
   )
     .then((r) => res.send(r))
     .catch((r) => res.send(r))
 })
 
+router.delete('', function(req: Request, res: Response) {
+  const data = req.body
+  deleteODAProblem(data.odaProblem)
+    .then((r) => res.send(r))
+    .catch((r) => res.send(r))
+})
+
+router.get('/GetODAProblemsAdminInfo', function(req: Request, res: Response) {
+  getODAProblemsAdminInfo()
+    .then((r) => {
+      res.send(convertAdminPanelInfo(r))
+    })
+    .catch((r) => res.send(r))
+})
+
 router.get(
   '/AddCategories',
-  function (
+  function(
     req: Request<unknown, unknown, unknown, AddCategoriesParams>,
-    res: Response
+    res: Response,
   ) {
-    const { specProblem, dataProduct, accessibleData, id, approved } = req.query
+    const {
+      specProblem,
+      dataProduct,
+      accessibleData,
+      id,
+      approved,
+    } = req.query
     addCategories(specProblem, dataProduct, accessibleData, id, approved)
       .then((r) => {
         res.send(r)
       })
       .catch((r) => res.send(r))
-  }
+  },
 )
 
 router.get(
   '/GetSubscribers',
-  function (
+  function(
     req: Request<unknown, unknown, unknown, SubscribeParams>,
-    res: Response
+    res: Response,
   ) {
     const { ODAProblem } = req.query
     getSubscribers(ODAProblem)
@@ -148,5 +156,5 @@ router.get(
         res.send(convertSubscribers(r))
       })
       .catch(() => res.send([]))
-  }
+  },
 )

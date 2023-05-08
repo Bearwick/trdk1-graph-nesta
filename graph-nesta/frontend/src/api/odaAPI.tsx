@@ -10,7 +10,7 @@ export const getOdaProblems = async (
   relation?: number,
   approved?: boolean,
   similarProblem?: string,
-  filter?: number
+  filter?: number,
 ): Promise<AxiosResponse<ProblemCardProps[]>> => {
   const q = await axios.get<ProblemCardProps[]>('http://localhost:8080/odaProblem', {
     params: {
@@ -39,7 +39,7 @@ export const getUserOdaProblems = async (
   searchString: string,
   category: string,
   email: string,
-  relation: number
+  relation: number,
 ): Promise<AxiosResponse<ProblemCardProps[]>> => {
   return await axios.get<ProblemCardProps[]>('http://localhost:8080/odaProblem', {
     params: {
@@ -53,7 +53,7 @@ export const getUserOdaProblems = async (
   })
 }
 
-export function makeGetRequest() {
+export function makeGetRequest () {
   axios.get('http://localhost:8080/nesta').then(
     (response) => {
       const result = response.data
@@ -61,29 +61,28 @@ export function makeGetRequest() {
     },
     (error) => {
       console.log(error)
-    }
+    },
   )
 }
 
-export async function addUser(
+export async function addUser (
   phone: number,
   email: string,
   affiliation: string,
   password: string,
-  admin: boolean
+  admin: boolean,
 ) {
-  await axios.get(`http://localhost:8080/user/AddUser?`, {
-    params: {
-      phone,
-      email,
-      affiliation,
-      password,
-      admin,
-    },
+  await axios.post(`http://localhost:8080/user/AddUser?`, {
+    phone,
+    email,
+    affiliation,
+    password,
+    admin,
+
   })
 }
 
-export async function findUser(email: string, password: string) {
+export async function findUser (email: string, password: string) {
   return await axios.get<boolean>(`http://localhost:8080/user/FindUser?`, {
     params: {
       email,
@@ -92,7 +91,7 @@ export async function findUser(email: string, password: string) {
   })
 }
 
-export async function getUserInfo(email: string) {
+export async function getUserInfo (email: string) {
   return await axios.get<ContextUser>(`http://localhost:8080/user/UserInfo?`, {
     params: {
       email,
@@ -100,7 +99,7 @@ export async function getUserInfo(email: string) {
   })
 }
 
-export async function addOdaProblem(
+export async function addOdaProblem (
   title: string,
   specificProblem: string,
   clearDataProduct: string,
@@ -108,7 +107,7 @@ export async function addOdaProblem(
   definedAction: string,
   supplier: string,
   userMail: string,
-  status: string
+  status: string,
 ) {
   const test = axios.post('http://localhost:8080/odaProblem/AddProblem', {
     title,
@@ -123,7 +122,7 @@ export async function addOdaProblem(
   return await test
 }
 
-export async function updateOdaProblem(
+export async function updateOdaProblem (
   odaProblem: string,
   vendor: string,
   progress: string,
@@ -131,9 +130,9 @@ export async function updateOdaProblem(
   specificProblem: string,
   clearDataProduct: string,
   accessibleData: string,
-  definedAction: string
+  definedAction: string,
 ) {
-  return await axios.put('http://localhost:8080/odaProblem/UpdateOdaProblem', {
+  return await axios.put('http://localhost:8080/odaProblem', {
     odaProblem,
     vendor,
     progress,
@@ -145,13 +144,15 @@ export async function updateOdaProblem(
   })
 }
 
-export async function deleteOdaProblem(odaProblem: string) {
-  return await axios.put('http://localhost:8080/odaProblem/DeleteOdaProblem', {
-    odaProblem,
+export async function deleteOdaProblem (odaProblem: string) {
+  return await axios.delete('http://localhost:8080/odaProblem', {
+    data: {
+      odaProblem,
+    },
   })
 }
 
-export async function subscribe(id: string, email: string, subscribe: boolean) {
+export async function subscribe (id: string, email: string, subscribe: boolean) {
   if (subscribe) {
     return await axios.get('http://localhost:8080/user/Subscribe', {
       params: {
@@ -169,7 +170,7 @@ export async function subscribe(id: string, email: string, subscribe: boolean) {
   }
 }
 
-export async function isSubscribed(id: string, email: string) {
+export async function isSubscribed (id: string, email: string) {
   return await axios.get<boolean>('http://localhost:8080/user/IsSubscribed', {
     params: {
       ODAProblem: id,
@@ -178,7 +179,7 @@ export async function isSubscribed(id: string, email: string) {
   })
 }
 
-export async function getSubscribers(id: string) {
+export async function getSubscribers (id: string) {
   return await axios.get<User[]>('http://localhost:8080/odaProblem/getSubscribers', {
     params: {
       ODAProblem: id,
@@ -186,16 +187,16 @@ export async function getSubscribers(id: string) {
   })
 }
 
-export async function getCategories() {
+export async function getCategories () {
   return await axios.get<Categories>('http://localhost:8080/ontology/GetCategories')
 }
 
-export async function approve(
+export async function approve (
   specProblem: string,
   accessibleData: string,
   dataProduct: string,
   id: string,
-  approved: boolean
+  approved: boolean,
 ) {
   return await axios.get('http://localhost:8080/odaProblem/AddCategories', {
     params: {
@@ -208,6 +209,6 @@ export async function approve(
   })
 }
 
-export async function getVendors() {
+export async function getVendors () {
   return await axios.get<string[]>('http://localhost:8080/ontology/GetVendors')
 }
