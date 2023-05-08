@@ -1,18 +1,18 @@
 import React from 'react'
 import { cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import ChallengeCard from '../../components/ProblemCard'
-import { ContextUser, Status, type challengeCardProps } from '../../types/types'
+import ProblemCard from '../../components/ProblemCard'
+import { ContextUser, Status, type ProblemCardProps } from '../../types/types'
 import { MemoryRouter } from 'react-router-dom'
-import { ChallengeContext } from '../../globalState/ProblemContext'
+import { ProblemContext } from '../../globalState/ProblemContext'
 import renderer from 'react-test-renderer'
 
 // ChallengeCardProp-objects used for various test cases
-const challengeCorrectData: challengeCardProps = {
+const problemCorrectData: ProblemCardProps = {
   id: '123',
   title: 'Test Challenge',
   vendor: 'Test System',
-  status: Status.newChallenge,
+  status: Status.newProblem,
   specificProblem: 'Test Specific Problem',
   clearDataProduct: 'Test Clear Data Product',
   accessibleData: 'Test Accessible Data',
@@ -20,12 +20,14 @@ const challengeCorrectData: challengeCardProps = {
   subCount: 5,
   owner: { email: 'test@mail.no', telephone: '111 22 333', affiliation: 'Test kommune' },
   subs: [],
+  edit: false,
+  approved: true
 }
-const challengeEmptyTitle: challengeCardProps = {
+const problemEmptyTitle: ProblemCardProps = {
   id: '1234',
   title: '',
   vendor: 'aa',
-  status: Status.newChallenge,
+  status: Status.newProblem,
   specificProblem: 'aa',
   clearDataProduct: 'aa',
   accessibleData: 'aa',
@@ -33,12 +35,14 @@ const challengeEmptyTitle: challengeCardProps = {
   subCount: 5,
   owner: { email: 'test@mail.no', telephone: '111 22 333', affiliation: 'aaaaaa' },
   subs: [],
+  edit: false,
+  approved: false
 }
-const challengeNegativeSubCount: challengeCardProps = {
+const problemNegativeSubCount: ProblemCardProps = {
   id: '12345',
   title: 'Test Challenge',
   vendor: 'Test System',
-  status: Status.newChallenge,
+  status: Status.newProblem,
   specificProblem: 'Test Specific Problem',
   clearDataProduct: 'Test Clear Data Product',
   accessibleData: 'Test Accessible Data',
@@ -46,12 +50,14 @@ const challengeNegativeSubCount: challengeCardProps = {
   subCount: -5,
   owner: { email: 'test@mail.no', telephone: '111 22 333', affiliation: 'Test kommune' },
   subs: [],
+  edit: false,
+  approved: false
 }
-const challengeInvalidEmail: challengeCardProps = {
+const problemInvalidEmail: ProblemCardProps = {
   id: '12345',
   title: 'Test Challenge',
   vendor: 'Test System',
-  status: Status.newChallenge,
+  status: Status.newProblem,
   specificProblem: 'Test Specific Problem',
   clearDataProduct: 'Test Clear Data Product',
   accessibleData: 'Test Accessible Data',
@@ -59,12 +65,14 @@ const challengeInvalidEmail: challengeCardProps = {
   subCount: 5,
   owner: { email: 'c:', telephone: '111 22 333', affiliation: 'Test kommune' },
   subs: [],
+  edit: false,
+  approved: false
 }
-const challengeInvalidPhoneNumb: challengeCardProps = {
+const problemInvalidPhoneNumb: ProblemCardProps = {
   id: '12345',
   title: 'Test Challenge',
   vendor: 'Test System',
-  status: Status.newChallenge,
+  status: Status.newProblem,
   specificProblem: 'Test Specific Problem',
   clearDataProduct: 'Test Clear Data Product',
   accessibleData: 'Test Accessible Data',
@@ -72,12 +80,16 @@ const challengeInvalidPhoneNumb: challengeCardProps = {
   subCount: 5,
   owner: { email: 'test@ail.no', telephone: '11333', affiliation: 'Test kommune' },
   subs: [],
+  edit: false,
+  approved: false
 }
 const loggedInUser: ContextUser = {
   email: 'a@b.c',
   password: 'aaaaaaaaaaaaaaa',
-  isAdmin: true,
+  affiliation: 'TRONDHJÆM, BAYBEY',
+  telephone: '111 22 333',
   isLoggedIn: true,
+  isAdmin: true,
 }
 
 afterEach(() => {
@@ -88,52 +100,52 @@ describe('Renders with no errors', () => {
   it('renders challenge card with correct data', () => {
     render(
       <MemoryRouter>
-        <ChallengeCard {...challengeCorrectData} />
+        <ProblemCard {...problemCorrectData} />
       </MemoryRouter>
     )
-    expect(screen.getByText(challengeCorrectData.title)).toBeInTheDocument()
-    expect(screen.getByText(challengeCorrectData.status)).toBeInTheDocument()
-    expect(screen.getByText(challengeCorrectData.specificProblem)).toBeInTheDocument()
-    expect(screen.getByText(challengeCorrectData.vendor)).toBeInTheDocument()
-    expect(screen.getByText(challengeCorrectData.subCount)).toBeInTheDocument()
-    expect(screen.getByText(challengeCorrectData.owner.affiliation)).toBeInTheDocument()
+    expect(screen.getByText(problemCorrectData.title)).toBeInTheDocument()
+    expect(screen.getByText(problemCorrectData.status)).toBeInTheDocument()
+    expect(screen.getByText(problemCorrectData.specificProblem)).toBeInTheDocument()
+    expect(screen.getByText(problemCorrectData.vendor)).toBeInTheDocument()
+    expect(screen.getByText(problemCorrectData.subCount)).toBeInTheDocument()
+    expect(screen.getByText(problemCorrectData.owner.affiliation)).toBeInTheDocument()
   })
 
   it('calls setChallenge on click', () => {
-    const setChallengeMock = jest.fn()
+    const setProblemMock = jest.fn()
     render(
       <MemoryRouter>
-        <ChallengeContext.Provider
+        <ProblemContext.Provider
           value={{
-            challenge: challengeCorrectData,
-            setChallenge: setChallengeMock,
+            problem: problemCorrectData,
+            setProblem: setProblemMock,
             user: loggedInUser,
             setUser: jest.fn(),
           }}
         >
-          <ChallengeCard {...challengeCorrectData} />
-        </ChallengeContext.Provider>
+          <ProblemCard {...problemCorrectData} />
+        </ProblemContext.Provider>
       </MemoryRouter>
     )
-    userEvent.click(screen.getByText(challengeCorrectData.title))
-    expect(setChallengeMock).toHaveBeenCalledWith(challengeCorrectData)
+    userEvent.click(screen.getByText(problemCorrectData.title))
+    expect(setProblemMock).toHaveBeenCalledWith(problemCorrectData)
   })
 })
 
-describe('Weird cases of data in ChallengeCardProps', () => {
+describe('Weird cases of data in ProblemCardProps', () => {
   it('Title-field is an empty string', () => {
     render(
       <MemoryRouter>
-        <ChallengeContext.Provider
+        <ProblemContext.Provider
           value={{
-            challenge: challengeEmptyTitle,
-            setChallenge: jest.fn(),
+            problem: problemEmptyTitle,
+            setProblem: jest.fn(),
             user: loggedInUser,
             setUser: jest.fn(),
           }}
         >
-          <ChallengeCard {...challengeEmptyTitle} />
-        </ChallengeContext.Provider>
+          <ProblemCard {...problemEmptyTitle} />
+        </ProblemContext.Provider>
       </MemoryRouter>
     )
     expect(screen.getByText('En feil oppstod: Error: Tittel-feltet er tomt'))
@@ -142,16 +154,16 @@ describe('Weird cases of data in ChallengeCardProps', () => {
   it('Subs-count is negative', () => {
     render(
       <MemoryRouter>
-        <ChallengeContext.Provider
+        <ProblemContext.Provider
           value={{
-            challenge: challengeNegativeSubCount,
-            setChallenge: jest.fn(),
+            problem: problemNegativeSubCount,
+            setProblem: jest.fn(),
             user: loggedInUser,
             setUser: jest.fn(),
           }}
         >
-          <ChallengeCard {...challengeNegativeSubCount} />
-        </ChallengeContext.Provider>
+          <ProblemCard {...problemNegativeSubCount} />
+        </ProblemContext.Provider>
       </MemoryRouter>
     )
     expect(screen.getByText('En feil oppstod: Error: Mengden abonnenter er negativ'))
@@ -160,16 +172,16 @@ describe('Weird cases of data in ChallengeCardProps', () => {
   it('Owner with invalid email', () => {
     render(
       <MemoryRouter>
-        <ChallengeContext.Provider
+        <ProblemContext.Provider
           value={{
-            challenge: challengeInvalidEmail,
-            setChallenge: jest.fn(),
+            problem: problemInvalidEmail,
+            setProblem: jest.fn(),
             user: loggedInUser,
             setUser: jest.fn(),
           }}
         >
-          <ChallengeCard {...challengeInvalidEmail} />
-        </ChallengeContext.Provider>
+          <ProblemCard {...problemInvalidEmail} />
+        </ProblemContext.Provider>
       </MemoryRouter>
     )
     expect(screen.getByText('En feil oppstod: Error: Ugyldig email'))
@@ -178,16 +190,16 @@ describe('Weird cases of data in ChallengeCardProps', () => {
   it('Owner with invalid phone number', () => {
     render(
       <MemoryRouter>
-        <ChallengeContext.Provider
+        <ProblemContext.Provider
           value={{
-            challenge: challengeInvalidPhoneNumb,
-            setChallenge: jest.fn(),
+            problem: problemInvalidPhoneNumb,
+            setProblem: jest.fn(),
             user: loggedInUser,
             setUser: jest.fn(),
           }}
         >
-          <ChallengeCard {...challengeInvalidPhoneNumb} />
-        </ChallengeContext.Provider>
+          <ProblemCard {...problemInvalidPhoneNumb} />
+        </ProblemContext.Provider>
       </MemoryRouter>
     )
     expect(screen.getByText('En feil oppstod: Error: Ugyldig telefonnummer'))
@@ -198,16 +210,16 @@ it('Matches snapshot', () => {
   const snapshot = renderer
     .create(
       <MemoryRouter>
-        <ChallengeContext.Provider
+        <ProblemContext.Provider
           value={{
-            challenge: challengeInvalidPhoneNumb,
-            setChallenge: jest.fn(),
+            problem: problemInvalidPhoneNumb,
+            setProblem: jest.fn(),
             user: loggedInUser,
             setUser: jest.fn(),
           }}
         >
-          <ChallengeCard {...challengeInvalidPhoneNumb} />
-        </ChallengeContext.Provider>
+          <ProblemCard {...problemInvalidPhoneNumb} />
+        </ProblemContext.Provider>
       </MemoryRouter>
     )
     .toJSON()

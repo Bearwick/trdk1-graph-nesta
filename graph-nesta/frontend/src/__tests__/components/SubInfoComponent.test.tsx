@@ -32,7 +32,7 @@ it("Renders with valid props data", () => {
             affiliation={userValidInfo.affiliation} 
         />
     );
-    expect(screen.getByText("111 22 333")).toBeInTheDocument();
+    expect(screen.getByText("+47 111 22 333")).toBeInTheDocument();
 });
 
 it("Throws an error on invalid email", () => {
