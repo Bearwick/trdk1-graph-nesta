@@ -8,12 +8,6 @@ describe('Test the different interaction between users and problems', () => {
     cy.get('[data-cy="logginButton"]').click()
 
   })
-  after( () => {
-    cy.visit('http://localhost:3000/Hjem')
-    cy.get('[data-cy="search"]').click()
-    cy.contains("Lønnsoppgjør").click()
-    cy.get('[data-cy = "subscribeBtn"]').click()
-  })
 
   it('Checks that it is possible to subscribe to a problem', () => {
     cy.get('[data-cy="search"]').click()
@@ -41,5 +35,12 @@ describe('Test the different interaction between users and problems', () => {
     .and("contain", "Malvik kommune")
     .and("contain", "bruker@malvik.kommune.no")
     .and("contain", "12345678")
+  })
+  it("unsubscribes from a problem", () => {
+    cy.get('[data-cy="search"]').click()
+    cy.contains("Lønnsoppgjør").click()
+    cy.get('[data-cy = "subscribeBtn"]').click()
+    cy.get('[data-cy = "subcount"]').contains("0")
+    
   })
 })

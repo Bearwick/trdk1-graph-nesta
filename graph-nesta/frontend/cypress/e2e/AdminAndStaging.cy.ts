@@ -52,7 +52,7 @@ describe('Tests staging and the admin-specific functions', () => {
     cy.get('[data-cy="categorizeAccesibleData"]').should("be.visible").click()
     cy.contains("CitizenData").click()
     cy.get('[data-cy="approveProblem"]').click()
-    cy.contains("Hjem").click()
+    cy.get('[data-cy ="nestaLogo"]').click()
     cy.get('[data-cy="search"]').click()
     cy.contains("EksProblem").should("be.visible")
   })
