@@ -13,7 +13,7 @@ function Header() {
   return (
     <div className="h-[3.25rem] flex flex-row justify-between bg-white sticky top-0 z-50 drop-shadow-xl px-10 sm:px-20">
       <Link to="/Hjem" className="text-3xl text-left w-48 mt-2">
-        <p className="">Graph Nesta</p>
+        <p data-cy = "nestaLogo" className="">Graph Nesta</p>
       </Link>
 
       <section className="text-based">

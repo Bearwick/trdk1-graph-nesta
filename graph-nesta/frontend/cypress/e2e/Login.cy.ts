@@ -7,8 +7,8 @@ describe('template spec', () => {
     cy.get('[data-cy="password"]').type('admin')
     cy.get('[data-cy="logginButton"]').click()
     cy.get('[data-cy="hamburgerMenu"]').click()
-    cy.get('[data-cy="minProfil"]').click()
-    cy.contains("Trondheim kommune")
+    cy.get('[data-cy="myProfile"]').click()
+    cy.contains("Trondheim Kommune")
     cy.contains("admin@trondheim.kommune.no")
 
   })
