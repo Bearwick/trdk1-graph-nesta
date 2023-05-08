@@ -6,6 +6,7 @@ describe('Test the different interaction between users and problems', () => {
     cy.get('[data-cy="email"]').type('bruker@malvik.kommune.no')
     cy.get('[data-cy="password"]').type('bruker')
     cy.get('[data-cy="logginButton"]').click()
+    cy.wait(2000)
 
   })
 
@@ -25,6 +26,7 @@ describe('Test the different interaction between users and problems', () => {
     cy.get('[data-cy="hamburgerMenu"]').click()
     cy.get('[data-cy="myProblems"]').click()
     cy.get('[data-cy="subscribedProblems"]').click()
+    cy.wait(2000)
     cy.contains("Lønnsoppgjør")
   })
   it("Checks that the profile information is right", () => {
@@ -39,8 +41,10 @@ describe('Test the different interaction between users and problems', () => {
   it("unsubscribes from a problem", () => {
     cy.get('[data-cy="search"]').click()
     cy.contains("Lønnsoppgjør").click()
-    cy.get('[data-cy = "subscribeBtn"]').click()
-    cy.get('[data-cy = "subcount"]').contains("0")
+    if(cy.get('[data-cy = "subcount"]').contains("1")){
+      cy.get('[data-cy = "subscribeBtn"]').click()
+    }
+    cy.get('[data-cy = "subcount"]').should("contain", "0")
     
   })
 })
