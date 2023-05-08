@@ -74,7 +74,7 @@ router.get(
   },
 )
 
-router.post('/AddProblem', function(req: Request, res: Response) {
+router.post('', function(req: Request, res: Response) {
   const data = req.body
   addODAProblem(
     data.title,
