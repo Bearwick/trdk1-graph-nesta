@@ -12,13 +12,13 @@ const options = {
   definition: {
     openapi: '3.0.1',
     info: {
-      title: 'REST API for Swagger Documentation',
+      title: 'API specification for graph nesta',
       version: '1.0.0',
     },
     schemes: ['http', 'https'],
     servers: [{ url: 'http://localhost:8080/' }],
   },
-  apis: ['./src/routes/ontology.ts'],
+  apis: ['./api.yaml'],
 }
 
 // Add a list of allowed origins.

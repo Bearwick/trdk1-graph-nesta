@@ -109,7 +109,7 @@ export async function addOdaProblem (
   userMail: string,
   status: string,
 ) {
-  const test = axios.post('http://localhost:8080/odaProblem/AddProblem', {
+  const test = axios.post('http://localhost:8080/odaProblem', {
     title,
     specificProblem,
     clearDataProduct,
