@@ -1,8 +1,6 @@
 import { type Request, type Response, Router } from 'express'
 import {
-  type AddUserParams,
   type FindUserParams,
-  type SetAdminParams,
   type SubscribeParams,
 } from '../interfaces/interfaces'
 
@@ -19,19 +17,19 @@ import {
 
 export const router = Router()
 
-router.get(
+router.post(
   '/AddUser',
   function (
-    req: Request<unknown, unknown, unknown, AddUserParams>,
+    req: Request,
     res: Response
   ) {
-    const query = req.query
+    const data = req.body
     addUser(
-      query.phone,
-      query.email,
-      query.affiliation,
-      query.password,
-      query.admin
+      data.phone,
+      data.email,
+      data.affiliation,
+      data.password,
+      data.admin
     )
       .then((r) => {
         res.send(r)
@@ -59,14 +57,14 @@ router.get(
   }
 )
 
-router.get(
+router.put(
   '/SetAdmin',
   function (
-    req: Request<unknown, unknown, unknown, SetAdminParams>,
+    req: Request,
     res: Response
   ) {
-    const query = req.query
-    setAdmin(query.email, query.setAdmin.toLowerCase() === 'true')
+    const data = req.body
+    setAdmin(data.email, data.setAdmin.toLowerCase() === 'true')
       .then((r) => {
         res.send(r)
       })
