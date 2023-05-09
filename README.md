@@ -32,6 +32,7 @@ docker-compose build
 docker-compose up -d
 npm start
 ```
+Open [http://localhost:7200](http://localhost:7200) to view GraphDB in your browser.
 For more in-depth information about the backend see the readme in `graph-nesta/backend `
 
 ### Frontend
@@ -40,6 +41,7 @@ cd graph-nesta/frontend
 npm install
 npm start
 ```
+Opens [http://localhost:3000](http://localhost:3000) to view Graph-Nesta in your browser.
 
 ### Mock Database
 By running the commands in `Backend` above, a mock database is set up using docker. The mock database contains some data-related problems and some initial users.
