@@ -1,8 +1,8 @@
 import { type Request, type Response, Router } from 'express'
-import { type CategoryParams } from '../interfaces/interfaces'
-import { convertCategory, convertVendors } from '../utils/convertData'
+import { type CategoryParams } from '../interfaces/interfaces.ts'
+import { convertCategory, convertVendors } from '../utils/convertData.ts'
 import axios from 'axios'
-import { getCategories, getVendors } from '../database/api/ontology'
+import { getCategories, getVendors } from '../database/api/ontology.ts'
 
 export const router = Router()
 

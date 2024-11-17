@@ -1,5 +1,5 @@
-import { get } from './endpoints'
-import { ontology } from '../queries/ontology'
+import { get } from './endpoints.ts'
+import { ontology } from '../queries/ontology.ts'
 import axios from 'axios'
 
 export const getCategories = async () => {

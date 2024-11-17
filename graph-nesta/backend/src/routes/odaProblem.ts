@@ -3,9 +3,9 @@ import {
   type AddCategoriesParams,
   type OdaProblemParams,
   type SubscribeParams,
-} from '../interfaces/interfaces'
+} from '../interfaces/interfaces.ts'
 
-import { convertSubscribers, convertOdaProblem, convertAdminPanelInfo } from '../utils/convertData'
+import { convertSubscribers, convertOdaProblem, convertAdminPanelInfo } from '../utils/convertData.ts'
 import {
   addCategories,
   addODAProblem,
@@ -14,7 +14,7 @@ import {
   getODAProblemsAdminInfo,
   getSubscribers,
   updateODAProblem,
-} from '../database/api/odaProblem'
+} from '../database/api/odaProblem.ts'
 
 export const router = Router()
 
