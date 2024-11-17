@@ -1,32 +1,18 @@
-import { Status } from "../../types/types.ts";
-
 export const odaProblem = {
-  getODAProblems: (
-    limit: number,
-    offset: number,
-    searchString: string,
-    category: string,
-    email?: string,
-    relation?: number,
-    approved?: boolean,
-    similarProblem?: string,
-    filter?: number
-  ) => `
+    getODAProblems: (limit, offset, searchString, category, email, relation, approved, similarProblem, filter) => `
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX oda: <urn:absolute:ODA2.0#>
   ${similarProblem ? 'PREFIX similarProblem:<'.concat(similarProblem, '>') : ''}
   select * where {
    
-   ${
-     similarProblem
-       ? `    {
+   ${similarProblem
+        ? `    {
         select distinct ?odaProblem {
               ?odaProblem oda:relatedVendor_ODAProblem|oda:relatedDP_ODAProblem|oda:relatedSP_ODAProblem|oda:relatedAD_ODAProblem similarProblem:.
         }
     }`
-       : ' ?odaProblem rdf:type oda:ODAProblem.'
-   }
+        : ' ?odaProblem rdf:type oda:ODAProblem.'}
     ?odaProblem oda:hasSpecificProblem ?specificProblem.
     ?odaProblem oda:hasClearDataProduct ?dataProduct.
     ?odaProblem oda:hasAccesibleData ?accessibleData.
@@ -53,41 +39,32 @@ export const odaProblem = {
             
     }
     }
-    ${
-      filter === 1
+    ${filter === 1
         ? 'Filter(regex(?progress, "newChallenge"))'
         : filter === 2
-        ? 'Filter(regex(?progress, "inProcess"))'
-        : filter === 3
-        ? 'Filter(regex(?progress, "Solved"))'
-        : ''
-    }
-    ${
-      relation && email
+            ? 'Filter(regex(?progress, "inProcess"))'
+            : filter === 3
+                ? 'Filter(regex(?progress, "Solved"))'
+                : ''}
+    ${relation && email
         ? '?user2 oda:userMail "'.concat(email.toString(), '".')
-        : ''
-    }
-    ${
-      relation && +relation === 0
+        : ''}
+    ${relation && +relation === 0
         ? '?user2 oda:subscribedTo ?odaProblem.'
         : relation && +relation === 1
-        ? '?user2 oda:creatorOf ?odaProblem.'
-        : ''
-    }
-    ${
-      approved?.toString() === 'true'
+            ? '?user2 oda:creatorOf ?odaProblem.'
+            : ''}
+    ${approved?.toString() === 'true'
         ? '?odaProblem oda:approved true.'
         : approved?.toString() === 'false'
-        ? '?odaProblem oda:approved false.'
-        : ''
-    }
+            ? '?odaProblem oda:approved false.'
+            : ''}
     Filter (regex(?title, "${searchString}") || regex(?specificProblemDescription, "${searchString}")).
     Filter (regex(?title, "${category}") || regex(?specificProblemDescription, "${category}")).
     
 } limit ${limit} offset ${offset}
 `,
-
-   getODAProblemsAdminInfo: () => `
+    getODAProblemsAdminInfo: () => `
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX oda: <urn:absolute:ODA2.0#>
@@ -123,14 +100,7 @@ select * {
     }
 }
   `,
-
-  addCategories: (
-    specProblem: string,
-    dataProduct: string,
-    accessibleData: string,
-    id: string,
-    approved: boolean
-  ) => `
+    addCategories: (specProblem, dataProduct, accessibleData, id, approved) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   prefix oda: <urn:absolute:ODA2.0#>
@@ -156,12 +126,7 @@ select * {
     
   }
   `,
-  addInference: (
-    specProblem: string,
-    dataProduct: string,
-    accessibleData: string,
-    id: string
-  ) => `
+    addInference: (specProblem, dataProduct, accessibleData, id) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   prefix oda: <urn:absolute:ODA2.0#>
@@ -190,17 +155,7 @@ select * {
     bind(?dp as ?dataProduct).
     }
     `,
-  addODAProblem: (
-    nodeName: string,
-    title: string,
-    specificProblem: string,
-    clearDataProduct: string,
-    accessibleData: string,
-    definedAction: string,
-    supplier: string,
-    userMail: string,
-    status: Status,
-  ) => `
+    addODAProblem: (nodeName, title, specificProblem, clearDataProduct, accessibleData, definedAction, supplier, userMail, status) => `
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -245,16 +200,7 @@ select * {
   }
 
 `,
-  updateODAProblem: (
-    odaProblem: string,
-    vendor: string,
-    progress: string,
-    title: string,
-    specificProblem: string,
-    clearDataProduct: string,
-    accessibleData: string,
-    definedAction: string
-  ) => `
+    updateODAProblem: (odaProblem, vendor, progress, title, specificProblem, clearDataProduct, accessibleData, definedAction) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
   PREFIX : <urn:absolute:ODA2.0#>
@@ -297,13 +243,13 @@ select * {
     
   }
   `,
-  deleteODAProblem: (ODAProblem: string) => `
+    deleteODAProblem: (ODAProblem) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   delete where {
   <${ODAProblem}> ?p ?o
   }
   `,
-  getSubscribers: (ODAProblem: string) => `
+    getSubscribers: (ODAProblem) => `
   PREFIX oda: <urn:absolute:ODA2.0#>
   PREFIX problem: <${ODAProblem}>
   select * {
@@ -313,4 +259,4 @@ select * {
     ?user oda:userAffiliation ?affiliation.
 }
   `,
-}
+};

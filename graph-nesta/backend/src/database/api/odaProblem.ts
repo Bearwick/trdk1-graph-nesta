@@ -1,6 +1,7 @@
-import { get, update } from './endpoints'
-import { odaProblem } from '../queries/odaProblem'
+import { get, update } from './endpoints.ts'
+import { odaProblem } from '../queries/odaProblem.ts'
 import axios from 'axios'
+import { Status } from '../../types/types.ts'
 
 export const getODAProblems = async (
   limit: number,
@@ -42,7 +43,7 @@ export const addODAProblem = async (
   definedAction: string,
   supplier: string,
   userMail: string,
-  status: string
+  status: Status
 ) => {
   // Assumes title is unique, otherwise we could end up in a situation where a single ODA problem can have many accessible datas etc.
   // Eventually add a check for thiss
@@ -58,7 +59,7 @@ export const addODAProblem = async (
       definedAction,
       supplier,
       userMail,
-      status
+      status,
     )
   )
 }

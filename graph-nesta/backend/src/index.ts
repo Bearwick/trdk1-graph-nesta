@@ -3,10 +3,10 @@ import swaggerUi from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import { router as odaProblemRoutes } from './routes/odaProblem'
-import { router as ontologyRoutes } from './routes/ontology'
-import { router as userRoutes } from './routes/user'
-import { router as nestaRoutes } from './routes/nesta'
+import { router as odaProblemRoutes } from './routes/odaProblem.ts'
+import { router as ontologyRoutes } from './routes/ontology.ts'
+import { router as userRoutes } from './routes/user.ts'
+import { router as nestaRoutes } from './routes/nesta.ts'
 
 const options = {
   definition: {

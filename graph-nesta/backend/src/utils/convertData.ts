@@ -1,9 +1,9 @@
-import { type OdaProblem, Status, type User, type UserInfo, type AdminPanelInfoType } from '../types/types'
+import { type OdaProblem, Status, type User, type UserInfo, type AdminPanelInfoType } from '../types/types.ts'
 import { type AxiosResponse } from 'axios'
 
 export function convertOdaProblem (r: AxiosResponse<any, any>) {
   const odaProblems: OdaProblem[] =
-    r.data.results.bindings.map(odaProblem => {
+    r.data.results.bindings.map((odaProblem: { email: { value: any }; affiliation: { value: any }; phoneNumber: { value: any }; progress: { value: string }; accessibleDataDescription: { value: any }; dataProductDescription: { value: any }; definedActionDescription: { value: any }; odaProblem: { value: any }; specificProblemDescription: { value: any }; subCount: { value: number }; title: { value: any }; vendor: { value: any }; approved: { value: any } }) => {
       const owner: User = {
         email: odaProblem.email.value,
         affiliation: odaProblem.affiliation.value,
@@ -33,7 +33,7 @@ export function convertAdminPanelInfo (r: AxiosResponse<any, any>) {
 
   const counts: number[] = [];
   
-  r.data.results.bindings.forEach(element => { 
+  r.data.results.bindings.forEach((element: { [x: string]: { value: number; }; } & { hasOwnProperty: (arg0: string) => boolean; }) => { 
       for (const key in element) {
         if (element.hasOwnProperty(key)) {
           counts.push(element[key].value);
@@ -45,7 +45,7 @@ export function convertAdminPanelInfo (r: AxiosResponse<any, any>) {
 }
 
 export function convertSubscribers (r: AxiosResponse<any, any>) {
-  const subscribers: User[] = r.data.results.bindings.map(subscriber => {
+  const subscribers: User[] = r.data.results.bindings.map((subscriber: { email: { value: any; }; affiliation: { value: any; }; phone: { value: any; }; }) => {
     const owner: User = {
       email: subscriber.email.value,
       affiliation: subscriber.affiliation.value,
@@ -70,12 +70,12 @@ export function convertUser (r: AxiosResponse<any, any>) {
 }
 
 export function convertCategory (r: AxiosResponse<any, any>) {
-  return r.data.results.bindings.map(r => {
+  return r.data.results.bindings.map((r: { category: { value: string; }; }) => {
     return r.category.value.substring(20)
   }).slice(2)
 }
 export function convertVendors(r: AxiosResponse<any, any>) {
-  return r.data.results.bindings.map(r => {
+  return r.data.results.bindings.map((r: { vendor: { value: string; }; }) => {
     return r.vendor.value.substring(20)
   })
 }

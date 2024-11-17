@@ -2,9 +2,9 @@ import { type Request, type Response, Router } from 'express'
 import {
   type FindUserParams,
   type SubscribeParams,
-} from '../interfaces/interfaces'
+} from '../interfaces/interfaces.ts'
 
-import { convertUser } from '../utils/convertData'
+import { convertUser } from '../utils/convertData.ts'
 import {
   addUser,
   findUser,
@@ -13,7 +13,7 @@ import {
   setAdmin,
   subscribe,
   unsubscribe,
-} from '../database/api/user'
+} from '../database/api/user.ts'
 
 export const router = Router()
 

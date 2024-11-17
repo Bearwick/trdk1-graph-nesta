@@ -1,5 +1,5 @@
-import { get, update } from './endpoints'
-import { user } from '../queries/user'
+import { get, update } from './endpoints.ts'
+import { user } from '../queries/user.ts'
 
 export const addUser = async (
   phone: number,
